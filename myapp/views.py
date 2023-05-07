@@ -5,18 +5,18 @@ from . import models
 # Create your views here.
 
 
-class createShift(generics.CreateAPIView):
-    queryset = models.Shift
+class CreateShift(generics.CreateAPIView):
+    queryset = models.Shift.objects.all()
     serializer_class = serializers.ShiftSerializer
 
-class getShift(generics.RetrieveAPIView):
-    queryset = models.Shift
+class GetSingleShift(generics.RetrieveAPIView):
+    queryset = models.Shift.objects.all()
     serializer_class = serializers.ShiftSerializer
 
-class removeShift(generics.DestroyAPIView):
-    queryset = models.Shift
+class RemoveShift(generics.DestroyAPIView):
+    queryset = models.Shift.objects.all()
     serializer_class = serializers.ShiftSerializer
 
-class updateShift(generics.UpdateAPIView):
-    queryset = models.Shift
+class UpdateShift(generics.UpdateAPIView):
+    queryset = models.Shift.objects.all()
     serializer_class = serializers.ShiftSerializer
