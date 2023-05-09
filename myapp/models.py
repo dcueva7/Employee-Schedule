@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from datetime import time
 
 # Create your models here.
 
@@ -35,4 +36,7 @@ class Availability(models.Model):
     start_time = models.TimeField(blank=True)
     end_time = models.TimeField(blank=True)
     day = models.CharField(max_length=3, choices=DAYS_OF_WEEK)
+
+    def __str__(self):
+        return self.student + 's availabilaity'
 
