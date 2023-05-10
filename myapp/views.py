@@ -2,8 +2,11 @@ from django.shortcuts import render
 from rest_framework import generics
 from . import serializers
 from . import models
+
+from pulp import *
 # Create your views here.
 
+prob = LpProblem("Scheduling Problem", LpMaximize)
 
 def createSchedule():
 
@@ -11,7 +14,9 @@ def createSchedule():
     maxDailyHours = 8
     minWeeklyHours = 10
     maxShiftHours = 5
-    timeInBetween = 
+    timeInBetween = 3
+
+    return "haha"
 
 class GetShifts(generics.ListAPIView):
     queryset = models.Shift.objects.all()
