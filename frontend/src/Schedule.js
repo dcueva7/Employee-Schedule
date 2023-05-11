@@ -3,7 +3,10 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from "@fullcalendar/interaction"; 
 
-import { Container } from '@chakra-ui/react';
+import { Container, Box } from '@chakra-ui/react';
+import Nav from './Nav';
+
+
 
 
 const Schedule = () => {
@@ -17,23 +20,31 @@ const Schedule = () => {
         
       ];
 
-    return (
-        <Container maxH='container.2xl' maxW='container.xl' >
+      
 
-            <FullCalendar
-                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                initialView="timeGridWeek"
-                weekends={false}
-                events={shifts}
-                slotMinTime="07:00:00"
-                slotMaxTime="22:00:00"
-                eventColor="#378006"
-                selectable={true}
-                slotEventOverlap={false}
-                allDaySlot={false}
-                
-            />
-        </Container>
+    return (
+        <>
+            <Nav/>
+
+            <Box height="1rem" />
+
+            <Container maxH='20vh' maxW='container.xl' >
+
+                <FullCalendar
+                    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                    initialView="timeGridWeek"
+                    weekends={false}
+                    events={shifts}
+                    slotMinTime="07:00:00"
+                    slotMaxTime="22:00:00"
+                    eventColor="#378006"
+                    selectable={true}
+                    slotEventOverlap={false}
+                    allDaySlot={false}
+                    
+                />
+            </Container>
+        </>
        
     );
 }

@@ -1,15 +1,27 @@
 import './App.css';
-import { ChakraProvider, Box } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react'
 import Schedule from './Schedule';
-import Nav from './Nav'
+import SignIn from './SignIn';
+import SignUp from './SignUp';
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes
+
+} from "react-router-dom"
 
 
 function App() {
   return (
     <ChakraProvider>
-      <Nav />
-      <Box height="1rem" />
-      <Schedule />
+      <Router>
+        <Routes>
+            <Route path="/" exact element={<Schedule />} />
+            <Route path="sign_in" element={<SignIn />} />
+            <Route path="sign_up" element={<SignUp />} />
+        </Routes>
+      </Router>
     </ChakraProvider>
       
   );
