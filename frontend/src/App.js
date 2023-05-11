@@ -1,13 +1,15 @@
 import './App.css';
-import { ChakraProvider } from '@chakra-ui/react'
-import Home from './Home';
+import { ChakraProvider, Box } from '@chakra-ui/react'
+import Schedule from './Schedule';
 import Nav from './Nav'
+
 
 function App() {
   return (
     <ChakraProvider>
       <Nav />
-      <Home />
+      <Box height="1rem" />
+      <Schedule />
     </ChakraProvider>
       
   );
