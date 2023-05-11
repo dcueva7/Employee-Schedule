@@ -3,6 +3,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import Schedule from './Schedule';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import Dashboard from './Dashboard';
 
 import {
   BrowserRouter as Router,
@@ -20,6 +21,7 @@ function App() {
             <Route path="/" exact element={<Schedule />} />
             <Route path="sign_in" element={<SignIn />} />
             <Route path="sign_up" element={<SignUp />} />
+            <Route path="dashboard" element={<Dashboard/>} />
         </Routes>
       </Router>
     </ChakraProvider>

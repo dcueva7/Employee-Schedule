@@ -12,8 +12,12 @@ import {
     Text,
     useColorModeValue,
 } from '@chakra-ui/react';
+
+import { useNavigate } from 'react-router-dom';
   
 const SignIn = () => {
+
+    const nav = useNavigate()
 
     return (
       <Flex
@@ -25,7 +29,7 @@ const SignIn = () => {
           <Stack align={'center'}>
             <Heading fontSize={'4xl'}>Sign in to your account</Heading>
             <Text fontSize={'lg'} color={'gray.600'}>
-              to enjoy all of our cool <Link color={'blue.400'}>features</Link> ✌️
+              or create an account here <Link color={'blue.400'} onClick={() => nav('/sign_up')}>Sign-up</Link> ✌️
             </Text>
           </Stack>
           <Box

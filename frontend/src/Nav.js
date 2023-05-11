@@ -11,14 +11,13 @@ const Nav = () => {
     <Box as="nav" p={4} shadow="md" bg="bg-surface">
         <Flex align="center" justify="space-between">
         <ButtonGroup variant="link" spacing={4}>
-        {['Dashboard', 'Schedule', 'Notifications', 'Profile'].map((item) => (
-            <Button key={item}>{item}</Button>
-        ))}
+            <Button onClick={() => nav('/dashboard')}>Dashboard</Button>
+            <Button onClick={() => nav('/')}>Schedule</Button>
         </ButtonGroup>
 
         <HStack spacing={4}>
             <IconButton icon={<BellIcon/>} />
-            <Button variant="ghost" onClick={() => nav('sign_in')}>Sign in</Button>
+            <Button variant="ghost" onClick={() => nav('/sign_in')}>Sign in</Button>
         </HStack>
         </Flex>
     </Box>
