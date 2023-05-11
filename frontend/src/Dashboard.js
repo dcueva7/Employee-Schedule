@@ -66,28 +66,28 @@ const Dashboard = () => {
         <Container maxW={'5xl'} mt={12}>
             <Flex flexWrap="wrap" gridGap={6} justify="center">
             <Card
-                heading={'Heading'}
+                heading={'Total Hours'}
                 icon={'FcAssistant'}
                 description={
-                'Lorem ipsum dolor sit amet catetur, adipisicing elit.'
+                'Here are the number of hours you are scheduled for this week: '
                 }
             />
             <Card
-                heading={'Heading'}
+                heading={'Schedule for today: [Insert Date]'}
                 icon={'FcCollaboration'}
                 description={
                 'Lorem ipsum dolor sit amet catetur, adipisicing elit.'
                 }
             />
             <Card
-                heading={'Heading'}
+                heading={'Shifts available for coverage: '}
                 icon={'FcDonate'}
                 description={
                 'Lorem ipsum dolor sit amet catetur, adipisicing elit.'
                 }
             />
             <Card
-                heading={'Heading'}
+                heading={'Time Off Requests'}
                 icon={'FcManager'}
                 description={
                 'Lorem ipsum dolor sit amet catetur, adipisicing elit.'

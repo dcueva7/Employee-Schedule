@@ -41,6 +41,7 @@ const Schedule = () => {
                     selectable={true}
                     slotEventOverlap={false}
                     allDaySlot={false}
+                    eventClick={}
                     
                 />
             </Container>
