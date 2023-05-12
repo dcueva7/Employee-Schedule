@@ -3,7 +3,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from "@fullcalendar/interaction"; 
 
-import { Container, Box } from '@chakra-ui/react';
+import { Container, Box, Button } from '@chakra-ui/react';
 import Nav from './Nav';
 
 
@@ -20,6 +20,10 @@ const Schedule = () => {
         
       ];
 
+      const handleAdd = () => {
+        
+      }
+
       
 
     return (
@@ -30,6 +34,7 @@ const Schedule = () => {
 
             <Container maxH='20vh' maxW='container.xl' >
 
+                <Button onClick={handleAdd}>Add Shift</Button>
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                     initialView="timeGridWeek"
@@ -41,8 +46,7 @@ const Schedule = () => {
                     selectable={true}
                     slotEventOverlap={false}
                     allDaySlot={false}
-                    eventClick={}
-                    
+                    eventClick={() => alert('lol you clicked this fool')}      
                 />
             </Container>
         </>

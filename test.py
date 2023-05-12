@@ -1,5 +1,5 @@
-employees = ["Employee_" + str(i) for i in range(1, 11)]
+import pulp as pl
 
-hours = [(day, hour) for day in range(7) for hour in range(7, 22)]
+solver_list = pl.list_solvers()
 
-print(hours)
+print(solver_list)
