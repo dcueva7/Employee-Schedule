@@ -3,13 +3,18 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from "@fullcalendar/interaction"; 
 
-import { Container, Box, Button } from '@chakra-ui/react';
+import { Container, Box, Button, Modal, ModalContent, ModalHeader, ModalFooter, Select, ModalBody } from '@chakra-ui/react';
+
+import { useState } from 'react'
 import Nav from './Nav';
 
 
 
 
 const Schedule = () => {
+
+    const [ isOpen, setIsOpen ] = useState(false)
+
     const shifts = [
        
         { title: 'John', start: '2023-05-011T09:00:00', end: '2023-05-11T14:00:00', backgroundColor : 'red' },
@@ -21,7 +26,14 @@ const Schedule = () => {
       ];
 
       const handleAdd = () => {
+
+        setIsOpen(true)
+
         
+      }
+
+      const onClose = () => {
+        setIsOpen(false)
       }
 
       
@@ -33,6 +45,20 @@ const Schedule = () => {
             <Box height="1rem" />
 
             <Container maxH='20vh' maxW='container.xl' >
+
+                <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
+                    <ModalContent>
+                        <ModalHeader>Enter Shift Details</ModalHeader>
+                        <ModalBody>
+                            <Select placeholder='Select student'>
+                                <option value='option1'>Option1</option>
+                            </Select>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button onClick={onClose}>Close</Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
 
                 <Button onClick={handleAdd}>Add Shift</Button>
                 <FullCalendar
