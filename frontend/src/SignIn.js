@@ -4,20 +4,53 @@ import {
     FormControl,
     FormLabel,
     Input,
-    Checkbox,
     Stack,
     Link,
     Button,
     Heading,
     Text,
     useColorModeValue,
+    Alert,
+    AlertIcon
 } from '@chakra-ui/react';
 
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+
+import Cookies from 'js-cookie'
   
 const SignIn = () => {
 
     const nav = useNavigate()
+
+    const [ username, setUsername ] = useState('')
+    const [ password, setPassword ] = useState('')
+    const [ error, setError ] = useState('')
+
+    const handleLogin = (e) => {
+      e.preventDefault()
+
+      fetch('/auth/token/login/', {
+          method : 'POST',
+          headers : {
+              'Content-type' : 'application/json'
+          },
+          body : JSON.stringify({ password : password, username : username})
+          
+      })
+          .then(response => {
+              if(!response.ok){
+                  setError("Invalid Credentials!")
+                  throw new Error("Invalid Credentials!");
+              }
+                return response.json()
+          })
+          .then(json => {
+              Cookies.set("authToken", json.auth_token, { expires: 7 });
+              nav('/');
+          }).catch(error => console.log(error.message))
+
+    }
 
     return (
       <Flex
@@ -38,31 +71,39 @@ const SignIn = () => {
             boxShadow={'lg'}
             p={8}>
             <Stack spacing={4}>
-              <FormControl id="email">
-                <FormLabel>Email address</FormLabel>
-                <Input type="email" />
-              </FormControl>
-              <FormControl id="password">
-                <FormLabel>Password</FormLabel>
-                <Input type="password" />
-              </FormControl>
-              <Stack spacing={10}>
-                <Stack
-                  direction={{ base: 'column', sm: 'row' }}
-                  align={'start'}
-                  justify={'space-between'}>
-                  <Checkbox>Remember me</Checkbox>
-                  <Link color={'blue.400'}>Forgot password?</Link>
-                </Stack>
-                <Button
-                  bg={'blue.400'}
-                  color={'white'}
-                  _hover={{
-                    bg: 'blue.500',
-                  }}>
-                  Sign in
-                </Button>
+              <form onSubmit={handleLogin}>
+                {error && 
+                    <Alert status="error">
+                        <AlertIcon />
+                            {error}
+                    </Alert>}
+                <FormControl id="username">
+                  <FormLabel>Username</FormLabel>
+                  <Input type="text" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                </FormControl>
+                <FormControl id="password">
+                  <FormLabel>Password</FormLabel>
+                  <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                </FormControl>
+                <Stack spacing={10}>
+                  <Stack
+                    direction={{ base: 'column', sm: 'row' }}
+                    align={'start'}
+                    justify={'space-between'}>
+                    <Link color={'blue.400'}>Forgot password?</Link>
+                  </Stack>
+                  <Button
+                    type='submit'
+                    bg={'blue.400'}
+                    color={'white'}
+                    _hover={{
+                      bg: 'blue.500',
+                    }}>
+                    Sign in
+                  </Button>
+              
               </Stack>
+            </form>
             </Stack>
           </Box>
         </Stack>

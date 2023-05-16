@@ -4,7 +4,6 @@ import {
     Container,
     Flex,
     Heading,
-    Icon,
     Stack,
     Text,
     useColorModeValue,
