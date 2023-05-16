@@ -29,7 +29,7 @@ const SignIn = () => {
           <Stack align={'center'}>
             <Heading fontSize={'4xl'}>Sign in to your account</Heading>
             <Text fontSize={'lg'} color={'gray.600'}>
-              or create an account here <Link color={'blue.400'} onClick={() => nav('/sign_up')}>Sign-up</Link> ✌️
+              or create an account here <Link color={'blue.400'} onClick={() => nav('/sign_up')}>Sign-up</Link> 
             </Text>
           </Stack>
           <Box

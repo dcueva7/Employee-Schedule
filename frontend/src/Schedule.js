@@ -13,6 +13,7 @@ import Nav from './Nav';
 
 const Schedule = () => {
 
+    //isOpen state variable for the "addShift" Modal
     const [ isOpen, setIsOpen ] = useState(false)
     const [ employees, setEmployees ] = useState([])
     const [ shifts, setShifts ] = useState([])
@@ -123,6 +124,7 @@ const Schedule = () => {
 
             <Container maxH='20vh' maxW='container.xl' >
 
+                {/* add shift modal */}
                 <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
                     <ModalContent>
                         <ModalHeader>Enter Shift Details</ModalHeader>
