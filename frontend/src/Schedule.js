@@ -15,7 +15,7 @@ import {
     Input, 
     FormControl, 
     FormLabel,
-    Spacer } from '@chakra-ui/react';
+    } from '@chakra-ui/react';
 import { useEffect, useState } from 'react'
 import Nav from './Nav';
 import Cookies from 'js-cookie'
@@ -44,7 +44,7 @@ const Schedule = () => {
     const [ endTime, setEndTime ] = useState('')
 
     // state variable to hold selected event after event click
-    const [ selectedEvent, setSelectedEvent ] = useState=(null)
+    const [ selectedEvent, setSelectedEvent ] = useState([])
 
 
     const authToken = Cookies.get("authToken")
@@ -249,16 +249,19 @@ const Schedule = () => {
                             </FormControl>
                         
                         </ModalBody>
-                        <ModalFooter>
-                            <Button onClick={deleteShift} color='red'>Delete</Button>
-                            <Button 
-                                onClick={() => {
-                                    setEventModalOpen(false);
-                                    resetInputs();
-                                }} 
-                                color='red'>Cancel</Button>
+                        <ModalFooter display='flex' justifyContent='space-between'>
 
-                            <Button onClick={updateShift}>Submit</Button>
+                            <Button onClick={deleteShift} color='red'>Delete</Button>
+
+                            <Box>
+                                <Button 
+                                    onClick={() => {
+                                        setEventModalOpen(false);
+                                        resetInputs();
+                                    }} 
+                                    color='red'>Cancel</Button>
+                                <Button onClick={updateShift}>Submit</Button>
+                            </Box>
                         </ModalFooter>
                     </ModalContent>
                 </Modal>
@@ -275,7 +278,14 @@ const Schedule = () => {
                     selectable={true}
                     slotEventOverlap={false}
                     allDaySlot={false}
-                    eventClick={() => setEventModalOpen(true)}      
+                    eventClick={(info) => {
+                        setStudent(info.event.title)
+                        setDate(info.event.startStr.substring(0,10))
+                        setStartTime(info.event.startStr.substring(11,16)) 
+                        setEndTime(info.event.endStr.substring(11,16)) 
+                        setSelectedEvent(info.event)
+                        setEventModalOpen(true);
+                    }}      
                 />
             </Container>
         </>
