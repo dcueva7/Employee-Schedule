@@ -3,9 +3,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from "@fullcalendar/interaction"; 
 
-import { Container, Box, Button, Modal, ModalContent, ModalHeader, ModalFooter, Select, ModalBody } from '@chakra-ui/react';
+import { Container, Box, Button, Modal, ModalContent, ModalHeader, ModalFooter, Select, ModalBody, Input, FormControl, FormLabel } from '@chakra-ui/react';
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Nav from './Nav';
 
 
@@ -15,26 +15,41 @@ const Schedule = () => {
 
     const [ isOpen, setIsOpen ] = useState(false)
 
+    const [ employees, setEmployees ] = useState([])
+    
+
+    // state variables to hold values of 
+    const [ student, setStudent ] = useState('') 
+    const [date, setDate ] = useState('')
+    const [ startTime, setStartTime ] = useState('')
+    const [ endTime, setEndTime ] = useState('')
+
+
+    
+    
+
+    useEffect(() => {
+        fetch('/employee/get_all_employees/')
+            .then(response => response.json())
+            .then(json => {
+                const data = json.map(item => ({
+                    name : `${item.first_name} ${item.last_name}`,
+                    id : item.id
+                }));
+                setEmployees(data)
+            }).catch(error => {
+                console.error('Error:', error);
+            })
+    }, [])
+    
+
     const shifts = [
-       
-        { title: 'John', start: '2023-05-011T09:00:00', end: '2023-05-11T14:00:00', backgroundColor : 'red' },
-        { title: 'Jim', start: '2023-05-11T12:00:00', end: '2023-05-11T17:00:00' },
-        { title: 'Snoopy', start: '2023-05-11T16:00:00', end: '2023-05-11T20:00:00' },
-        { title: 'Snoopy', start: '2023-05-11T09:00:00', end: '2023-05-11T22:00:00' },
-        { title: 'Jane', start: '2023-05-12T10:00:00', end: '2023-05-12T15:00:00' },
         
-      ];
+    ];
 
-      const handleAdd = () => {
-
-        setIsOpen(true)
-
-        
-      }
-
-      const onClose = () => {
+    const onClose = () => {
         setIsOpen(false)
-      }
+    }
 
       
 
@@ -50,17 +65,38 @@ const Schedule = () => {
                     <ModalContent>
                         <ModalHeader>Enter Shift Details</ModalHeader>
                         <ModalBody>
-                            <Select placeholder='Select student'>
-                                <option value='option1'>Option1</option>
-                            </Select>
+                            <FormControl>
+                                <FormLabel>Student</FormLabel>
+                                    <Select placeholder='Select student' onChange={(e) => setStudent(e.target.value)}>
+                                        {employees.map((item) => {
+                                            return (
+                                                <option key={item.id} value={item.name}>{item.name}</option>
+                                            )
+                                        })}
+                                    </Select>
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Date</FormLabel>
+                                    <Input type='date' onChange={(e) => setDate(e.target.value)} value={date}/>
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Start Time</FormLabel>
+                                    <Input type='time' value={startTime} onChange={(e) => setStartTime(e.target.value)} />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>End Time</FormLabel>
+                                    <Input type='time' value={endTime} onChange={(e) => setEndTime(e.target.value)} />
+                            </FormControl>
+                        
                         </ModalBody>
                         <ModalFooter>
+                            <Button onClick={() => setIsOpen(false)} color='red'>Cancel</Button>
                             <Button onClick={onClose}>Close</Button>
                         </ModalFooter>
                     </ModalContent>
                 </Modal>
 
-                <Button onClick={handleAdd}>Add Shift</Button>
+                <Button onClick={() => setIsOpen(true)}>Add Shift</Button>
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                     initialView="timeGridWeek"

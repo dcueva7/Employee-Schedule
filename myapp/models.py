@@ -18,6 +18,7 @@ class Employee(models.Model):
     last_name = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     email = models.EmailField(max_length=254)
+    color = models.CharField(max_length=20, default='red')
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name

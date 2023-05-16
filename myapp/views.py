@@ -59,19 +59,19 @@ class UpdateEmployee(generics.UpdateAPIView):
     serializer_class = serializers.EmployeeSerializer
 
 class AddAvailability(generics.CreateAPIView):
-    queryset = models.Availability.all()
+    queryset = models.Availability.objects.all()
     serializer_class = serializers.AvailabilitySerializer
 
 class UpdateAvailability(generics.UpdateAPIView):
-    queryset = models.Availability.all()
+    queryset = models.Availability.objects.all()
     serializer_class = serializers.AvailabilitySerializer
 
 class GetAllAvailability(generics.ListAPIView):
-    queryset = models.Availability.all()
+    queryset = models.Availability.objects.all()
     serializer_class = serializers.AvailabilitySerializer
 
 class DeleteAvailability(generics.CreateAPIView):
-    queryset = models.Availability.all()
+    queryset = models.Availability.objects.all()
     serializer_class = serializers.AvailabilitySerializer
 
 
