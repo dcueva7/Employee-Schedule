@@ -29,6 +29,7 @@ const Schedule = () => {
         fetch('/employee/get_all_employees/')
             .then(response => response.json())
             .then(json => {
+                console.log(json)
                 const data = json.map(item => ({
                     name : `${item.first_name} ${item.last_name}`,
                     id : item.id
@@ -45,8 +46,9 @@ const Schedule = () => {
         fetch('/shift/list_shifts/')
             .then(response => response.json())
             .then(json => {
+                console.log(json)
                 const data = json.map(item => ({
-                    title : 'test title',
+                    title : item.student,
                     start : `${item.date}T${item.start_time}`,
                     end : `${item.date}T${item.end_time}`
                 }));
@@ -95,7 +97,7 @@ const Schedule = () => {
                     .then(response => response.json())
                     .then(json => {
                         const data = json.map(item => ({
-                            title : 'test title',
+                            title : item.student,
                             start : `${item.date}T${item.start_time}`,
                             end : `${item.date}T${item.end_time}`
                         }));

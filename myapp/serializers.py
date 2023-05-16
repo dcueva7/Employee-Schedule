@@ -21,6 +21,7 @@ class EmployeeNameSerializer(serializers.ModelSerializer):
 
 
 class ShiftSerializer(serializers.ModelSerializer):
+    student = serializers.StringRelatedField()
     class Meta:
         model = models.Shift
-        fields = '__all__'
+        fields = ['student', 'start_time', 'end_time', 'date']
