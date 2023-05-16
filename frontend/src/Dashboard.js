@@ -11,6 +11,8 @@ import {
 
   import Nav from './Nav';
   import * as Icons from 'react-icons/fc';
+
+  import useAuth from './UseAuth';
   
   const Card = (props) => {
     const Icon = Icons[props.icon];
@@ -48,6 +50,10 @@ import {
   };
   
 const Dashboard = () => {
+
+  
+    useAuth();
+
     return (
         <>
         <Nav />

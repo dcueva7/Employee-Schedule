@@ -3,6 +3,8 @@ import {BellIcon} from '@chakra-ui/icons'
 
 import { useNavigate } from 'react-router-dom';
 
+import Cookies from 'js-cookie'
+
 const Nav = () => {
 
     const nav = useNavigate()
@@ -17,7 +19,10 @@ const Nav = () => {
 
         <HStack spacing={4}>
             <IconButton icon={<BellIcon/>} />
-            <Button variant="ghost" onClick={() => nav('/sign_in')}>Sign in</Button>
+            <Button variant="ghost" onClick={() => {
+                Cookies.remove("authToken");
+                nav('/sign_in');
+            }}>Log Out</Button>
         </HStack>
         </Flex>
     </Box>
