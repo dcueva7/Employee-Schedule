@@ -14,20 +14,17 @@ import Nav from './Nav';
 const Schedule = () => {
 
     const [ isOpen, setIsOpen ] = useState(false)
-
     const [ employees, setEmployees ] = useState([])
+    const [ shifts, setShifts ] = useState([])
     
-
     // state variables to hold values of 
     const [ student, setStudent ] = useState('') 
     const [date, setDate ] = useState('')
     const [ startTime, setStartTime ] = useState('')
     const [ endTime, setEndTime ] = useState('')
 
-
     
-    
-
+    //retrive all employees
     useEffect(() => {
         fetch('/employee/get_all_employees/')
             .then(response => response.json())
@@ -40,14 +37,77 @@ const Schedule = () => {
             }).catch(error => {
                 console.error('Error:', error);
             })
+    },[] )
+
+
+    //retrieve all shifts
+    useEffect(() => {
+        fetch('/shift/list_shifts/')
+            .then(response => response.json())
+            .then(json => {
+                const data = json.map(item => ({
+                    title : 'test title',
+                    start : `${item.date}T${item.start_time}`,
+                    end : `${item.date}T${item.end_time}`
+                }));
+                setShifts(data)
+            }).catch(error => {
+                console.error('Error:', error);
+            })
     }, [])
+
     
 
-    const shifts = [
-        
-    ];
+    const resetInputs = () => {
+        setStudent('')
+        setDate('')
+        setEndTime('')
+        setStartTime('')
+    }
 
+    const data = {
+
+        "start_time": startTime,
+        "end_time": endTime,
+        "date": date,
+        "student": student
+    }
+
+    //add shift 
     const onClose = () => {
+        if (!student || !date || !startTime || !endTime) {
+            alert('All fields must be filled in before submitting.');
+            return;
+        }
+
+        
+        fetch('/shift/add_shift/', {
+            method : 'POST',
+            headers : {
+                'Content-type' : 'application/json'
+            },
+            body : JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(json => {
+                console.log(json)
+                fetch('/shift/list_shifts/')
+                    .then(response => response.json())
+                    .then(json => {
+                        const data = json.map(item => ({
+                            title : 'test title',
+                            start : `${item.date}T${item.start_time}`,
+                            end : `${item.date}T${item.end_time}`
+                        }));
+                        setShifts(data)
+                    }).catch(error => {
+                        console.error('Error:', error);
+                    })
+            })
+            .catch(error => console.log(error))
+        
+
+        resetInputs()
         setIsOpen(false)
     }
 
@@ -70,7 +130,7 @@ const Schedule = () => {
                                     <Select placeholder='Select student' onChange={(e) => setStudent(e.target.value)}>
                                         {employees.map((item) => {
                                             return (
-                                                <option key={item.id} value={item.name}>{item.name}</option>
+                                                <option key={item.id} value={item.id}>{item.name}</option>
                                             )
                                         })}
                                     </Select>
@@ -90,8 +150,14 @@ const Schedule = () => {
                         
                         </ModalBody>
                         <ModalFooter>
-                            <Button onClick={() => setIsOpen(false)} color='red'>Cancel</Button>
-                            <Button onClick={onClose}>Close</Button>
+                            <Button 
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    resetInputs();
+                                }} 
+                                color='red'>Cancel</Button>
+
+                            <Button onClick={onClose}>Submit</Button>
                         </ModalFooter>
                     </ModalContent>
                 </Modal>

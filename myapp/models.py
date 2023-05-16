@@ -22,6 +22,7 @@ class Employee(models.Model):
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
+    
 
 class Shift(models.Model):
     student = models.ForeignKey(Employee, on_delete=models.CASCADE)
@@ -31,6 +32,7 @@ class Shift(models.Model):
 
     def __str__(self):
         return self.student.first_name + ' shift on ' + str(self.date)
+    
 
 class Availability(models.Model):
     student = models.ForeignKey(Employee, on_delete=models.CASCADE)
