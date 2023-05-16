@@ -7,6 +7,7 @@ import { Container, Box, Button, Modal, ModalContent, ModalHeader, ModalFooter, 
 
 import { useEffect, useState } from 'react'
 import Nav from './Nav';
+import Cookies from 'js-cookie'
 
 
 
@@ -24,10 +25,17 @@ const Schedule = () => {
     const [ startTime, setStartTime ] = useState('')
     const [ endTime, setEndTime ] = useState('')
 
+    const authToken = Cookies.get("authToken")
+
     
     //retrive all employees
     useEffect(() => {
-        fetch('/employee/get_all_employees/')
+        fetch('/employee/get_all_employees/', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Token ${authToken}`,
+            },
+        })
             .then(response => response.json())
             .then(json => {
                 console.log(json)
@@ -44,7 +52,12 @@ const Schedule = () => {
 
     //retrieve all shifts
     useEffect(() => {
-        fetch('/shift/list_shifts/')
+        fetch('/shift/list_shifts/', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Token ${authToken}`,
+            },
+        })
             .then(response => response.json())
             .then(json => {
                 console.log(json)
@@ -87,14 +100,20 @@ const Schedule = () => {
         fetch('/shift/add_shift/', {
             method : 'POST',
             headers : {
-                'Content-type' : 'application/json'
+                'Content-type' : 'application/json',
+                'Authorization': `Token ${authToken}`
             },
             body : JSON.stringify(data)
         })
             .then(response => response.json())
             .then(json => {
                 console.log(json)
-                fetch('/shift/list_shifts/')
+                fetch('/shift/list_shifts/', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Token ${authToken}`,
+                    }
+                })
                     .then(response => response.json())
                     .then(json => {
                         const data = json.map(item => ({
