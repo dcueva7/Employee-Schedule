@@ -13,11 +13,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
         model = models.Employee
         fields = '__all__'
 
-class EmployeeNameSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Employee
-        fields = ['first_name']
-
 
 
 class ShiftSerializer(serializers.ModelSerializer):
