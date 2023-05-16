@@ -2,9 +2,20 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from "@fullcalendar/interaction"; 
-
-import { Container, Box, Button, Modal, ModalContent, ModalHeader, ModalFooter, Select, ModalBody, Input, FormControl, FormLabel } from '@chakra-ui/react';
-
+import { 
+    Container, 
+    Box, 
+    Button, 
+    Modal, 
+    ModalContent, 
+    ModalHeader, 
+    ModalFooter, 
+    Select, 
+    ModalBody, 
+    Input, 
+    FormControl, 
+    FormLabel,
+    Spacer } from '@chakra-ui/react';
 import { useEffect, useState } from 'react'
 import Nav from './Nav';
 import Cookies from 'js-cookie'
@@ -22,12 +33,19 @@ const Schedule = () => {
     const [ isOpen, setIsOpen ] = useState(false)
     const [ employees, setEmployees ] = useState([])
     const [ shifts, setShifts ] = useState([])
+
+    //state variables for the "editEvent" modal
+    const [ eventModalOpen, setEventModalOpen ] = useState(false)
     
-    // state variables to hold values of 
+    // state variables to hold values of addShift form
     const [ student, setStudent ] = useState('') 
     const [date, setDate ] = useState('')
     const [ startTime, setStartTime ] = useState('')
     const [ endTime, setEndTime ] = useState('')
+
+    // state variable to hold selected event after event click
+    const [ selectedEvent, setSelectedEvent ] = useState=(null)
+
 
     const authToken = Cookies.get("authToken")
 
@@ -66,6 +84,7 @@ const Schedule = () => {
             .then(json => {
                 console.log(json)
                 const data = json.map(item => ({
+                    id: item.id,
                     title : item.student,
                     start : `${item.date}T${item.start_time}`,
                     end : `${item.date}T${item.end_time}`
@@ -93,7 +112,7 @@ const Schedule = () => {
         "student": student
     }
 
-    //add shift 
+    //add shift onClose
     const onClose = () => {
         if (!student || !date || !startTime || !endTime) {
             alert('All fields must be filled in before submitting.');
@@ -135,6 +154,18 @@ const Schedule = () => {
 
         resetInputs()
         setIsOpen(false)
+    }
+
+    //update Shift
+    const updateShift = () => {
+        
+        setEventModalOpen(false)
+
+    }
+
+    const deleteShift = () => {
+        setEventModalOpen(false)
+
     }
 
       
@@ -189,6 +220,49 @@ const Schedule = () => {
                     </ModalContent>
                 </Modal>
 
+                {/* edit event modal */}
+                <Modal isOpen={eventModalOpen} onClose={updateShift} isCentered={true}>
+                    <ModalContent>
+                        <ModalHeader>Edit Shift</ModalHeader>
+                        <ModalBody>
+                            <FormControl>
+                                <FormLabel>Student</FormLabel>
+                                    <Select placeholder='Select student' onChange={(e) => setStudent(e.target.value)}>
+                                        {employees.map((item) => {
+                                            return (
+                                                <option key={item.id} value={item.id}>{item.name}</option>
+                                            )
+                                        })}
+                                    </Select>
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Date</FormLabel>
+                                    <Input type='date' onChange={(e) => setDate(e.target.value)} value={date}/>
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Start Time</FormLabel>
+                                    <Input type='time' value={startTime} onChange={(e) => setStartTime(e.target.value)} />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>End Time</FormLabel>
+                                    <Input type='time' value={endTime} onChange={(e) => setEndTime(e.target.value)} />
+                            </FormControl>
+                        
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button onClick={deleteShift} color='red'>Delete</Button>
+                            <Button 
+                                onClick={() => {
+                                    setEventModalOpen(false);
+                                    resetInputs();
+                                }} 
+                                color='red'>Cancel</Button>
+
+                            <Button onClick={updateShift}>Submit</Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
+
                 <Button onClick={() => setIsOpen(true)}>Add Shift</Button>
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -201,7 +275,7 @@ const Schedule = () => {
                     selectable={true}
                     slotEventOverlap={false}
                     allDaySlot={false}
-                    eventClick={() => alert('lol you clicked this fool')}      
+                    eventClick={() => setEventModalOpen(true)}      
                 />
             </Container>
         </>
