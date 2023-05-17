@@ -19,7 +19,7 @@ class ShiftSerializer(serializers.ModelSerializer):
     student = serializers.StringRelatedField()
     class Meta:
         model = models.Shift
-        fields = ['student', 'start_time', 'end_time', 'date']
+        fields = ['id','student', 'start_time', 'end_time', 'date']
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
