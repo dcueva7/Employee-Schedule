@@ -24,7 +24,7 @@ class GetShifts(generics.ListAPIView):
 
 class CreateShift(generics.CreateAPIView):
     queryset = models.Shift.objects.all()
-    serializer_class = serializers.ShiftSerializer
+    serializer_class = serializers.CreateShiftSerializer
 
 class GetSingleShift(generics.RetrieveAPIView):
     queryset = models.Shift.objects.all()

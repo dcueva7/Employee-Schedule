@@ -132,27 +132,11 @@ const Schedule = () => {
         })
             .then(response => response.json())
             .then(json => {
+                setShifts((prevShifts) => [...prevShifts, {
+                    
+                }]})
                 console.log(json, 'added a shift')
-                fetch('/shift/list_shifts/', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Token ${authToken}`,
-                    }
-                })
-                    .then(response => response.json())
-                    .then(json => {
-                        const data = json.map(item => ({
-                            id: item.id,
-                            title : item.student,
-                            start : `${item.date}T${item.start_time}`,
-                            end : `${item.date}T${item.end_time}`
-                        }));
-                        console.log(json,'fetched all shifts')
-                        setShifts(data)
-                        
-                    }).catch(error => {
-                        console.error('Error:', error);
-                    })
+                
             })
             .catch(error => console.log(error))
         
@@ -282,11 +266,11 @@ const Schedule = () => {
                     slotEventOverlap={false}
                     allDaySlot={false}
                     eventClick={(info) => {
+                        setStudent(info.event.title)
                         setDate(info.event.startStr.substring(0,10))
                         setStartTime(info.event.startStr.substring(11,16)) 
                         setEndTime(info.event.endStr.substring(11,16)) 
                         setSelectedEvent(info.event)
-                        console.log(info.event)
                         setEventModalOpen(true);
                     }}      
                 />

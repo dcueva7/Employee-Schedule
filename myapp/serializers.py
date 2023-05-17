@@ -30,3 +30,8 @@ class ShiftSerializer(serializers.ModelSerializer):
         value = super().to_internal_value(data)
         value['student'] = models.Employee.objects.get(id=data['student'])
         return value
+    
+class CreateShiftSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Shift
+        fields = '__all__'
