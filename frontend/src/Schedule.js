@@ -25,6 +25,8 @@ import useAuth from './UseAuth';
 import { useContext } from 'react';
 import EmployeeShiftContext from './EmployeeShiftContext';
 
+import useRole from './useRole';
+
 
 
 
@@ -33,6 +35,8 @@ import EmployeeShiftContext from './EmployeeShiftContext';
 const Schedule = () => {
 
     useAuth();
+    const role = useRole();
+    
 
     const {shifts, setShifts, employees, setEmployees } = useContext(EmployeeShiftContext)
 

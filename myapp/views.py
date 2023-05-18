@@ -2,6 +2,9 @@ from django.shortcuts import render
 from rest_framework import generics
 from . import serializers
 from . import models
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.decorators import api_view, permission_classes
 
 from pulp import *
 # Create your views here.
@@ -17,6 +20,13 @@ def createSchedule():
     timeInBetween = 3
 
     return 
+
+@api_view(['GET'])
+@permission_classes([ IsAdminUser ])
+def check_manager(request):
+
+    return Response({'message': 'true'})
+
 
 class GetShifts(generics.ListAPIView):
     queryset = models.Shift.objects.all()

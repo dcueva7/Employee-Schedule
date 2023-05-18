@@ -18,9 +18,12 @@ import Nav from './Nav';
 import * as Icons from 'react-icons/fc';
 
 import useAuth from './UseAuth';
+import { useEffect } from 'react';
 
 import { useContext } from 'react';
 import EmployeeShiftContext from './EmployeeShiftContext';
+
+import useRole from './useRole';
   
 const Card = (props) => {
   const Icon = Icons[props.icon];
@@ -61,6 +64,11 @@ const Dashboard = () => {
 
   
   useAuth();
+  const role = useRole()
+
+ 
+
+
   const { shifts, setShifts, employees, setEmployees } = useContext(EmployeeShiftContext)
     
   return (

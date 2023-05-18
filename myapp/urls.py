@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('check_manager/', views.check_manager, name='check_manager'),
     path('shift/list_shifts/', views.GetShifts.as_view(), name='list_shifts'),
     path('shift/add_shift/', views.CreateShift.as_view(), name='add_shift'),
     path('shift/get_single_shift/<int:pk>/', views.GetSingleShift.as_view(), name='get_single_shift'),
