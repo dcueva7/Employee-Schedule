@@ -4,6 +4,8 @@ import Schedule from './Schedule';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Dashboard from './Dashboard';
+import EmployeeShiftContext from './EmployeeShiftContext';
+import { useState } from 'react';
 
 import {
   BrowserRouter as Router,
@@ -14,16 +16,23 @@ import {
 
 
 function App() {
+
+  //state variables to be shared between Dashboard and Schedule components.  Will be set initially in Schedule component
+  const [ shifts, setShifts ] = useState([]);
+  const [ employees, setEmployees ] = useState([])
+
   return (
     <ChakraProvider>
-      <Router>
-        <Routes>
-            <Route path="/" exact element={<Schedule />} />
-            <Route path="sign_in" element={<SignIn />} />
-            <Route path="sign_up" element={<SignUp />} />
-            <Route path="dashboard" element={<Dashboard/>} />
-        </Routes>
-      </Router>
+      <EmployeeShiftContext.Provider value={{shifts, setShifts, employees, setEmployees}} >
+        <Router>
+          <Routes>
+              <Route path="/" exact element={<Schedule />} />
+              <Route path="sign_in" element={<SignIn />} />
+              <Route path="sign_up" element={<SignUp />} />
+              <Route path="dashboard" element={<Dashboard/>} />
+          </Routes>
+        </Router>
+      </EmployeeShiftContext.Provider>
     </ChakraProvider>
       
   );

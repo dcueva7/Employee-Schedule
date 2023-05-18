@@ -16,11 +16,16 @@ import {
     FormControl, 
     FormLabel,
     } from '@chakra-ui/react';
+
 import { useEffect, useState } from 'react'
 import Nav from './Nav';
 import Cookies from 'js-cookie'
 
 import useAuth from './UseAuth';
+import { useContext } from 'react';
+import EmployeeShiftContext from './EmployeeShiftContext';
+
+
 
 
 
@@ -29,10 +34,10 @@ const Schedule = () => {
 
     useAuth();
 
+    const {shifts, setShifts, employees, setEmployees } = useContext(EmployeeShiftContext)
+
     //isOpen state variable for the "addShift" Modal
     const [ isOpen, setIsOpen ] = useState(false)
-    const [ employees, setEmployees ] = useState([])
-    const [ shifts, setShifts ] = useState([])
 
     //state variables for the "editEvent" modal
     const [ eventModalOpen, setEventModalOpen ] = useState(false)

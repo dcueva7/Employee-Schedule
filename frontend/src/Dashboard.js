@@ -1,3 +1,8 @@
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from "@fullcalendar/interaction"; 
+
 import {
     Box,
     Button,
@@ -7,55 +12,59 @@ import {
     Stack,
     Text,
     useColorModeValue,
-  } from '@chakra-ui/react';
+} from '@chakra-ui/react';
 
-  import Nav from './Nav';
-  import * as Icons from 'react-icons/fc';
+import Nav from './Nav';
+import * as Icons from 'react-icons/fc';
 
-  import useAuth from './UseAuth';
+import useAuth from './UseAuth';
+
+import { useContext } from 'react';
+import EmployeeShiftContext from './EmployeeShiftContext';
   
-  const Card = (props) => {
-    const Icon = Icons[props.icon];
-    return (
-      <Box
-        maxW={{ base: 'full', md: '275px' }}
-        w={'full'}
-        borderWidth="1px"
-        borderRadius="lg"
-        overflow="hidden"
-        p={5}>
-        <Stack align={'start'} spacing={2}>
-          <Flex
-            w={16}
-            h={16}
-            align={'center'}
-            justify={'center'}
-            color={'white'}
-            rounded={'full'}
-            bg={useColorModeValue('gray.100', 'gray.700')}>
-            <Icon size="32" />
-          </Flex>
-          <Box mt={2}>
-            <Heading size="md">{props.heading}</Heading>
-            <Text mt={1} fontSize={'sm'}>
-              {props.description}
-            </Text>
-          </Box>
-          <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
-            Learn more
-          </Button>
-        </Stack>
-      </Box>
-    );
-  };
+const Card = (props) => {
+  const Icon = Icons[props.icon];
+  return (
+    <Box
+      maxW={{ base: 'full', md: '275px' }}
+      w={'full'}
+      borderWidth="1px"
+      borderRadius="lg"
+      overflow="hidden"
+      p={5}>
+      <Stack align={'start'} spacing={2}>
+        <Flex
+          w={16}
+          h={16}
+          align={'center'}
+          justify={'center'}
+          color={'white'}
+          rounded={'full'}
+          bg={useColorModeValue('gray.100', 'gray.700')}>
+          <Icon size="32" />
+        </Flex>
+        <Box mt={2}>
+          <Heading size="md">{props.heading}</Heading>
+          <Text mt={1} fontSize={'sm'}>
+            {props.description}
+          </Text>
+        </Box>
+        <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
+          Learn more
+        </Button>
+      </Stack>
+    </Box>
+  );
+};
   
 const Dashboard = () => {
 
   
-    useAuth();
-
-    return (
-        <>
+  useAuth();
+  const { shifts, setShifts, employees, setEmployees } = useContext(EmployeeShiftContext)
+    
+  return (
+      <>
         <Nav />
         <Box p={4}>
         <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
@@ -75,13 +84,6 @@ const Dashboard = () => {
                 icon={'FcAssistant'}
                 description={
                 'Here are the number of hours you are scheduled for this week: '
-                }
-            />
-            <Card
-                heading={'Schedule for today: [Insert Date]'}
-                icon={'FcCollaboration'}
-                description={
-                'Lorem ipsum dolor sit amet catetur, adipisicing elit.'
                 }
             />
             <Card
@@ -106,6 +108,26 @@ const Dashboard = () => {
                 }
             />
             </Flex>
+
+            <Box >
+              <Stack spacing={2}>
+                <Box mt={2}>
+                  <Heading size="md">Schedule for today</Heading>
+                  <FullCalendar
+                    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                    initialView="timeGridDay"
+                    weekends={false}
+                    events={shifts}
+                    slotMinTime="07:00:00"
+                    slotMaxTime="22:00:00"
+                    eventColor="#378006"
+                    selectable={false}
+                    slotEventOverlap={false}
+                    allDaySlot={false}      
+                />
+                </Box>
+              </Stack>
+            </Box>
         </Container>
         </Box>
         </>
