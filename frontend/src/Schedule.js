@@ -74,7 +74,7 @@ const Schedule = () => {
 
 
     //retrieve all shifts
-    useEffect(() => {
+    const fetchShift = () => {
         fetch('/shift/list_shifts/', {
             method: 'GET',
             headers: {
@@ -95,6 +95,11 @@ const Schedule = () => {
             }).catch(error => {
                 console.error('Error:', error);
             })
+    }
+
+
+    useEffect(() => {
+        fetchShift();
     }, [])
 
     
@@ -132,11 +137,8 @@ const Schedule = () => {
         })
             .then(response => response.json())
             .then(json => {
-                setShifts((prevShifts) => [...prevShifts, {
-                    
-                }]})
-                console.log(json, 'added a shift')
-                
+                console.log(json, 'added a shift');
+                fetchShift();
             })
             .catch(error => console.log(error))
         
@@ -147,11 +149,43 @@ const Schedule = () => {
 
     //update Shift
     const updateShift = () => {
+
+        fetch(`/shift/update_shift/${selectedEvent.id}/`, {
+            method : 'PUT',
+            headers : {
+                'Content-type' : 'application/json',
+                'Authorization': `Token ${authToken}`
+            },
+            body : JSON.stringify({
+                start_time : startTime,
+                end_time : endTime,
+                date : date,
+                student : student
+                
+            })
+        })
+            .then(response => response.json())
+            .then(json => {
+                console.log(json);
+                fetchShift();
+            })
+            .catch(error => console.log(error))
         
+        resetInputs()
         setEventModalOpen(false)
     }
 
     const deleteShift = () => {
+        fetch(`/shift/delete_shift/${selectedEvent.id}/`,{
+            method : 'DELETE',
+            headers : {
+                'Authorization' : `Token ${authToken}`,
+            },
+        })
+            .then(() => fetchShift())
+            .catch(error => console.log(error))
+
+        resetInputs()
         setEventModalOpen(false)
     }
 

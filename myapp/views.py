@@ -16,7 +16,7 @@ def createSchedule():
     maxShiftHours = 5
     timeInBetween = 3
 
-    return "haha"
+    return 
 
 class GetShifts(generics.ListAPIView):
     queryset = models.Shift.objects.all()
@@ -36,7 +36,7 @@ class RemoveShift(generics.DestroyAPIView):
 
 class UpdateShift(generics.UpdateAPIView):
     queryset = models.Shift.objects.all()
-    serializer_class = serializers.ShiftSerializer
+    serializer_class = serializers.CreateShiftSerializer
 
 class CreateEmployee(generics.CreateAPIView):
     queryset = models.Employee.objects.all()
