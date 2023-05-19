@@ -15,6 +15,7 @@ import {
     Input, 
     FormControl, 
     FormLabel,
+    Text,
     } from '@chakra-ui/react';
 
 import { useEffect, useState } from 'react'
@@ -47,6 +48,9 @@ const Schedule = () => {
 
     //state variables for the "editEvent" modal
     const [ eventModalOpen, setEventModalOpen ] = useState(false)
+
+    //state variable for employeeModal
+    const [ employeeModalOpen, setEmployeeModalOpen ] = useState(false)
     
     // state variables to hold values of addShift form
     const [ student, setStudent ] = useState('') 
@@ -135,7 +139,7 @@ const Schedule = () => {
     }
 
     //add shift onClose
-    const onClose = () => {
+    const addShift = () => {
         if (!student || !date || !startTime || !endTime) {
             alert('All fields must be filled in before submitting.');
             return;
@@ -215,7 +219,13 @@ const Schedule = () => {
             <Container maxH='20vh' maxW='container.xl' >
 
                 {/* add shift modal */}
-                <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
+                <Modal 
+                    isOpen={isOpen} 
+                    onClose={() => {
+                        resetInputs()
+                        setIsOpen(false)
+                    }} 
+                    isCentered={true}>
                     <ModalContent>
                         <ModalHeader>Enter Shift Details</ModalHeader>
                         <ModalBody>
@@ -251,7 +261,7 @@ const Schedule = () => {
                                 }} 
                                 color='red'>Cancel</Button>
 
-                            <Button onClick={onClose}>Submit</Button>
+                            <Button onClick={addShift}>Submit</Button>
                         </ModalFooter>
                     </ModalContent>
                 </Modal>
@@ -259,7 +269,11 @@ const Schedule = () => {
                 {/* edit event modal */}
                 <Modal 
                     isOpen={eventModalOpen} 
-                    onClose={} isCentered={true}>
+                    onClose={() => {
+                        resetInputs()
+                        setEventModalOpen(false)
+                    }} 
+                    isCentered={true}>
                     <ModalContent>
                         <ModalHeader>Edit Shift</ModalHeader>
                         <ModalBody>
@@ -305,12 +319,17 @@ const Schedule = () => {
                 </Modal>
 
                 {/* employee modal */}
-                <Modal isOpen={} onClose={} isCentered={true}>
+                <Modal 
+                    isOpen={employeeModalOpen} 
+                    onClose={() => {
+                        setEmployeeModalOpen(false)
+                    }} 
+                    isCentered={true}>
                     <ModalContent>
                         <ModalHeader>Shift Requests</ModalHeader>
                         <ModalBody>
+                            <Text>Request for full or partial coverage of your shift below:</Text>
                             
-                        
                         </ModalBody>
                         <ModalFooter display='flex' justifyContent='space-between'>
 
