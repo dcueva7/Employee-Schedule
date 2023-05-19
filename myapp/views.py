@@ -5,6 +5,8 @@ from . import models
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.decorators import api_view, permission_classes
+from django.contrib.auth.models import User
+from django.http import Http404
 
 from pulp import *
 # Create your views here.
@@ -20,6 +22,19 @@ def createSchedule():
     timeInBetween = 3
 
     return 
+
+@api_view(['GET'])
+@permission_classes([])
+def get_user_id(request):
+    
+    try:
+        user = User.objects.get(id=request.user.id)
+        return Response({ "id" : user.id })
+    
+    except User.DoesNotExist:
+        raise Http404
+
+
 
 @api_view(['GET'])
 @permission_classes([ IsAdminUser ])

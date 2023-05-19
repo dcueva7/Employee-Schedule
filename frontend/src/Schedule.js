@@ -26,6 +26,7 @@ import { useContext } from 'react';
 import EmployeeShiftContext from './EmployeeShiftContext';
 
 import useRole from './useRole';
+import useUserId from './useUserId';
 
 
 
@@ -36,6 +37,7 @@ const Schedule = () => {
 
     useAuth();
     const role = useRole();
+    const loggedInUser = useUserId();
     
 
     const {shifts, setShifts, employees, setEmployees } = useContext(EmployeeShiftContext)
@@ -98,7 +100,8 @@ const Schedule = () => {
                     title : `${item.student.first_name} ${item.student.last_name}`,
                     start : `${item.date}T${item.start_time}`,
                     end : `${item.date}T${item.end_time}`,
-                    color : item.student.color
+                    color : item.student.color,
+                    student_id : item.student.id,
                 }));
                 setShifts(data)
                 
@@ -310,12 +313,20 @@ const Schedule = () => {
                     slotEventOverlap={false}
                     allDaySlot={false}
                     eventClick={(info) => {
-                        setStudent(info.event.title)
-                        setDate(info.event.startStr.substring(0,10))
-                        setStartTime(info.event.startStr.substring(11,16)) 
-                        setEndTime(info.event.endStr.substring(11,16)) 
-                        setSelectedEvent(info.event)
-                        setEventModalOpen(true);
+
+                        if (role){
+                            setStudent(info.event.title)
+                            setDate(info.event.startStr.substring(0,10))
+                            setStartTime(info.event.startStr.substring(11,16)) 
+                            setEndTime(info.event.endStr.substring(11,16)) 
+                            setSelectedEvent(info.event)
+                            console.log(info.event.student_id)
+                            setEventModalOpen(true);
+                        }
+                        else if (info.event.student_id === loggedInUser){
+                            console.log(info.event.student_id)
+                            alert("Good you can click on your shit bro")
+                        }
                     }}      
                 />
             </Container>
