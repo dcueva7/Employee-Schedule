@@ -333,16 +333,16 @@ const Schedule = () => {
                         </ModalBody>
                         <ModalFooter display='flex' justifyContent='space-between'>
 
-                            <Button onClick={deleteShift} color='red'>Delete</Button>
+                            <Button onClick={() => setEmployeeModalOpen(false)} color='red'>Cancel</Button>
 
                             <Box>
                                 <Button 
                                     onClick={() => {
-                                        setEventModalOpen(false);
+                                        setEmployeeModalOpen(false);
                                         resetInputs();
                                     }} 
-                                    color='red'>Cancel</Button>
-                                <Button onClick={updateShift}>Submit</Button>
+                                    >Partial</Button>
+                                <Button onClick={() => setEmployeeModalOpen(false)}>Full</Button>
                             </Box>
                         </ModalFooter>
                     </ModalContent>
@@ -373,7 +373,7 @@ const Schedule = () => {
     
                     
                         else if(info.event.extendedProps.student_id === loggedInUser ){
-                            alert("Good you can click on your shit bro")
+                            setEmployeeModalOpen(true)
                         }
                         
                     }}      
