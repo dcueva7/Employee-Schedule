@@ -11,7 +11,7 @@ class AvailabilitySerializer(serializers.ModelSerializer):
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Employee
-        fields = ['id','first_name', 'last_name', 'color']
+        fields = ['id','first_name', 'last_name', 'color', 'user']
 
 
 

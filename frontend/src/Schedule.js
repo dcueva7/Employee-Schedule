@@ -101,7 +101,9 @@ const Schedule = () => {
                     start : `${item.date}T${item.start_time}`,
                     end : `${item.date}T${item.end_time}`,
                     color : item.student.color,
-                    student_id : item.student.id,
+                    extendedProps : {
+                        student_id : item.student.user,
+                    },
                 }));
                 setShifts(data)
                 
@@ -255,7 +257,9 @@ const Schedule = () => {
                 </Modal>
 
                 {/* edit event modal */}
-                <Modal isOpen={eventModalOpen} onClose={updateShift} isCentered={true}>
+                <Modal 
+                    isOpen={eventModalOpen} 
+                    onClose={} isCentered={true}>
                     <ModalContent>
                         <ModalHeader>Edit Shift</ModalHeader>
                         <ModalBody>
@@ -300,6 +304,31 @@ const Schedule = () => {
                     </ModalContent>
                 </Modal>
 
+                {/* employee modal */}
+                <Modal isOpen={} onClose={} isCentered={true}>
+                    <ModalContent>
+                        <ModalHeader>Shift Requests</ModalHeader>
+                        <ModalBody>
+                            
+                        
+                        </ModalBody>
+                        <ModalFooter display='flex' justifyContent='space-between'>
+
+                            <Button onClick={deleteShift} color='red'>Delete</Button>
+
+                            <Box>
+                                <Button 
+                                    onClick={() => {
+                                        setEventModalOpen(false);
+                                        resetInputs();
+                                    }} 
+                                    color='red'>Cancel</Button>
+                                <Button onClick={updateShift}>Submit</Button>
+                            </Box>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
+
                 {role && <Button onClick={() => setIsOpen(true)}>Add Shift</Button>}
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -320,13 +349,14 @@ const Schedule = () => {
                             setStartTime(info.event.startStr.substring(11,16)) 
                             setEndTime(info.event.endStr.substring(11,16)) 
                             setSelectedEvent(info.event)
-                            console.log(info.event.student_id)
                             setEventModalOpen(true);
                         }
-                        else if (info.event.student_id === loggedInUser){
-                            console.log(info.event.student_id)
+    
+                    
+                        else if(info.event.extendedProps.student_id === loggedInUser ){
                             alert("Good you can click on your shit bro")
                         }
+                        
                     }}      
                 />
             </Container>
