@@ -95,9 +95,10 @@ const Schedule = () => {
                 console.log(json,'fetched all shifts')
                 const data = json.map(item => ({
                     id: item.id,
-                    title : item.student,
+                    title : `${item.student.first_name} ${item.student.last_name}`,
                     start : `${item.date}T${item.start_time}`,
-                    end : `${item.date}T${item.end_time}`
+                    end : `${item.date}T${item.end_time}`,
+                    color : item.student.color
                 }));
                 setShifts(data)
                 
@@ -296,7 +297,7 @@ const Schedule = () => {
                     </ModalContent>
                 </Modal>
 
-                <Button onClick={() => setIsOpen(true)}>Add Shift</Button>
+                {role && <Button onClick={() => setIsOpen(true)}>Add Shift</Button>}
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                     initialView="timeGridWeek"
