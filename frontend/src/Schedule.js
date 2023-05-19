@@ -51,6 +51,16 @@ const Schedule = () => {
 
     //state variable for employeeModal
     const [ employeeModalOpen, setEmployeeModalOpen ] = useState(false)
+
+    //state variable and functions for alert dialog
+    const [ alertDialogOpen, setAlertDialogOpen ] = useState(false)
+
+    const alertClose = () => {
+        setAlertDialogOpen(false)
+    }
+    const alertConfirm = () => {
+        setAlertDialogOpen(false)
+    }
     
     // state variables to hold values of addShift form
     const [ student, setStudent ] = useState('') 
@@ -261,7 +271,7 @@ const Schedule = () => {
                                 }} 
                                 color='red'>Cancel</Button>
 
-                            <Button onClick={addShift}>Submit</Button>
+                            <Button onClick={addShift} ml={3}>Submit</Button>
                         </ModalFooter>
                     </ModalContent>
                 </Modal>
@@ -312,7 +322,7 @@ const Schedule = () => {
                                         resetInputs();
                                     }} 
                                     color='red'>Cancel</Button>
-                                <Button onClick={updateShift}>Submit</Button>
+                                <Button onClick={updateShift} ml={3}>Submit</Button>
                             </Box>
                         </ModalFooter>
                     </ModalContent>
@@ -342,7 +352,7 @@ const Schedule = () => {
                                         resetInputs();
                                     }} 
                                     >Partial</Button>
-                                <Button onClick={() => setEmployeeModalOpen(false)}>Full</Button>
+                                <Button onClick={() => setEmployeeModalOpen(false)} ml={3}>Full</Button>
                             </Box>
                         </ModalFooter>
                     </ModalContent>
