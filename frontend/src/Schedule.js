@@ -28,7 +28,7 @@ import EmployeeShiftContext from './EmployeeShiftContext';
 
 import useRole from './useRole';
 import useUserId from './useUserId';
-
+import Dialog from './Dialog';
 
 
 
@@ -52,8 +52,9 @@ const Schedule = () => {
     //state variable for employeeModal
     const [ employeeModalOpen, setEmployeeModalOpen ] = useState(false)
 
-    //state variable and functions for alert dialog
+    //state variables and functions for alert dialog
     const [ alertDialogOpen, setAlertDialogOpen ] = useState(false)
+    const [ full, setFull ] = useState(false) //variable that tells Dialog whether full or partial was clicked
 
     const alertClose = () => {
         setAlertDialogOpen(false)
@@ -346,17 +347,32 @@ const Schedule = () => {
                             <Button onClick={() => setEmployeeModalOpen(false)} color='red'>Cancel</Button>
 
                             <Box>
-                                <Button 
-                                    onClick={() => {
-                                        setEmployeeModalOpen(false);
-                                        resetInputs();
-                                    }} 
-                                    >Partial</Button>
-                                <Button onClick={() => setEmployeeModalOpen(false)} ml={3}>Full</Button>
+                                <Button onClick={() => {
+                                    setAlertDialogOpen(true)
+                                    setFull(false)
+                                }}> 
+                                    Partial
+                                </Button>
+
+                                <Button onClick={() => {
+                                    setAlertDialogOpen(true)
+                                    setFull(true)
+                                }} ml={3}>
+                                    Full
+                                </Button>
                             </Box>
                         </ModalFooter>
                     </ModalContent>
                 </Modal>
+
+                <Dialog 
+                    alertDialogOpen={alertDialogOpen}
+                    alertClose={alertClose}
+                    full={full}
+                    alertConfirm={alertConfirm} 
+                />
+
+
 
                 {role && <Button onClick={() => setIsOpen(true)}>Add Shift</Button>}
                 <FullCalendar
