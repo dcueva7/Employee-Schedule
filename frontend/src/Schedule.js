@@ -62,10 +62,20 @@ const Schedule = () => {
     const [ alertDialogOpen, setAlertDialogOpen ] = useState(false)
     const [ full, setFull ] = useState(false) //variable that tells Dialog whether full or partial was clicked
 
+    const setAlertStartTime = (time) => {
+        setStartTime(time)
+    }
+
+    const setAlertEndTime = (time) => {
+        setEndTime(time)
+    }
+
     const alertClose = () => {
         setAlertDialogOpen(false)
     }
     const alertConfirm = () => {
+        resetInputs()
+        setEmployeeModalOpen(false)
         setAlertDialogOpen(false)
     }
     
@@ -186,11 +196,6 @@ const Schedule = () => {
 
     //update Shift
     const updateShift = () => {
-
-        if(!student){
-            alert('you must select a student')
-            return
-        }
 
         fetch(`/shift/update_shift/${selectedEvent.id}/`, {
             method : 'PATCH',
@@ -360,15 +365,16 @@ const Schedule = () => {
 
                             <Box>
                                 <Button onClick={() => {
-                                    setAlertDialogOpen(true)
                                     setFull(false)
+                                    setAlertDialogOpen(true)
+                                    
                                 }}> 
                                     Partial
                                 </Button>
 
                                 <Button onClick={() => {
-                                    setAlertDialogOpen(true)
                                     setFull(true)
+                                    setAlertDialogOpen(true)  
                                 }} ml={3}>
                                     Full
                                 </Button>
@@ -381,7 +387,12 @@ const Schedule = () => {
                     alertDialogOpen={alertDialogOpen}
                     alertClose={alertClose}
                     full={full}
-                    alertConfirm={alertConfirm} 
+                    alertConfirm={alertConfirm}
+                    date={date}
+                    startTime={startTime}
+                    endTime={endTime}
+                    setAlertStartTime={setAlertStartTime}
+                    setAlertEndTime={setAlertEndTime} 
                 />
 
 
@@ -412,6 +423,7 @@ const Schedule = () => {
     
                     
                         else if(info.event.extendedProps.student_id === loggedInUser ){
+                            setDate(info.event.startStr.substring(0,10))
                             setEmployeeModalOpen(true)
                         }
                         
