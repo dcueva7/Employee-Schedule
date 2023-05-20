@@ -53,6 +53,7 @@ const Schedule = () => {
 
     //state variables for the "editEvent" modal
     const [ eventModalOpen, setEventModalOpen ] = useState(false)
+    const [ placeholder, setPlaceholder ] = useState('') //state to hold placeholder when updating shifts
 
     //state variable for employeeModal
     const [ employeeModalOpen, setEmployeeModalOpen ] = useState(false)
@@ -123,6 +124,7 @@ const Schedule = () => {
                     color : item.student.color,
                     extendedProps : {
                         student_id : item.student.user,
+                        employee_id : item.student.id,
                     },
                 }));
                 setShifts(data)
@@ -185,8 +187,13 @@ const Schedule = () => {
     //update Shift
     const updateShift = () => {
 
+        if(!student){
+            alert('you must select a student')
+            return
+        }
+
         fetch(`/shift/update_shift/${selectedEvent.id}/`, {
-            method : 'PUT',
+            method : 'PATCH',
             headers : {
                 'Content-type' : 'application/json',
                 'Authorization': `Token ${authToken}`
@@ -247,7 +254,7 @@ const Schedule = () => {
                         <ModalBody>
                             <FormControl>
                                 <FormLabel>Student</FormLabel>
-                                    <Select placeholder='Select student' onChange={(e) => setStudent(e.target.value)}>
+                                    <Select placeholder='Select Student' onChange={(e) => setStudent(e.target.value)}>
                                         {employees.map((item) => {
                                             return (
                                                 <option key={item.id} value={item.id}>{item.name}</option>
@@ -295,7 +302,7 @@ const Schedule = () => {
                         <ModalBody>
                             <FormControl>
                                 <FormLabel>Student</FormLabel>
-                                    <Select placeholder='Select student' onChange={(e) => setStudent(e.target.value)}>
+                                    <Select placeholder={placeholder} onChange={(e) => setStudent(e.target.value)}>
                                         {employees.map((item) => {
                                             return (
                                                 <option key={item.id} value={item.id}>{item.name}</option>
@@ -394,7 +401,8 @@ const Schedule = () => {
                     eventClick={(info) => {
 
                         if (role){
-                            setStudent(info.event.title)
+                            setPlaceholder(info.event.title)
+                            setStudent(info.event.extendedProps.employee_id)
                             setDate(info.event.startStr.substring(0,10))
                             setStartTime(info.event.startStr.substring(11,16)) 
                             setEndTime(info.event.endStr.substring(11,16)) 
