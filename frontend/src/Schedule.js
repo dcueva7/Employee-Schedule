@@ -18,12 +18,17 @@ import {
     Text,
     } from '@chakra-ui/react';
 
-import { useEffect, useState } from 'react'
+import { 
+    useEffect, 
+    useState, 
+    useContext, 
+    useCallback 
+} from 'react'
+
 import Nav from './Nav';
 import Cookies from 'js-cookie'
 
 import useAuth from './UseAuth';
-import { useContext } from 'react';
 import EmployeeShiftContext from './EmployeeShiftContext';
 
 import useRole from './useRole';
@@ -96,11 +101,11 @@ const Schedule = () => {
             }).catch(error => {
                 console.error('Error:', error);
             })
-    },[] )
+    },[setEmployees, authToken] )
 
 
     //retrieve all shifts
-    const fetchShift = () => {
+    const fetchShift = useCallback(() => {
         fetch('/shift/list_shifts/', {
             method: 'GET',
             headers: {
@@ -125,12 +130,12 @@ const Schedule = () => {
             }).catch(error => {
                 console.error('Error:', error);
             })
-    }
+    }, [setShifts, authToken])
 
 
     useEffect(() => {
         fetchShift();
-    }, [])
+    }, [fetchShift])
 
     
 
