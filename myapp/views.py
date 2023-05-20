@@ -24,7 +24,7 @@ def createSchedule():
     return 
 
 @api_view(['GET'])
-@permission_classes([])
+@permission_classes([IsAuthenticated])
 def get_user_id(request):
     
     try:
@@ -33,6 +33,18 @@ def get_user_id(request):
     
     except User.DoesNotExist:
         raise Http404
+    
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def request_coverage(request):
+
+    shift_id 
+    type_of_coverage 
+
+    return
+
+
+
 
 
 

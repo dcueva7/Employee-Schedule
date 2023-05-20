@@ -37,7 +37,7 @@ const Dialog = (props) => {
                         {props.full && <Text>Are you sure you would like to request for coverage for the whole shift?</Text>}
                         {!props.full && 
                             <>
-                            <Text>Input detials of adjusted shift on: {props.date}</Text>
+                            <Text>Input new times for shift on: {props.date}</Text>
                             
                                 <Box>
                                     <FormControl>
