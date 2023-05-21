@@ -42,4 +42,10 @@ class Availability(models.Model):
 
     def __str__(self):
         return self.student + 's availabilaity'
+    
+class ShiftAdjustment(models.Model):
+    shift_id = models.IntegerField()
+    type_of_coverage = models.CharField(max_length=10)
+    start = models.TimeField(null=True)
+    end = models.TimeField(null=True)
 

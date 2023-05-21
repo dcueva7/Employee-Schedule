@@ -2,6 +2,11 @@ from rest_framework import serializers
 
 from . import models
 
+class ShiftAdjustmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ShiftAdjustment
+        fields = '__all__'
+
 class AvailabilitySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Availability

@@ -38,8 +38,11 @@ def get_user_id(request):
 @permission_classes([IsAuthenticated])
 def request_coverage(request):
 
+    query_set
     shift_id 
     type_of_coverage 
+    
+
 
     return
 
