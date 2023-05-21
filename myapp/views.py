@@ -37,6 +37,8 @@ def get_user_id(request):
     else:
         return HttpResponseNotAllowed
     
+
+    
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def request_adjustment(request):

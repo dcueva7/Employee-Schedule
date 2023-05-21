@@ -52,5 +52,5 @@ class ShiftAdjustment(models.Model):
     date = models.DateField(null=True)
 
     def __str__(self):
-        return self.employee + 'is requesting an adjustment on ' + self.date
+        return str(self.employee) + ' is requesting an adjustment on ' + str(self.date)
 
