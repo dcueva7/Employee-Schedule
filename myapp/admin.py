@@ -5,3 +5,4 @@ from . import models
 admin.site.register(models.Employee)
 admin.site.register(models.Shift)
 admin.site.register(models.Availability)
+admin.site.register(models.ShiftAdjustment)

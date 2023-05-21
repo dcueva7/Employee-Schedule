@@ -17,6 +17,7 @@ urlpatterns = [
     path('availability/add/', views.AddAvailability.as_view(), name='add_availability'),
     path('availability/update/<int:pk>', views.UpdateAvailability.as_view(), name='update_availability'),
     path('availability/list/', views.GetAllAvailability.as_view(), name='get_all_availability'),
-    path('availability/delete/<int:pk>', views.DeleteAvailability.as_view(), name='delete_availability'),  
+    path('availability/delete/<int:pk>', views.DeleteAvailability.as_view(), name='delete_availability'),
+    path('request_adjustment/', views.request_adjustment),  
 
 ]

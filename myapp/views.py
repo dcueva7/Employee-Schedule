@@ -1,12 +1,12 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, status
 from . import serializers
 from . import models
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth.models import User
-from django.http import Http404
+from django.http import Http404, HttpResponseNotAllowed
 
 from pulp import *
 # Create your views here.
@@ -26,25 +26,31 @@ def createSchedule():
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_user_id(request):
-    
-    try:
-        user = User.objects.get(id=request.user.id)
-        return Response({ "id" : user.id })
-    
-    except User.DoesNotExist:
-        raise Http404
+    if request.method == 'GET':
+        try:
+            user = User.objects.get(id=request.user.id)
+            return Response({ "id" : user.id })
+        
+        except User.DoesNotExist:
+            raise Http404
+        
+    else:
+        return HttpResponseNotAllowed
     
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def request_coverage(request):
+def request_adjustment(request):
+        
+    if request.method == 'POST':
+        serialized_data = serializers.ShiftAdjustmentSerializer(data=request.data)
+        serialized_data.is_valid(raise_exception=True)
+        serialized_data.save()
 
-    query_set
-    shift_id 
-    type_of_coverage 
+        return Response(serialized_data.data, status.HTTP_201_CREATED)
     
+    else:
+        return HttpResponseNotAllowed 
 
-
-    return
 
 
 

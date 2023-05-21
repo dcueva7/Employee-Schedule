@@ -61,6 +61,7 @@ const Schedule = () => {
     //state variables and functions for alert dialog
     const [ alertDialogOpen, setAlertDialogOpen ] = useState(false)
     const [ full, setFull ] = useState(false) //variable that tells Dialog whether full or partial was clicked
+    const [ shiftId, setShiftId ] = useState('') //variable to hold shift_id when employee requests a shift off
 
     const setAlertStartTime = (time) => {
         setStartTime(time)
@@ -73,7 +74,21 @@ const Schedule = () => {
     const alertClose = () => {
         setAlertDialogOpen(false)
     }
+
     const alertConfirm = () => {
+        let type_of_coverage = ''
+
+        if (full){
+            type_of_coverage='full'
+
+        }
+
+        else if (!full){
+            type_of_coverage='partial'
+            
+        }
+
+
         resetInputs()
         setEmployeeModalOpen(false)
         setAlertDialogOpen(false)
@@ -423,6 +438,7 @@ const Schedule = () => {
     
                     
                         else if(info.event.extendedProps.student_id === loggedInUser ){
+                            setShiftId(info.event.id)
                             setDate(info.event.startStr.substring(0,10))
                             setEmployeeModalOpen(true)
                         }
