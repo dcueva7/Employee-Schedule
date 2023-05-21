@@ -34,7 +34,7 @@ const Dialog = (props) => {
                     </AlertDialogHeader>
 
                     <AlertDialogBody>
-                        {props.full && <Text>Are you sure you would like to request for coverage for the whole shift?</Text>}
+                        {props.full && <Text>Are you sure you would like to request for coverage for the whole shift on {props.date}?</Text>}
                         {!props.full && 
                             <>
                             <Text>Input new times for shift on: {props.date}</Text>

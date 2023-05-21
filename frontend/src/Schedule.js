@@ -76,15 +76,58 @@ const Schedule = () => {
     }
 
     const alertConfirm = () => {
-        let type_of_coverage = ''
+        const shift_id = shiftId
+        const type_of_coverage = full ? 'full' : 'partial'
 
         if (full){
-            type_of_coverage='full'
+            fetch(`/request_adjustment/`, {
+                method : 'POST',
+                headers : {
+                    'Content-type' : 'application/json',
+                    'Authorization': `Token ${authToken}`
+                },
+                body : JSON.stringify({
+                    employee : student,
+                    shift_id : shift_id,
+                    type_of_coverage : type_of_coverage,
+                    start : null,
+                    end : null,
+                    date: date,
+
+                    
+                })
+            })
+                .then(response => response.json())
+                .then(json => {
+                    console.log(json);
+                })
+                .catch(error => console.log(error))
+            
 
         }
 
         else if (!full){
-            type_of_coverage='partial'
+            fetch(`/request_adjustment/`, {
+                method : 'POST',
+                headers : {
+                    'Content-type' : 'application/json',
+                    'Authorization': `Token ${authToken}`
+                },
+                body : JSON.stringify({
+                    employee : student,
+                    shift_id : shift_id,
+                    type_of_coverage : type_of_coverage,
+                    start : startTime,
+                    end : endTime,
+                    date: date,
+                    
+                })
+            })
+                .then(response => response.json())
+                .then(json => {
+                    console.log(json);
+                })
+                .catch(error => console.log(error))
             
         }
 
@@ -439,6 +482,7 @@ const Schedule = () => {
                     
                         else if(info.event.extendedProps.student_id === loggedInUser ){
                             setShiftId(info.event.id)
+                            setStudent(info.event.extendedProps.employee_id)
                             setDate(info.event.startStr.substring(0,10))
                             setEmployeeModalOpen(true)
                         }
