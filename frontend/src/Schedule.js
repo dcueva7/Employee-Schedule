@@ -93,7 +93,7 @@ const Schedule = () => {
                     start : null,
                     end : null,
                     date: date,
-
+                    approved : false,
                     
                 })
             })
@@ -120,6 +120,7 @@ const Schedule = () => {
                     start : startTime,
                     end : endTime,
                     date: date,
+                    approved : false,
                     
                 })
             })

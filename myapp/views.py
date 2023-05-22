@@ -64,12 +64,6 @@ class ListAdjustments(generics.ListAPIView):
     queryset = models.ShiftAdjustment.objects.all()
     serializer_class = serializers.ShiftAdjustmentSerializer
 
-
-
-
-
-
-
 @api_view(['GET'])
 @permission_classes([ IsAdminUser ])
 def check_manager(request):
@@ -129,7 +123,7 @@ class GetAllAvailability(generics.ListAPIView):
     queryset = models.Availability.objects.all()
     serializer_class = serializers.AvailabilitySerializer
 
-class DeleteAvailability(generics.CreateAPIView):
+class DeleteAvailability(generics.DestroyAPIView):
     queryset = models.Availability.objects.all()
     serializer_class = serializers.AvailabilitySerializer
 

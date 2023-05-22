@@ -72,6 +72,8 @@ const Dashboard = () => {
           type_of_coverage : adjustment.type_of_coverage,
           start : adjustment.start,
           end : adjustment.end,
+          approved : adjustment.approved,
+
         }))
 
         setAdjustments(data)
@@ -127,11 +129,13 @@ const Dashboard = () => {
                     <CardHeader mb={4}><Heading size='lg'>Time off requests</Heading></CardHeader>
                     <CardBody>
                       {adjustments.map((adjustment) => {
-                        return (
+                        if(!adjustment.approved){
+                          return (
+                            <Card key={adjustment.shift_id} padding={4}>{adjustment.employee} is requesting a {adjustment.type_of_coverage} shift adjustment on {adjustment.date} <Button onClick={() => reviewRequest(adjustment)}>Review</Button></Card>
                           
-                          <Card key={adjustment.shift_id} padding={4}>{adjustment.employee} is requesting a {adjustment.type_of_coverage} shift adjustment on {adjustment.date} <Button onClick={() => reviewRequest(adjustment)}>Review</Button></Card>
-
-                        )
+                          )
+                        }
+                        else{return <></>}
                       })}
                     </CardBody>
                     
