@@ -14,12 +14,10 @@ import {
     Card,
     CardBody,
     CardHeader,
-    Divider
+    
 } from '@chakra-ui/react';
 
 import Nav from './Nav';
-import * as Icons from 'react-icons/fc';
-
 import useAuth from './UseAuth';
 
 import { useContext, useCallback, useEffect } from 'react';
@@ -34,7 +32,7 @@ const Dashboard = () => {
   useAuth();
   const authToken = Cookies.get("authToken")
   const role = useRole()
-  const { shifts, setShifts, employees, setEmployees, adjustments, setAdjustments } = useContext(EmployeeShiftContext)
+  const { shifts, adjustments, setAdjustments } = useContext(EmployeeShiftContext)
 
 
   const fetchAdjustments = useCallback(() => {
@@ -70,6 +68,16 @@ const Dashboard = () => {
       fetchAdjustments()
     }
   }, [fetchAdjustments, role])
+
+  const reviewRequest = (adjustment) => {
+    if (adjustment.type_of_coverage === 'full'){
+
+      
+
+    }
+
+
+  }
   
     
   return (
@@ -111,7 +119,7 @@ const Dashboard = () => {
                       {adjustments.map((adjustment) => {
                         return (
                           
-                          <Card key={adjustment.shift_id} padding={4}>{adjustment.employee} is requesting {adjustment.type_of_coverage} coverage on {adjustment.date} <Button>Review</Button></Card>
+                          <Card key={adjustment.shift_id} padding={4}>{adjustment.employee} is requesting {adjustment.type_of_coverage} coverage on {adjustment.date} <Button onClick={() => reviewRequest(adjustment)}>Review</Button></Card>
 
                         )
                       })}
