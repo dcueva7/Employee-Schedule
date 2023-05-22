@@ -38,6 +38,7 @@ const Dashboard = () => {
   //state variables and functions for Review Request Dialog
   const [ isOpen, setIsOpen ] = useState(false)
   const [ full, setFull ] = useState(false)
+  const [currentAdjustment, setCurrentAdjustment] = useState(null)
 
   const closeRequestDialog = () => {
     setIsOpen(false)
@@ -45,6 +46,12 @@ const Dashboard = () => {
 
   const approveRequest = () => {
     setIsOpen(false)
+  }
+
+  const reviewRequest = (adjustment) => {
+    setIsOpen(true)
+    setCurrentAdjustment(adjustment)
+    setFull(adjustment.type_of_coverage === 'full')
   }
 
 
@@ -81,31 +88,6 @@ const Dashboard = () => {
       fetchAdjustments()
     }
   }, [fetchAdjustments, role])
-
-  const reviewRequest = (adjustment) => {
-    setIsOpen(true)
-
-    if (adjustment.type_of_coverage === 'full'){
-      setFull(true)
-
-      return (
-        <ReviewRequestDialog 
-              isOpen={isOpen}
-              closeRequestDialog={closeRequestDialog}
-              full={full}
-              date={adjustment.date}
-              start={null}
-              end={null}
-              approveRequest={approveRequest}
-        />
-      )
-
-
-
-    }
-
-
-  }
   
     
   return (
@@ -157,6 +139,16 @@ const Dashboard = () => {
             }
                 
             </Flex>
+
+            <ReviewRequestDialog 
+              isOpen={isOpen}
+              closeRequestDialog={closeRequestDialog}
+              full={full}
+              date={currentAdjustment?.date}
+              start={null}
+              end={null}
+              approveRequest={approveRequest}
+        />
               
 
             <Box >
