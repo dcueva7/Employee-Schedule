@@ -50,6 +50,7 @@ class ShiftAdjustment(models.Model):
     start = models.TimeField(null=True)
     end = models.TimeField(null=True)
     date = models.DateField(null=True)
+    approved = models.BooleanField()
 
     def __str__(self):
         return self.employee + ' is requesting an adjustment on ' + str(self.date)

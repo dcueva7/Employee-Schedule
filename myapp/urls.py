@@ -19,6 +19,7 @@ urlpatterns = [
     path('availability/list/', views.GetAllAvailability.as_view(), name='get_all_availability'),
     path('availability/delete/<int:pk>', views.DeleteAvailability.as_view(), name='delete_availability'),
     path('request_adjustment/', views.request_adjustment),
-    path('retrieve_adjustments/', views.ListAdjustments.as_view())  
+    path('retrieve_adjustments/', views.ListAdjustments.as_view()),  
+    path('delete_adjustment/<int:pk>/', views.DeleteAdjustmentRequest.as_view()),
 
 ]
