@@ -20,10 +20,11 @@ function App() {
   //state variables to be shared between Dashboard and Schedule components.  Will be set initially in Schedule component
   const [ shifts, setShifts ] = useState([]);
   const [ employees, setEmployees ] = useState([])
+  const [ adjustments, setAdjustments ] = useState([])
 
   return (
     <ChakraProvider>
-      <EmployeeShiftContext.Provider value={{shifts, setShifts, employees, setEmployees}} >
+      <EmployeeShiftContext.Provider value={{shifts, setShifts, employees, setEmployees, adjustments, setAdjustments}} >
         <Router>
           <Routes>
               <Route path="/" exact element={<Schedule />} />

@@ -87,7 +87,7 @@ const Schedule = () => {
                     'Authorization': `Token ${authToken}`
                 },
                 body : JSON.stringify({
-                    employee : student,
+                    employee : placeholder,
                     shift_id : shift_id,
                     type_of_coverage : type_of_coverage,
                     start : null,
@@ -114,7 +114,7 @@ const Schedule = () => {
                     'Authorization': `Token ${authToken}`
                 },
                 body : JSON.stringify({
-                    employee : student,
+                    employee : placeholder,
                     shift_id : shift_id,
                     type_of_coverage : type_of_coverage,
                     start : startTime,
@@ -482,7 +482,7 @@ const Schedule = () => {
                     
                         else if(info.event.extendedProps.student_id === loggedInUser ){
                             setShiftId(info.event.id)
-                            setStudent(info.event.extendedProps.employee_id)
+                            setPlaceholder(info.event.title)
                             setDate(info.event.startStr.substring(0,10))
                             setEmployeeModalOpen(true)
                         }

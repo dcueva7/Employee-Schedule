@@ -52,6 +52,12 @@ def request_adjustment(request):
     
     else:
         return HttpResponseNotAllowed 
+    
+
+class ListAdjustments(generics.ListAPIView):
+    permission_classes = [IsAdminUser]
+    queryset = models.ShiftAdjustment.objects.all()
+    serializer_class = serializers.ShiftAdjustmentSerializer
 
 
 

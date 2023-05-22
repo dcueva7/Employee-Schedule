@@ -11,65 +11,66 @@ import {
     Heading,
     Stack,
     Text,
-    useColorModeValue,
+    Card,
+    CardBody,
+    CardHeader,
+    Divider
 } from '@chakra-ui/react';
 
 import Nav from './Nav';
 import * as Icons from 'react-icons/fc';
 
 import useAuth from './UseAuth';
-import { useEffect } from 'react';
 
-import { useContext } from 'react';
+import { useContext, useCallback, useEffect } from 'react';
 import EmployeeShiftContext from './EmployeeShiftContext';
 
 import useRole from './useRole';
-  
-const Card = (props) => {
-  const Icon = Icons[props.icon];
-  return (
-    <Box
-      maxW={{ base: 'full', md: '275px' }}
-      w={'full'}
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
-      p={5}>
-      <Stack align={'start'} spacing={2}>
-        <Flex
-          w={16}
-          h={16}
-          align={'center'}
-          justify={'center'}
-          color={'white'}
-          rounded={'full'}
-          bg={useColorModeValue('gray.100', 'gray.700')}>
-          <Icon size="32" />
-        </Flex>
-        <Box mt={2}>
-          <Heading size="md">{props.heading}</Heading>
-          <Text mt={1} fontSize={'sm'}>
-            {props.description}
-          </Text>
-        </Box>
-        <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
-          Learn more
-        </Button>
-      </Stack>
-    </Box>
-  );
-};
+import Cookies from 'js-cookie';
   
 const Dashboard = () => {
 
   
   useAuth();
+  const authToken = Cookies.get("authToken")
   const role = useRole()
+  const { shifts, setShifts, employees, setEmployees, adjustments, setAdjustments } = useContext(EmployeeShiftContext)
 
- 
+
+  const fetchAdjustments = useCallback(() => {
+
+    fetch('retrieve_adjustments', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Token ${authToken}`,
+      },
+    })
+      .then(response => response.json())
+      .then(json => {
+        const data = json.map(adjustment => ({
+          employee : adjustment.employee,
+          date : adjustment.date,
+          shift_id : adjustment.shift_id,
+          type_of_coverage : adjustment.type_of_coverage,
+          start : adjustment.start,
+          end : adjustment.end,
+        }))
+
+        setAdjustments(data)
+      })
 
 
-  const { shifts, setShifts, employees, setEmployees } = useContext(EmployeeShiftContext)
+
+
+  }, [authToken, setAdjustments])
+
+  
+  useEffect(() => {
+    if (role){
+      fetchAdjustments()
+    }
+  }, [fetchAdjustments, role])
+  
     
   return (
       <>
@@ -77,44 +78,48 @@ const Dashboard = () => {
         <Box p={4}>
         <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
             <Heading fontSize={{ base: '2xl', sm: '4xl' }} fontWeight={'bold'}>
-                Welcome to the Employee Dashboard
+
+                { !role && <Text>Welcome to the Employee Dashboard</Text>}
+                { role && <Text>Welcome to the Supervisor Dashboard</Text>}
             </Heading>
-            <Text color={'gray.600'} fontSize={{ base: 'sm', sm: 'lg' }}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis
-                obcaecati ut cupiditate pariatur, dignissimos, placeat amet officiis.
-            </Text>
         </Stack>
 
         <Container maxW={'5xl'} mt={12}>
             <Flex flexWrap="wrap" gridGap={6} justify="center">
-            <Card
-                heading={'Total Hours'}
-                icon={'FcAssistant'}
-                description={
-                'Here are the number of hours you are scheduled for this week: '
-                }
-            />
-            <Card
-                heading={'Shifts available for coverage: '}
-                icon={'FcDonate'}
-                description={
-                'Lorem ipsum dolor sit amet catetur, adipisicing elit.'
-                }
-            />
-            <Card
-                heading={'Time Off Requests'}
-                icon={'FcManager'}
-                description={
-                'Lorem ipsum dolor sit amet catetur, adipisicing elit.'
-                }
-            />
-            <Card
-                heading={'Heading'}
-                icon={'FcAbout'}
-                description={
-                'Lorem ipsum dolor sit amet catetur, adipisicing elit.'
-                }
-            />
+              {!role &&
+                <Card>
+                  <CardHeader><Heading>Total Hours Worked</Heading></CardHeader>
+                  <CardBody>This should return total hours worked for the week</CardBody>
+                </Card>
+              }
+              {!role &&<Card>
+                <CardHeader><Heading>Shifts available for coverage</Heading></CardHeader>
+                <CardBody>List of approved shifts for coverage</CardBody>
+              </Card>}
+              
+              <Card
+                  heading={'Time Off Requests'}
+                  icon={'FcManager'}
+                  description={
+                    'Lorem ipsum dolor sit amet catetur, adipisicing elit.'
+                  }
+              />
+              {role &&
+                <Card padding={4}>
+                    <CardHeader mb={4}><Heading size='lg'>Time off requests</Heading></CardHeader>
+                    <CardBody>
+                      {adjustments.map((adjustment) => {
+                        return (
+                          
+                          <Card key={adjustment.shift_id} padding={4}>{adjustment.employee} is requesting {adjustment.type_of_coverage} coverage on {adjustment.date} <Button>Review</Button></Card>
+
+                        )
+                      })}
+                    </CardBody>
+                    
+                </Card>
+            }
+                
             </Flex>
 
             <Box >

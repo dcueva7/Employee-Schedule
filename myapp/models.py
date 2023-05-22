@@ -44,7 +44,7 @@ class Availability(models.Model):
         return self.student + 's availabilaity'
     
 class ShiftAdjustment(models.Model):
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    employee = models.CharField(max_length=30)
     shift_id = models.IntegerField()
     type_of_coverage = models.CharField(max_length=10)
     start = models.TimeField(null=True)
@@ -52,5 +52,5 @@ class ShiftAdjustment(models.Model):
     date = models.DateField(null=True)
 
     def __str__(self):
-        return str(self.employee) + ' is requesting an adjustment on ' + str(self.date)
+        return self.employee + ' is requesting an adjustment on ' + str(self.date)
 
