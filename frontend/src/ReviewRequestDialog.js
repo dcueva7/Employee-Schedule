@@ -23,9 +23,9 @@ const ReviewRequestDialog = (props) => {
     return (
         <>
             <AlertDialog
-                isOpen={props.alertDialogOpen}
+                isOpen={props.isOpen}
                 leastDestructiveRef={cancelRef}
-                onClose={props.alertClose}
+                onClose={props.closeRequestDialog}
             >
             <AlertDialogOverlay>
                 <AlertDialogContent>
@@ -54,10 +54,10 @@ const ReviewRequestDialog = (props) => {
                     </AlertDialogBody>
 
                     <AlertDialogFooter>
-                    <Button ref={cancelRef} onClick={props.alertClose}>
+                    <Button ref={cancelRef} onClick={props.closeRequestDialog}>
                         Cancel
                     </Button>
-                    <Button onClick={props.alertConfirm} ml={3}>
+                    <Button onClick={props.approveRequest} ml={3}>
                         Approve
                     </Button>
                     </AlertDialogFooter>

@@ -20,11 +20,12 @@ import {
 import Nav from './Nav';
 import useAuth from './UseAuth';
 
-import { useContext, useCallback, useEffect } from 'react';
+import { useContext, useCallback, useEffect, useState } from 'react';
 import EmployeeShiftContext from './EmployeeShiftContext';
 
 import useRole from './useRole';
 import Cookies from 'js-cookie';
+import ReviewRequestDialog from './ReviewRequestDialog';
   
 const Dashboard = () => {
 
@@ -33,6 +34,18 @@ const Dashboard = () => {
   const authToken = Cookies.get("authToken")
   const role = useRole()
   const { shifts, adjustments, setAdjustments } = useContext(EmployeeShiftContext)
+
+  //state variables and functions for Review Request Dialog
+  const [ isOpen, setIsOpen ] = useState(false)
+  const [ full, setFull ] = useState(false)
+
+  const closeRequestDialog = () => {
+    setIsOpen(false)
+  }
+
+  const approveRequest = () => {
+    setIsOpen(false)
+  }
 
 
   const fetchAdjustments = useCallback(() => {
@@ -70,9 +83,24 @@ const Dashboard = () => {
   }, [fetchAdjustments, role])
 
   const reviewRequest = (adjustment) => {
-    if (adjustment.type_of_coverage === 'full'){
+    setIsOpen(true)
 
-      
+    if (adjustment.type_of_coverage === 'full'){
+      setFull(true)
+
+      return (
+        <ReviewRequestDialog 
+              isOpen={isOpen}
+              closeRequestDialog={closeRequestDialog}
+              full={full}
+              date={adjustment.date}
+              start={null}
+              end={null}
+              approveRequest={approveRequest}
+        />
+      )
+
+
 
     }
 
@@ -129,6 +157,7 @@ const Dashboard = () => {
             }
                 
             </Flex>
+              
 
             <Box >
               <Stack spacing={2}>
