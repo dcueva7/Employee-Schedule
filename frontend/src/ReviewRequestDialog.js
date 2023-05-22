@@ -7,10 +7,8 @@ import {
     AlertDialogOverlay,
     Button,
     Text,
-    FormControl,
-    Input,
-    FormLabel,
     Box,
+    Center,
 } from '@chakra-ui/react'
 
 import { useRef } from 'react';
@@ -37,18 +35,16 @@ const ReviewRequestDialog = (props) => {
                         {props.full && <Text>Approve request for entire shift off on {props.date}?</Text>}
                         {!props.full && 
                             <>
-                            <Text>Input new times for shift on: {props.date}</Text>
+                            <Text>Details for adjustment request: {props.date}</Text>
                             
-                                <Box>
-                                    <FormControl>
-                                        <FormLabel>Start Time</FormLabel>
-                                            <Input type='time' value={props.startTime} onChange={(e) => props.setAlertStartTime(e.target.value)} />
-                                    </FormControl>
-                                    <FormControl>
-                                        <FormLabel>End Time</FormLabel>
-                                            <Input type='time' value={props.endTime} onChange={(e) => props.setAlertEndTime(e.target.value)} />
-                                    </FormControl>
-                                </Box>
+                                <Center>
+                                    <Box>
+                                        <ul>
+                                            <li>Adjusted start time: {props.start}</li>
+                                            <li>Adjusted end time: {props.end}</li>
+                                        </ul>
+                                    </Box>
+                                </Center>
                             </>
                         }
                     </AlertDialogBody>

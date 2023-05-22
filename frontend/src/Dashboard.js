@@ -129,7 +129,7 @@ const Dashboard = () => {
                       {adjustments.map((adjustment) => {
                         return (
                           
-                          <Card key={adjustment.shift_id} padding={4}>{adjustment.employee} is requesting {adjustment.type_of_coverage} coverage on {adjustment.date} <Button onClick={() => reviewRequest(adjustment)}>Review</Button></Card>
+                          <Card key={adjustment.shift_id} padding={4}>{adjustment.employee} is requesting a {adjustment.type_of_coverage} shift adjustment on {adjustment.date} <Button onClick={() => reviewRequest(adjustment)}>Review</Button></Card>
 
                         )
                       })}
@@ -145,10 +145,10 @@ const Dashboard = () => {
               closeRequestDialog={closeRequestDialog}
               full={full}
               date={currentAdjustment?.date}
-              start={null}
-              end={null}
+              start={currentAdjustment?.start}
+              end={currentAdjustment?.end}
               approveRequest={approveRequest}
-        />
+          />
               
 
             <Box >
