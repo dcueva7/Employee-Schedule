@@ -75,19 +75,16 @@ const Dashboard = () => {
               if(!response.ok){
                 throw response
               }
-              if(response.status !== 204){
-                response.json()
-              }
               else{
-                return null
+                return response.json()
               }
+
             })
             .then(json => {
-              if (json){
-                console.log(json)
-              }
+              console.log(json)
               fetchAdjustments()
             })
+
             .catch(error => console.error(error))
             
 
@@ -99,6 +96,7 @@ const Dashboard = () => {
       fetch(`/shift/update_shift/${currentAdjustment.shift_id}/`, {
         method: 'PATCH',
         headers : {
+          'Content-type' : 'application/json',
           'Authorization' : `Token ${authToken}`,
         },
         body : JSON.stringify({
@@ -110,9 +108,12 @@ const Dashboard = () => {
           if(!response.ok){
             throw response
           }
-
-          return response
+          else {
+            return response.json()
+          }
+          
         })
+        .then(json => console.log(json))
         .then(() => {
           fetch(`update_adjustment/${currentAdjustment.adj_id}/`, {
             method : 'PATCH',
@@ -128,17 +129,12 @@ const Dashboard = () => {
               if(!response.ok){
                 throw response
               }
-              if(response.status !== 204){
-                response.json()
-              }
               else{
-                return null
+                return response.json()
               }
             })
             .then(json => {
-              if (json){
-                console.log(json)
-              }
+              console.log(json)
               fetchAdjustments()
             })
             .catch(error => console.error(error))
