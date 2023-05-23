@@ -24,16 +24,20 @@ import { useContext, useCallback, useEffect, useState } from 'react';
 import EmployeeShiftContext from './EmployeeShiftContext';
 
 import useRole from './useRole';
-import Cookies from 'js-cookie';
 import ReviewRequestDialog from './ReviewRequestDialog';
   
 const Dashboard = () => {
 
   
-  useAuth();
-  const authToken = Cookies.get("authToken")
+  
+  const authToken = useAuth();
   const role = useRole()
-  const { shifts, adjustments, setAdjustments } = useContext(EmployeeShiftContext)
+  const { shifts, adjustments, setAdjustments, fetchShift } = useContext(EmployeeShiftContext)
+
+  //fetch shifts on component mount
+  useEffect(() => {
+    fetchShift()
+  }, [fetchShift])
 
   //state variables and functions for Review Request Dialog
   const [ isOpen, setIsOpen ] = useState(false)
@@ -143,7 +147,7 @@ const Dashboard = () => {
         }).catch(error => console.error(error))
     }
 
-
+    fetchShift()
     setIsOpen(false)
   }
 

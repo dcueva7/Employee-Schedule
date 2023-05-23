@@ -52,7 +52,7 @@ function App() {
         }).catch(error => {
             console.error('Error:', error);
         })
-  }, [setShifts, authToken])
+  }, [authToken])
 
   return (
     <ChakraProvider>

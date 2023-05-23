@@ -21,12 +21,10 @@ import {
 import { 
     useEffect, 
     useState, 
-    useContext, 
-    useCallback 
+    useContext,  
 } from 'react'
 
 import Nav from './Nav';
-import Cookies from 'js-cookie'
 
 import useAuth from './UseAuth';
 import EmployeeShiftContext from './EmployeeShiftContext';
@@ -41,12 +39,12 @@ import Dialog from './Dialog';
 
 const Schedule = () => {
 
-    useAuth();
+    const authToken = useAuth();
     const role = useRole();
     const loggedInUser = useUserId();
     
 
-    const {shifts, setShifts, employees, setEmployees } = useContext(EmployeeShiftContext)
+    const {shifts, employees, setEmployees, fetchShift } = useContext(EmployeeShiftContext)
 
     //isOpen state variable for the "addShift" Modal
     const [ isOpen, setIsOpen ] = useState(false)
@@ -147,9 +145,6 @@ const Schedule = () => {
     // state variable to hold selected event after event click
     const [ selectedEvent, setSelectedEvent ] = useState([])
 
-
-    const authToken = Cookies.get("authToken")
-
     
     //retrive all employees
     useEffect(() => {
@@ -175,35 +170,6 @@ const Schedule = () => {
 
 
     //retrieve all shifts
-    const fetchShift = useCallback(() => {
-        fetch('/shift/list_shifts/', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Token ${authToken}`,
-            },
-        })
-            .then(response => response.json())
-            .then(json => {
-                console.log(json,'fetched all shifts')
-                const data = json.map(item => ({
-                    id: item.id,
-                    title : `${item.student.first_name} ${item.student.last_name}`,
-                    start : `${item.date}T${item.start_time}`,
-                    end : `${item.date}T${item.end_time}`,
-                    color : item.student.color,
-                    extendedProps : {
-                        student_id : item.student.user,
-                        employee_id : item.student.id,
-                    },
-                }));
-                setShifts(data)
-                
-            }).catch(error => {
-                console.error('Error:', error);
-            })
-    }, [setShifts, authToken])
-
-
     useEffect(() => {
         fetchShift();
     }, [fetchShift])
