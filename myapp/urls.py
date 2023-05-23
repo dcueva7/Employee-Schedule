@@ -21,5 +21,6 @@ urlpatterns = [
     path('request_adjustment/', views.request_adjustment),
     path('retrieve_adjustments/', views.ListAdjustments.as_view()),  
     path('delete_adjustment/<int:pk>/', views.DeleteAdjustmentRequest.as_view()),
+    path('update_adjustment/<int:pk>/', views.UpdateAdjustment.as_view()),
 
 ]

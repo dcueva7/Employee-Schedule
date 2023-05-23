@@ -64,6 +64,11 @@ class ListAdjustments(generics.ListAPIView):
     queryset = models.ShiftAdjustment.objects.all()
     serializer_class = serializers.ShiftAdjustmentSerializer
 
+class UpdateAdjustment(generics.UpdateAPIView):
+    permission_classes = [IsAdminUser]
+    queryset = models.ShiftAdjustment.objects.all()
+    serializer_class = serializers.ShiftAdjustmentSerializer
+
 @api_view(['GET'])
 @permission_classes([ IsAdminUser ])
 def check_manager(request):

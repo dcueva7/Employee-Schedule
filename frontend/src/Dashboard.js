@@ -45,6 +45,7 @@ const Dashboard = () => {
   }
 
   const approveRequest = () => {
+    
     if(currentAdjustment.full){
       fetch(`/shift/delete_shift/${currentAdjustment.shift_id}/`, {
         method: 'DELETE',
@@ -52,9 +53,26 @@ const Dashboard = () => {
           'Authorization' : `Token ${authToken}`,
         }
       })
-        .then((prevCurrentAdjustment) => setCurrentAdjustment({...prevCurrentAdjustment, approved: true}))
-        .then(() => fetchAdjustments())
-        .catch(error => console.error(error))
+        .then(response => {
+          if(!response.ok){
+            throw response
+          }
+          return response.json()
+        })
+        .then(() => {
+          fetch(`update_adjustment/${currentAdjustment.adj_id}/`, {
+            method : 'PATCH',
+            headers : {
+              'Content-type' : 'application/json',
+              'Authorization': `Token ${authToken}`
+            },
+            body : JSON.stringify({
+                approved : true
+            })
+
+          })
+
+        })
         
     }
 
@@ -80,6 +98,7 @@ const Dashboard = () => {
       .then(response => response.json())
       .then(json => {
         const data = json.map(adjustment => ({
+          adj_id : adjustment.id,
           employee : adjustment.employee,
           date : adjustment.date,
           shift_id : adjustment.shift_id,
