@@ -45,8 +45,8 @@ const Dashboard = () => {
   }
 
   const approveRequest = () => {
-    
-    if(currentAdjustment.full){
+
+    if(full){
       fetch(`/shift/delete_shift/${currentAdjustment.shift_id}/`, {
         method: 'DELETE',
         headers : {
@@ -57,7 +57,8 @@ const Dashboard = () => {
           if(!response.ok){
             throw response
           }
-          return response.json()
+
+          return response
         })
         .then(() => {
           fetch(`update_adjustment/${currentAdjustment.adj_id}/`, {
@@ -69,11 +70,32 @@ const Dashboard = () => {
             body : JSON.stringify({
                 approved : true
             })
-
           })
+            .then(response => {
+              if(!response.ok){
+                throw response
+              }
+              if(response.status !== 204){
+                response.json()
+              }
+              else{
+                return null
+              }
+            })
+            .then(json => {
+              if (json){
+                console.log(json)
+              }
+              fetchAdjustments()
+            })
+            .catch(error => console.error(error))
+            
 
-        })
+        }).catch(error => console.error(error))
         
+    }
+    else{
+      console.log('partial coverage')
     }
 
 
@@ -82,8 +104,8 @@ const Dashboard = () => {
 
   const reviewRequest = (adjustment) => {
     setIsOpen(true)
-    setCurrentAdjustment(adjustment)
     setFull(adjustment.type_of_coverage === 'full')
+    setCurrentAdjustment(adjustment)
   }
 
 
