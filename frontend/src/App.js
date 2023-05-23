@@ -7,7 +7,7 @@ import Dashboard from './Dashboard';
 import EmployeeShiftContext from './EmployeeShiftContext';
 import { useState, useCallback } from 'react';
 
-import useAuth from './UseAuth'
+import Cookies from 'js-cookie'
 
 import {
   BrowserRouter as Router,
@@ -24,8 +24,7 @@ function App() {
   const [ employees, setEmployees ] = useState([])
   const [ adjustments, setAdjustments ] = useState([])
 
-  const authToken = useAuth()
-
+  const authToken = Cookies.get('authToken')
   const fetchShift = useCallback(() => {
     fetch('/shift/list_shifts/', {
         method: 'GET',

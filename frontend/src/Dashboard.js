@@ -86,6 +86,7 @@ const Dashboard = () => {
             })
             .then(json => {
               console.log(json)
+              fetchShift()
               fetchAdjustments()
             })
 
@@ -117,7 +118,10 @@ const Dashboard = () => {
           }
           
         })
-        .then(json => console.log(json))
+        .then(json => {
+          console.log(json)
+          fetchShift()
+        })
         .then(() => {
           fetch(`update_adjustment/${currentAdjustment.adj_id}/`, {
             method : 'PATCH',
@@ -139,6 +143,7 @@ const Dashboard = () => {
             })
             .then(json => {
               console.log(json)
+              
               fetchAdjustments()
             })
             .catch(error => console.error(error))
@@ -147,7 +152,7 @@ const Dashboard = () => {
         }).catch(error => console.error(error))
     }
 
-    fetchShift()
+    
     setIsOpen(false)
   }
 
