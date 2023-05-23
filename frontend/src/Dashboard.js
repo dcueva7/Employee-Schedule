@@ -95,7 +95,56 @@ const Dashboard = () => {
         
     }
     else{
-      console.log('partial coverage')
+
+      fetch(`/shift/update_shift/${currentAdjustment.shift_id}/`, {
+        method: 'PATCH',
+        headers : {
+          'Authorization' : `Token ${authToken}`,
+        },
+        body : JSON.stringify({
+          start_time : currentAdjustment.start,
+          end_time : currentAdjustment.end
+        })
+      })
+        .then(response => {
+          if(!response.ok){
+            throw response
+          }
+
+          return response
+        })
+        .then(() => {
+          fetch(`update_adjustment/${currentAdjustment.adj_id}/`, {
+            method : 'PATCH',
+            headers : {
+              'Content-type' : 'application/json',
+              'Authorization': `Token ${authToken}`
+            },
+            body : JSON.stringify({
+                approved : true
+            })
+          })
+            .then(response => {
+              if(!response.ok){
+                throw response
+              }
+              if(response.status !== 204){
+                response.json()
+              }
+              else{
+                return null
+              }
+            })
+            .then(json => {
+              if (json){
+                console.log(json)
+              }
+              fetchAdjustments()
+            })
+            .catch(error => console.error(error))
+            
+
+        }).catch(error => console.error(error))
     }
 
 
