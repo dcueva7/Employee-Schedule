@@ -38,13 +38,27 @@ const Dashboard = () => {
   //state variables and functions for Review Request Dialog
   const [ isOpen, setIsOpen ] = useState(false)
   const [ full, setFull ] = useState(false)
-  const [currentAdjustment, setCurrentAdjustment] = useState(null)
+  const [ currentAdjustment, setCurrentAdjustment] = useState(null)
 
   const closeRequestDialog = () => {
     setIsOpen(false)
   }
 
   const approveRequest = () => {
+    if(currentAdjustment.full){
+      fetch(`/shift/delete_shift/${currentAdjustment.shift_id}/`, {
+        method: 'DELETE',
+        headers : {
+          'Authorization' : `Token ${authToken}`,
+        }
+      })
+        .then((prevCurrentAdjustment) => setCurrentAdjustment({...prevCurrentAdjustment, approved: true}))
+        .then(() => fetchAdjustments())
+        .catch(error => console.error(error))
+        
+    }
+
+
     setIsOpen(false)
   }
 
@@ -128,14 +142,10 @@ const Dashboard = () => {
                 <Card padding={4}>
                     <CardHeader mb={4}><Heading size='lg'>Time off requests</Heading></CardHeader>
                     <CardBody>
-                      {adjustments.map((adjustment) => {
-                        if(!adjustment.approved){
-                          return (
-                            <Card key={adjustment.shift_id} padding={4}>{adjustment.employee} is requesting a {adjustment.type_of_coverage} shift adjustment on {adjustment.date} <Button onClick={() => reviewRequest(adjustment)}>Review</Button></Card>
-                          
-                          )
-                        }
-                        else{return <></>}
+                      {adjustments.filter(adjustment => !adjustment.approved).map((adjustment) => {
+                        return(
+                          <Card key={adjustment.shift_id} padding={4}>{adjustment.employee} is requesting a {adjustment.type_of_coverage} shift adjustment on {adjustment.date} <Button onClick={() => reviewRequest(adjustment)}>Review</Button></Card>
+                        )
                       })}
                     </CardBody>
                     
