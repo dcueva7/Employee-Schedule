@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.http import Http404, HttpResponseNotAllowed
 from datetime import *
 from django.utils import timezone
+from django.db import transaction
 
 from pulp import *
 # Create your views here.
@@ -38,13 +39,16 @@ def create_recurring_schedule():
 
     shifts = models.Shift.objects.filter(date__week=base_week)
 
-    days_count = 0
-    for week in weeks_to_create:
-        days_count += 7
-        for shift in shifts:
-            new_shift = shift.copy()
-            new_shift.date = shift.date + timedelta(days=days_count)
-            new_shift.save()
+    with transaction.atomic():
+        for week in range(weeks_to_create):
+            days_count = 7 * (week + 1)
+            for shift in shifts:
+                new_shift = models.Shift()
+                new_shift.student = shift.student
+                new_shift.start_time = shift.start_time
+                new_shift.end_time = shift.end_time
+                new_shift.date = shift.date + timedelta(days=days_count)
+                new_shift.save()
 
     return 'Recurring schedule created'
 
