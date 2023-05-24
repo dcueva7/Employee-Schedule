@@ -28,6 +28,8 @@ def createSchedule():
 
 
 #funciton to create recurring schedule based on schedule during given week
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
 def create_recurring_schedule():
 
     weeks_to_create = 5 #amount of weeks to create with base schedule
@@ -50,7 +52,7 @@ def create_recurring_schedule():
                 new_shift.date = shift.date + timedelta(days=days_count)
                 new_shift.save()
 
-    return 'Recurring schedule created'
+    return Response({'message' : 'recurring schedule succesfully set'}, status.HTTP_200_OK)
 
 
 @api_view(['GET'])
