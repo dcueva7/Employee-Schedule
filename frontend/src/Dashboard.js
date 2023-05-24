@@ -27,8 +27,6 @@ import useWeeklyHours from './useWeeklyHours';
   
 const Dashboard = () => {
 
-  
-  
   const authToken = useAuth();
   const role = useRole()
   const { shifts, adjustments, setAdjustments, fetchShift } = useContext(EmployeeShiftContext)
@@ -213,16 +211,16 @@ const Dashboard = () => {
             </Heading>
           </Container>
 
-          <Container maxW='container.xl' mt={12}>
+          <Container maxW='container.xl' mt={12} mb={12}>
             <Flex wrap='wrap' justify='center' spacing={6}>
                 {!role &&
-                  <Card>
-                    <CardHeader><Heading>Total Hours Worked</Heading></CardHeader>
+                  <Card >
+                    <CardHeader><Heading size='sm'>Total Hours Worked</Heading></CardHeader>
                     <CardBody>{hours}</CardBody>
                   </Card>
                 }
                 {!role &&<Card>
-                  <CardHeader><Heading>Shifts available for coverage</Heading></CardHeader>
+                  <CardHeader><Heading size='sm'>Shifts available for coverage</Heading></CardHeader>
                   <CardBody>List of approved shifts for coverage</CardBody>
                 </Card>}
                 

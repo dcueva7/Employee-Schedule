@@ -26,6 +26,29 @@ def createSchedule():
     return 
 
 
+#funciton to create recurring schedule based on schedule during given week
+def create_recurring_schedule():
+
+    weeks_to_create = 5 #amount of weeks to create with base schedule
+    base_schedule = '05/23/2024' #any date during the week of base schedule desired to use
+
+    date_object = datetime.strptime(base_schedule, "%m/%d/%Y").date()
+
+    base_week = date_object.isocalendar()[1]
+
+    shifts = models.Shift.objects.filter(date__week=base_week)
+
+    days_count = 0
+    for week in weeks_to_create:
+        days_count += 7
+        for shift in shifts:
+            new_shift = shift.copy()
+            new_shift.date = shift.date + timedelta(days=days_count)
+            new_shift.save()
+
+    return 'Recurring schedule created'
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_hours_current_week(request):
