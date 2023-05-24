@@ -33,7 +33,7 @@ import EmployeeShiftContext from './EmployeeShiftContext';
 import useRole from './useRole';
 import useUserId from './useUserId';
 import Dialog from './Dialog';
-
+import useRecurringSchedule from './useRecurringSchedule';
 
 
 
@@ -43,6 +43,8 @@ const Schedule = () => {
     const authToken = useAuth();
     const role = useRole();
     const loggedInUser = useUserId();
+
+    const { createRecurringSchedule } = useRecurringSchedule()
     
 
     const {shifts, employees, setEmployees, fetchShift } = useContext(EmployeeShiftContext)
@@ -429,7 +431,9 @@ const Schedule = () => {
                             <Button onClick={() => setIsOpen(true)}>Add Shift</Button>
                         </Box>
 
-                        <Button ml={8}>Create Recurring Schedule</Button>
+                        <Button ml={8} onClick={() => {
+                            createRecurringSchedule().then(() => fetchShift())
+                        }}>Create Recurring Schedule</Button>
                     </Flex>
                 }
                 <FullCalendar

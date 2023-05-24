@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+
 import Cookies from "js-cookie";
 
 
@@ -8,23 +8,22 @@ const useRecurringSchedule = () => {
 
     const authToken = Cookies.get('authToken')
 
-    const createRecurringSchedule = useCallback(() => {
+    const createRecurringSchedule = () => {
 
         fetch('create_recurring_schedule/', {
             method : 'GET',
             headers : {
                 'Content-type' : 'application/json',
-                'Authentication' : `Token ${authToken}`,
+                'Authorization' : `Token ${authToken}`,
             }
         })
             .then(response => response.json())
             .then(json => console.log(json))
             .catch(error => console.error(error))
-    }, [authToken])
+    }
 
-    useEffect(() => {
-        createRecurringSchedule()
-    }, [createRecurringSchedule])
+    return { createRecurringSchedule }
+
 
 }
 
