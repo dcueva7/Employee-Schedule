@@ -16,6 +16,7 @@ import {
     FormControl, 
     FormLabel,
     Text,
+    Flex,
     } from '@chakra-ui/react';
 
 import { 
@@ -422,7 +423,15 @@ const Schedule = () => {
 
 
 
-                {role && <Button onClick={() => setIsOpen(true)}>Add Shift</Button>}
+                {role && 
+                    <Flex mb={4}>
+                        <Box>
+                            <Button onClick={() => setIsOpen(true)}>Add Shift</Button>
+                        </Box>
+
+                        <Button ml={8}>Create Recurring Schedule</Button>
+                    </Flex>
+                }
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                     initialView="timeGridWeek"

@@ -23,5 +23,6 @@ urlpatterns = [
     path('delete_adjustment/<int:pk>/', views.DeleteAdjustmentRequest.as_view()),
     path('update_adjustment/<int:pk>/', views.UpdateAdjustment.as_view()),
     path('get_total_hours/', views.get_hours_current_week),
+    path('create_recurring_schedule/', views.create_recurring_schedule)
 
 ]
