@@ -35,6 +35,8 @@ import useUserId from '../Hooks/useUserId';
 import Dialog from '../Overlay/Dialog';
 import useRecurringSchedule from '../Hooks/useRecurringSchedule';
 
+import CreateRecurringScheduleDialog from '../Overlay/CreateRecurringScheduleDialog';
+
 
 
 
@@ -45,7 +47,6 @@ const Schedule = () => {
     const loggedInUser = useUserId();
 
     const { createRecurringSchedule } = useRecurringSchedule()
-    
 
     const {shifts, employees, setEmployees, fetchShift } = useContext(EmployeeShiftContext)
 
@@ -59,23 +60,31 @@ const Schedule = () => {
     //state variable for employeeModal
     const [ employeeModalOpen, setEmployeeModalOpen ] = useState(false)
 
-    //state variables and functions for alert dialog
+    //state variables and funcitons for recurring schedule dialog
+    const [ recurringDialogOpen, setRecurringDialogOpen ] = useState(false)
+    const [ weeks, setWeeks ] = useState(null)
+    const [baseDate, setBaseDate ] = useState(null)
+    const closeRecurringDialog = () => {
+        setRecurringDialogOpen(false)
+    }
+    const confirmRecurringSchedule = () => {
+        createRecurringSchedule().then(() => fetchShift())
+        setRecurringDialogOpen(false)
+    }
+
+    //state variables and functions for shift adjustment alert dialog
     const [ alertDialogOpen, setAlertDialogOpen ] = useState(false)
     const [ full, setFull ] = useState(false) //variable that tells Dialog whether full or partial was clicked
     const [ shiftId, setShiftId ] = useState('') //variable to hold shift_id when employee requests a shift off
-
     const setAlertStartTime = (time) => {
         setStartTime(time)
     }
-
     const setAlertEndTime = (time) => {
         setEndTime(time)
     }
-
     const alertClose = () => {
         setAlertDialogOpen(false)
     }
-
     const alertConfirm = () => {
         const shift_id = shiftId
         const type_of_coverage = full ? 'full' : 'partial'
@@ -423,6 +432,16 @@ const Schedule = () => {
                     setAlertEndTime={setAlertEndTime} 
                 />
 
+                <CreateRecurringScheduleDialog
+                    recurringDialogOpen={recurringDialogOpen}
+                    alertClose={closeRecurringDialog}
+                    date={baseDate}
+                    weeks={weeks}
+                    setDate = {setBaseDate}
+                    setWeeks= {setWeeks}
+                    confirm = {confirmRecurringSchedule}
+                />
+
 
 
                 {role && 
@@ -431,9 +450,7 @@ const Schedule = () => {
                             <Button onClick={() => setIsOpen(true)}>Add Shift</Button>
                         </Box>
 
-                        <Button ml={8} onClick={() => {
-                            createRecurringSchedule().then(() => fetchShift())
-                        }}>Create Recurring Schedule</Button>
+                        <Button ml={8} onClick={setRecurringDialogOpen(true)}>Create Recurring Schedule</Button>
                     </Flex>
                 }
                 <FullCalendar
