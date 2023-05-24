@@ -22,5 +22,6 @@ urlpatterns = [
     path('retrieve_adjustments/', views.ListAdjustments.as_view()),  
     path('delete_adjustment/<int:pk>/', views.DeleteAdjustmentRequest.as_view()),
     path('update_adjustment/<int:pk>/', views.UpdateAdjustment.as_view()),
+    path('get_total_hours/', views.get_hours_current_week),
 
 ]
