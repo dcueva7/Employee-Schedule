@@ -37,13 +37,15 @@ def get_hours_current_week(request):
         total_seconds = 0
         for shift in shifts:
             start = datetime.combine(date.today(), shift.start_time)
-            end = datetime.combine(date.today(), shift.start_time)
+            end = datetime.combine(date.today(), shift.end_time)
 
             total_seconds += (end - start).seconds
 
         total_hours = total_seconds/3600
 
-        return Response({'total_hours' : total_hours}, status.HTTP_200_OK)
+        serializer = serializers.ShiftSerializer(shifts, many=True)
+
+        return Response({'total_hours' : total_hours, 'shifts' : serializer.data}, status.HTTP_200_OK)
 
     else:
         return HttpResponseNotAllowed

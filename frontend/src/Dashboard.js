@@ -23,6 +23,7 @@ import EmployeeShiftContext from './EmployeeShiftContext';
 
 import useRole from './useRole';
 import ReviewRequestDialog from './ReviewRequestDialog';
+import useWeeklyHours from './useWeeklyHours';
   
 const Dashboard = () => {
 
@@ -36,6 +37,9 @@ const Dashboard = () => {
   useEffect(() => {
     fetchShift()
   }, [fetchShift])
+
+  //fetch weekly hours for user
+  const hours = useWeeklyHours()
 
   //state variables and functions for Review Request Dialog
   const [ isOpen, setIsOpen ] = useState(false)
@@ -214,7 +218,7 @@ const Dashboard = () => {
                 {!role &&
                   <Card>
                     <CardHeader><Heading>Total Hours Worked</Heading></CardHeader>
-                    <CardBody>This should return total hours worked for the week</CardBody>
+                    <CardBody>{hours}</CardBody>
                   </Card>
                 }
                 {!role &&<Card>
