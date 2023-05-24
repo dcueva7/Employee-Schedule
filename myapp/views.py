@@ -7,6 +7,8 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth.models import User
 from django.http import Http404, HttpResponseNotAllowed
+from datetime import *
+from django.utils import timezone
 
 from pulp import *
 # Create your views here.
@@ -22,6 +24,29 @@ def createSchedule():
     timeInBetween = 3
 
     return 
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_hours_current_week(request):
+
+    current_week = datetime.now().isocalendar()[1]
+    if request.method == 'GET':
+        shifts = models.Shift.objects.filter(student__user=request.user, date__week = current_week)
+
+        total_seconds = 0
+        for shift in shifts:
+            start = datetime.combine(date.today(), shift.start_time)
+            end = datetime.combine(date.today(), shift.start_time)
+
+            total_seconds += (end - start).seconds
+
+        total_hours = total_seconds/3600
+
+        return Response({'total_hours' : total_hours}, status.HTTP_200_OK)
+
+    else:
+        return HttpResponseNotAllowed
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
