@@ -16,14 +16,14 @@ import {
 } from '@chakra-ui/react';
 
 import Nav from './Nav';
-import useAuth from './UseAuth';
+import useAuth from '../Hooks/UseAuth';
 
 import { useContext, useCallback, useEffect, useState } from 'react';
-import EmployeeShiftContext from './EmployeeShiftContext';
+import EmployeeShiftContext from '../EmployeeShiftContext';
 
-import useRole from './useRole';
-import ReviewRequestDialog from './ReviewRequestDialog';
-import useWeeklyHours from './useWeeklyHours';
+import useRole from '../Hooks/useRole';
+import ReviewRequestDialog from '../Overlay/ReviewRequestDialog';
+import useWeeklyHours from '../Hooks/useWeeklyHours';
   
 const Dashboard = () => {
 

@@ -33,7 +33,7 @@ const useRole = () => {
                 console.log(json)
             }).catch(error => console.error(error))
 
-    }, [])
+    }, [authToken, manager])
 
     return manager
 

@@ -20,7 +20,7 @@ const useUserId = () => {
                 console.log(json)
             }).catch(error => console.error(error))
 
-    }, [])
+    }, [authToken])
 
     return id
 

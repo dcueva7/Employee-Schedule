@@ -30,6 +30,9 @@ class Shift(models.Model):
     end_time = models.TimeField(blank=True)
     date = models.DateField(default=timezone.now)
 
+    class Meta:
+        unique_together = ('student', 'start_time', 'end_time', 'date')
+
     def __str__(self):
         return self.student.first_name + ' shift on ' + str(self.date)
     

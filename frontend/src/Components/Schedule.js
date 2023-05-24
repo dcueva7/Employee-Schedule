@@ -27,13 +27,13 @@ import {
 
 import Nav from './Nav';
 
-import useAuth from './UseAuth';
-import EmployeeShiftContext from './EmployeeShiftContext';
+import useAuth from '../Hooks/UseAuth';
+import EmployeeShiftContext from '../EmployeeShiftContext';
 
-import useRole from './useRole';
-import useUserId from './useUserId';
-import Dialog from './Dialog';
-import useRecurringSchedule from './useRecurringSchedule';
+import useRole from '../Hooks/useRole';
+import useUserId from '../Hooks/useUserId';
+import Dialog from '../Overlay/Dialog';
+import useRecurringSchedule from '../Hooks/useRecurringSchedule';
 
 
 

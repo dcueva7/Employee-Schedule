@@ -1,9 +1,9 @@
 import './App.css';
 import { ChakraProvider } from '@chakra-ui/react'
-import Schedule from './Schedule';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
-import Dashboard from './Dashboard';
+import Schedule from './Components/Schedule';
+import SignIn from './Components/SignIn';
+import SignUp from './Components/SignUp';
+import Dashboard from './Components/Dashboard';
 import EmployeeShiftContext from './EmployeeShiftContext';
 import { useState, useCallback } from 'react';
 
