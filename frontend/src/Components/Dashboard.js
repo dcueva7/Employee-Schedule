@@ -175,7 +175,7 @@ const Dashboard = () => {
           adj_id : adjustment.id,
           employee : adjustment.employee,
           date : adjustment.date,
-          shift_id : adjustment.shift_id,
+          shift_id : adjustment.shift,
           type_of_coverage : adjustment.type_of_coverage,
           start : adjustment.start,
           end : adjustment.end,
