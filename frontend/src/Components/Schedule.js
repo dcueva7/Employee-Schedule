@@ -36,9 +36,7 @@ import Dialog from '../Overlay/Dialog';
 import useRecurringSchedule from '../Hooks/useRecurringSchedule';
 
 import CreateRecurringScheduleDialog from '../Overlay/CreateRecurringScheduleDialog';
-
-
-
+import BulkDeleteDialog from '../Overlay/BulkDeleteDialog';
 
 const Schedule = () => {
 
@@ -64,9 +62,7 @@ const Schedule = () => {
     const [ recurringDialogOpen, setRecurringDialogOpen ] = useState(false)
     const [ weeks, setWeeks ] = useState('')
     const [baseDate, setBaseDate ] = useState('')
-    const closeRecurringDialog = () => {
-        setRecurringDialogOpen(false)
-    }
+    const closeRecurringDialog = () => setRecurringDialogOpen(false)
     const confirmRecurringSchedule = () => {
         console.log(weeks)
         console.log(baseDate)
@@ -74,23 +70,39 @@ const Schedule = () => {
         setRecurringDialogOpen(false)
     }
 
+    //state variables and functions for bulkDeleteDialog
+    const [ isBulkDialogOpen, setIsBulkDialogOpen ] = useState(false)
+    const [ deleteDate, setDeleteDate ] = useState('')
+    const closeBulkDialog = () => setIsBulkDialogOpen(false)
+    const bulkDelete = () => {
+
+        fetch('bulk_delete_shifts/',{
+            method : 'POST',
+            headers : {
+                'Content-type' : 'application/json',
+                'Authorization': `Token ${authToken}`
+            },
+            body : JSON.stringify({date : deleteDate})
+
+        })
+            .then(response => response.json())
+            .then(json => {
+                fetchShift()
+                console.log(json)
+            })
+            .catch(error => console.log(error))
+    }
+
     //state variables and functions for shift adjustment alert dialog
     const [ alertDialogOpen, setAlertDialogOpen ] = useState(false)
     const [ full, setFull ] = useState(false) //variable that tells Dialog whether full or partial was clicked
     const [ shiftId, setShiftId ] = useState('') //variable to hold shift_id when employee requests a shift off
-    const setAlertStartTime = (time) => {
-        setStartTime(time)
-    }
-    const setAlertEndTime = (time) => {
-        setEndTime(time)
-    }
-    const alertClose = () => {
-        setAlertDialogOpen(false)
-    }
+    const setAlertStartTime = (time) => setStartTime(time)
+    const setAlertEndTime = (time) => setEndTime(time)
+    const alertClose = () => setAlertDialogOpen(false)    
     const alertConfirm = () => {
         const shift_id = shiftId
         const type_of_coverage = full ? 'full' : 'partial'
-
         if (full){
             fetch(`/request_adjustment/`, {
                 method : 'POST',
@@ -115,9 +127,7 @@ const Schedule = () => {
                 })
                 .catch(error => console.log(error))
             
-
         }
-
         else if (!full){
             fetch(`/request_adjustment/`, {
                 method : 'POST',
@@ -143,8 +153,6 @@ const Schedule = () => {
                 .catch(error => console.log(error))
             
         }
-
-
         resetInputs()
         setEmployeeModalOpen(false)
         setAlertDialogOpen(false)
@@ -159,7 +167,6 @@ const Schedule = () => {
     // state variable to hold selected event after event click
     const [ selectedEvent, setSelectedEvent ] = useState([])
 
-    
     //retrive all employees
     useEffect(() => {
         fetch('/employee/get_all_employees/', {
@@ -182,13 +189,10 @@ const Schedule = () => {
             })
     },[setEmployees, authToken] )
 
-
     //retrieve all shifts
     useEffect(() => {
         fetchShift();
     }, [fetchShift])
-
-    
 
     const resetInputs = () => {
         setStudent('')
@@ -444,6 +448,13 @@ const Schedule = () => {
                     confirm = {confirmRecurringSchedule}
                 />
 
+                <BulkDeleteDialog
+                    bulkDeleteDialogOpen={isBulkDialogOpen}
+                    alertClose = {closeBulkDialog}
+                    date={deleteDate}
+                    setDate={setDeleteDate}
+                    confirm={bulkDelete}
+                />
 
 
                 {role && 
@@ -453,6 +464,7 @@ const Schedule = () => {
                         </Box>
 
                         <Button ml={8} onClick={() => setRecurringDialogOpen(true)}>Create Recurring Schedule</Button>
+                        <Button ml={8} colorScheme='red' onClick={() => setIsBulkDialogOpen(true)}>Bulk Delete</Button>
                     </Flex>
                 }
                 <FullCalendar

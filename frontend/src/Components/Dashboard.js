@@ -214,23 +214,16 @@ const Dashboard = () => {
           <Container maxW='container.xl' mt={12} mb={12}>
             <Flex wrap='wrap' justify='center' spacing={6}>
                 {!role &&
-                  <Card >
+                  <Card padding={4} background='blue.100'>
                     <CardHeader><Heading size='sm'>Total Hours Worked</Heading></CardHeader>
                     <CardBody>{hours}</CardBody>
                   </Card>
                 }
-                {!role &&<Card>
+                {!role &&<Card padding={4} background='green.100'>
                   <CardHeader><Heading size='sm'>Shifts available for coverage</Heading></CardHeader>
                   <CardBody>List of approved shifts for coverage</CardBody>
                 </Card>}
                 
-                <Card
-                    heading={'Time Off Requests'}
-                    icon={'FcManager'}
-                    description={
-                      'Lorem ipsum dolor sit amet catetur, adipisicing elit.'
-                    }
-                />
                 {role &&
                   <Card padding={4}>
                       <CardHeader mb={4}><Heading size='lg'>Time off requests</Heading></CardHeader>
