@@ -62,13 +62,15 @@ const Schedule = () => {
 
     //state variables and funcitons for recurring schedule dialog
     const [ recurringDialogOpen, setRecurringDialogOpen ] = useState(false)
-    const [ weeks, setWeeks ] = useState(null)
-    const [baseDate, setBaseDate ] = useState(null)
+    const [ weeks, setWeeks ] = useState('')
+    const [baseDate, setBaseDate ] = useState('')
     const closeRecurringDialog = () => {
         setRecurringDialogOpen(false)
     }
     const confirmRecurringSchedule = () => {
-        createRecurringSchedule().then(() => fetchShift())
+        console.log(weeks)
+        console.log(baseDate)
+        createRecurringSchedule(weeks, baseDate).then(() => fetchShift())
         setRecurringDialogOpen(false)
     }
 
@@ -450,7 +452,7 @@ const Schedule = () => {
                             <Button onClick={() => setIsOpen(true)}>Add Shift</Button>
                         </Box>
 
-                        <Button ml={8} onClick={setRecurringDialogOpen(true)}>Create Recurring Schedule</Button>
+                        <Button ml={8} onClick={() => setRecurringDialogOpen(true)}>Create Recurring Schedule</Button>
                     </Flex>
                 }
                 <FullCalendar

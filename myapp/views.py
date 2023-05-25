@@ -28,14 +28,14 @@ def createSchedule():
 
 
 #funciton to create recurring schedule based on schedule during given week
-@api_view(['GET'])
+@api_view(['POST'])
 @permission_classes([IsAdminUser])
 def create_recurring_schedule(request):
 
-    weeks_to_create = request.data['weeks'] #amount of weeks to create with base schedule
+    weeks_to_create = int(request.data['weeks']) #amount of weeks to create with base schedule
     base_schedule = request.data['date'] #any date during the week of base schedule desired to use
 
-    date_object = datetime.strptime(base_schedule, "%m/%d/%Y").date()
+    date_object = datetime.strptime(base_schedule, "%Y-%m-%d").date()
 
     base_week = date_object.isocalendar()[1]
 
