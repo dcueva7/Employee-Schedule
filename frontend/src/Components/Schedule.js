@@ -112,7 +112,7 @@ const Schedule = () => {
                 },
                 body : JSON.stringify({
                     employee : placeholder,
-                    shift_id : shift_id,
+                    shift : shift_id,
                     type_of_coverage : type_of_coverage,
                     start : null,
                     end : null,
@@ -137,7 +137,7 @@ const Schedule = () => {
                 },
                 body : JSON.stringify({
                     employee : placeholder,
-                    shift_id : shift_id,
+                    shift : shift_id,
                     type_of_coverage : type_of_coverage,
                     start : startTime,
                     end : endTime,

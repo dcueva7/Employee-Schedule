@@ -56,7 +56,7 @@ def create_recurring_schedule(request):
         return Response({'message' : 'recurring schedule succesfully set'}, status.HTTP_200_OK)
     
     else:
-        return HttpResponseNotAllowed
+        return HttpResponseNotAllowed()
 
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
@@ -73,7 +73,7 @@ def bulk_delete_shifts(request):
         return Response({'message' : 'shifts succesfully deleted'}, status.HTTP_200_OK)
     
     else:
-        return HttpResponseNotAllowed
+        return HttpResponseNotAllowed()
 
 
 @api_view(['GET'])
@@ -98,7 +98,7 @@ def get_hours_current_week(request):
         return Response({'total_hours' : total_hours, 'shifts' : serializer.data}, status.HTTP_200_OK)
 
     else:
-        return HttpResponseNotAllowed
+        return HttpResponseNotAllowed()
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -112,7 +112,7 @@ def get_user_id(request):
             raise Http404
         
     else:
-        return HttpResponseNotAllowed
+        return HttpResponseNotAllowed()
     
 
     
@@ -128,7 +128,9 @@ def request_adjustment(request):
         return Response(serialized_data.data, status.HTTP_201_CREATED)
     
     else:
-        return HttpResponseNotAllowed 
+        return HttpResponseNotAllowed()
+    
+
     
 class DeleteAdjustmentRequest(generics.DestroyAPIView):
     permission_classes = [IsAdminUser]
@@ -147,12 +149,12 @@ def retrieve_adjustments(request):
         
         else:
             user_shifts = models.Shift.objects.filter(student__user=request.user)
-            query_set = models.ShiftAdjustment.objects.filter(shift_id=user_shifts['id'])
+            query_set = models.ShiftAdjustment.objects.filter(shift__in=user_shifts)
             serialized_data = serializers.ShiftAdjustmentSerializer(query_set, many=True)
-            return Response()
+            return Response(serialized_data.data, status.HTTP_200_OK)
     
     else:
-        return HttpResponseNotAllowed
+        return HttpResponseNotAllowed()
 
 class UpdateAdjustment(generics.UpdateAPIView):
     permission_classes = [IsAdminUser]
