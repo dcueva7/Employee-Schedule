@@ -215,8 +215,6 @@ const Schedule = () => {
             alert('All fields must be filled in before submitting.');
             return;
         }
-
-        
         fetch('/shift/add_shift/', {
             method : 'POST',
             headers : {

@@ -135,11 +135,24 @@ class DeleteAdjustmentRequest(generics.DestroyAPIView):
     queryset = models.ShiftAdjustment.objects.all()
     serializer_class = serializers.ShiftAdjustmentSerializer
     
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def retrieve_adjustments(request):
+    if request.method == 'GET':
+        if request.user.is_staff:
+            queryset = models.ShiftAdjustment.objects.all()
+            serialized_data = serializers.ShiftAdjustmentSerializer(queryset, many=True)
 
-class ListAdjustments(generics.ListAPIView):
-    permission_classes = [IsAdminUser]
-    queryset = models.ShiftAdjustment.objects.all()
-    serializer_class = serializers.ShiftAdjustmentSerializer
+            return Response(serialized_data.data, status.HTTP_200_OK)
+        
+        else:
+            user_shifts = models.Shift.objects.filter(student__user=request.user)
+            query_set = models.ShiftAdjustment.objects.filter(shift_id=user_shifts['id'])
+            serialized_data = serializers.ShiftAdjustmentSerializer(query_set, many=True)
+            return Response()
+    
+    else:
+        return HttpResponseNotAllowed
 
 class UpdateAdjustment(generics.UpdateAPIView):
     permission_classes = [IsAdminUser]

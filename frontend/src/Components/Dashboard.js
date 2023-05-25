@@ -49,7 +49,6 @@ const Dashboard = () => {
   }
 
   const approveRequest = () => {
-
     if(full){
       fetch(`/shift/delete_shift/${currentAdjustment.shift_id}/`, {
         method: 'DELETE',
@@ -164,8 +163,7 @@ const Dashboard = () => {
 
 
   const fetchAdjustments = useCallback(() => {
-
-    fetch('retrieve_adjustments', {
+    fetch('retrieve_adjustments/', {
       method: 'GET',
       headers: {
         'Authorization': `Token ${authToken}`,
