@@ -37,7 +37,7 @@ const CreateRecurringScheduleDialog = (props) => {
 
                     <AlertDialogBody>
                             
-                        <Text fontWeight='bold'>Choose a date during the week you want to use as base schedule and number of weeks for schedule to repeat </Text>
+                        <Text fontWeight='bold'>Choose date and number of weeks to repeat: </Text>
                         
                             <Box>
                                 <FormControl>

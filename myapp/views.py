@@ -32,27 +32,48 @@ def createSchedule():
 @permission_classes([IsAdminUser])
 def create_recurring_schedule(request):
 
-    weeks_to_create = int(request.data['weeks']) #amount of weeks to create with base schedule
-    base_schedule = request.data['date'] #any date during the week of base schedule desired to use
+    if request.method == 'POST':
+        weeks_to_create = int(request.data['weeks']) #amount of weeks to create with base schedule
+        base_schedule = request.data['date'] #any date during the week of base schedule desired to use
 
-    date_object = datetime.strptime(base_schedule, "%Y-%m-%d").date()
+        date_object = datetime.strptime(base_schedule, "%Y-%m-%d").date()
 
-    base_week = date_object.isocalendar()[1]
+        base_week = date_object.isocalendar()[1]
 
-    shifts = models.Shift.objects.filter(date__week=base_week)
+        shifts = models.Shift.objects.filter(date__week=base_week)
 
-    with transaction.atomic():
-        for week in range(weeks_to_create):
-            days_count = 7 * (week + 1)
-            for shift in shifts:
-                new_shift = models.Shift()
-                new_shift.student = shift.student
-                new_shift.start_time = shift.start_time
-                new_shift.end_time = shift.end_time
-                new_shift.date = shift.date + timedelta(days=days_count)
-                new_shift.save()
+        with transaction.atomic():
+            for week in range(weeks_to_create):
+                days_count = 7 * (week + 1)
+                for shift in shifts:
+                    new_shift = models.Shift()
+                    new_shift.student = shift.student
+                    new_shift.start_time = shift.start_time
+                    new_shift.end_time = shift.end_time
+                    new_shift.date = shift.date + timedelta(days=days_count)
+                    new_shift.save()
 
-    return Response({'message' : 'recurring schedule succesfully set'}, status.HTTP_200_OK)
+        return Response({'message' : 'recurring schedule succesfully set'}, status.HTTP_200_OK)
+    
+    else:
+        return HttpResponseNotAllowed
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def bulk_delete_shifts(request):
+    
+    if request.method == 'POST':
+        base_date = request.data['date'] #date to start bulk delete from
+
+        date_object = datetime.strptime(base_date, "%Y-%m-%d").date()
+
+
+        models.Shift.objects.filter(date__gte=date_object).delete()
+
+        return Response({'message' : 'shifts succesfully deleted'}, status.HTTP_200_OK)
+    
+    else:
+        return HttpResponseNotAllowed
 
 
 @api_view(['GET'])
