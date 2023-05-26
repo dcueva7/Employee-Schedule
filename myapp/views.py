@@ -22,7 +22,7 @@ def createSchedule():
     maxDailyHours = 8
     minWeeklyHours = 10
     maxShiftHours = 5
-    timeInBetween = 3
+    timeInBetween = 3   
 
     return 
 

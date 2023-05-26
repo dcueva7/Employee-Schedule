@@ -10,8 +10,6 @@ import {
     Flex,
     Heading,
     Card,
-    CardBody,
-    CardHeader,
     Text,
 } from '@chakra-ui/react';
 
@@ -197,7 +195,7 @@ const Dashboard = () => {
       <Box>
         <Nav />
         
-        <Flex alignItems="center" justifyContent="space-between"  p={4} color="black" mb={4}>
+        <Flex alignItems="center" justifyContent="space-between"  p={4} color="white" bg='red.700' mb={4}>
             <Heading>
               { !role ? 'Welcome to the Employee Dashboard' : 'Welcome to the Supervisor Dashboard'}
             </Heading>
@@ -224,16 +222,12 @@ const Dashboard = () => {
           
         {role &&
           <Box bg="white" boxShadow="sm" p={4}>
-            <Card padding={4}>
-                <CardHeader mb={4}><Heading size='lg'>Time off requests</Heading></CardHeader>
-                <CardBody>
-                  {adjustments.filter(adjustment => !adjustment.approved).map((adjustment) => {
-                    return(
-                      <Card key={adjustment.adj_id} padding={6} mt={4} mb={4}>{adjustment.employee} is requesting a {adjustment.type_of_coverage} shift adjustment on {adjustment.date} <Button onClick={() => reviewRequest(adjustment)}>Review</Button></Card>
-                    )
-                  })}
-                </CardBody>
-            </Card>
+            <Heading size='md'>Time off Requests</Heading>      
+              {adjustments.filter(adjustment => !adjustment.approved).map((adjustment) => {
+                return(
+                  <Card key={adjustment.adj_id} padding={6} mt={4} mb={4}>{adjustment.employee} is requesting a {adjustment.type_of_coverage} shift adjustment on {adjustment.date} <Button onClick={() => reviewRequest(adjustment)}>Review</Button></Card>
+                )
+              })}
           </Box> 
         }
            
