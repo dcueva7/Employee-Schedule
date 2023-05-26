@@ -118,6 +118,7 @@ const Schedule = () => {
                     end : null,
                     date: date,
                     approved : false,
+                    user : loggedInUser,
                     
                 })
             })
@@ -143,6 +144,7 @@ const Schedule = () => {
                     end : endTime,
                     date: date,
                     approved : false,
+                    user : loggedInUser,
                     
                 })
             })

@@ -6,7 +6,6 @@ import interactionPlugin from "@fullcalendar/interaction";
 import {
     Box,
     Button,
-    Container,
     Grid,
     Flex,
     Heading,
@@ -182,6 +181,7 @@ const Dashboard = () => {
           start : adjustment.start,
           end : adjustment.end,
           approved : adjustment.approved,
+          user : adjustment.user,
 
         }))
 

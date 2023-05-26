@@ -54,6 +54,7 @@ class ShiftAdjustment(models.Model):
     end = models.TimeField(null=True)
     date = models.DateField(null=True)
     approved = models.BooleanField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('employee', 'shift')
