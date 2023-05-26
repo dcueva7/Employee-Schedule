@@ -7,11 +7,13 @@ import {
     Box,
     Button,
     Container,
+    Grid,
     Flex,
     Heading,
     Card,
     CardBody,
     CardHeader,
+    Text,
 } from '@chakra-ui/react';
 
 import { TimeIcon, CheckCircleIcon } from '@chakra-ui/icons';
@@ -192,93 +194,78 @@ const Dashboard = () => {
   }, [fetchAdjustments])
      
   return (
-      <>
+      <Box>
         <Nav />
-        <Box padding={4}>
-          <Container centerContent>
-            <Heading fontSize={{ base: '2xl', sm: '4xl' }} fontWeight={'bold'} mb={4} textAlign='center'>
+        
+        <Flex alignItems="center" justifyContent="space-between" bg="red.700" p={4} color="white" mb={4}>
+            <Heading>
               { !role ? 'Welcome to the Employee Dashboard' : 'Welcome to the Supervisor Dashboard'}
             </Heading>
-          </Container>
+            {! role && <Text size='md'>Hours scheduled for the week: {hours}</Text>}
+        </Flex>
 
-          <Container maxW='container.xl' mt={12} mb={12}>
-            <Flex wrap='wrap' justify='center' spacing={6}>
-                {!role &&
-                  <Card padding={4}>
-                    <CardHeader><Heading size='sm'>Hours Scheduled This Week:</Heading></CardHeader>
-                    <CardBody>{hours}</CardBody>
-                  </Card>
-                }
+        <Grid templateColumns={{base: "1fr", md: "1fr 1fr"}} gap={6}>
+          {!role &&
+            <Box bg="white" boxShadow="sm" p={4}>
+              <Heading size='sm'>My time off requests:</Heading>
+              {adjustments.map((adjustment) => {
+                return(
+                  <Text key={adjustment.adj_id} mt={4} mb={4}>{adjustment.type_of_coverage} coverage request on {adjustment.date} Status: {adjustment.approved && <CheckCircleIcon color={'green'}/>} {!adjustment.approved && <TimeIcon color='red'/>} </Text>
+                )
+            })}
+          </Box>
+        }
+        {!role &&  
+          <Box bg="white" boxShadow="sm" p={4}> 
+            <Heading size='sm'>Shifts Available for coverage</Heading>
+            <Text size='md'>Hours scheduled for the week: {hours}</Text>
+          </Box>
+        }
+          
+        {role &&
+          <Box bg="white" boxShadow="sm" p={4}>
+            <Card padding={4}>
+                <CardHeader mb={4}><Heading size='lg'>Time off requests</Heading></CardHeader>
+                <CardBody>
+                  {adjustments.filter(adjustment => !adjustment.approved).map((adjustment) => {
+                    return(
+                      <Card key={adjustment.adj_id} padding={6} mt={4} mb={4}>{adjustment.employee} is requesting a {adjustment.type_of_coverage} shift adjustment on {adjustment.date} <Button onClick={() => reviewRequest(adjustment)}>Review</Button></Card>
+                    )
+                  })}
+                </CardBody>
+            </Card>
+          </Box> 
+        }
+           
+        </Grid>
 
-                {!role &&<Card padding={4}>
-                  <CardHeader><Heading size='sm'>Shifts available for coverage</Heading></CardHeader>
-                  <CardBody>
-                    {adjustments.filter(adjustment => !adjustment.approved).map((adjustment) => {
-                      return(
-                        <Card key={adjustment.shift_id} padding={4}>{adjustment.employee} is requesting a {adjustment.type_of_coverage} shift adjustment on {adjustment.date} <Button onClick={() => reviewRequest(adjustment)}>Review</Button></Card>
-                      )
-                    })}
-                  </CardBody>
-                </Card>}
-
-                {!role &&<Card padding={4}>
-                  <CardHeader><Heading size='sm'>My time off requests:</Heading></CardHeader>
-                  <CardBody>
-                    {adjustments.map((adjustment) => {
-                      return(
-                        <Card key={adjustment.shift_id} padding={4}>{adjustment.type_of_coverage} coverage request on {adjustment.date} Status: {adjustment.approved && <CheckCircleIcon/>} {!adjustment.approved && <TimeIcon/>} </Card>
-                      )
-                    })}
-                  </CardBody>
-                </Card>}
-                
-                {role &&
-                  <Card padding={4}>
-                      <CardHeader mb={4}><Heading size='lg'>Time off requests</Heading></CardHeader>
-                      <CardBody>
-                        {adjustments.filter(adjustment => !adjustment.approved).map((adjustment) => {
-                          return(
-                            <Card key={adjustment.shift_id} padding={4}>{adjustment.employee} is requesting a {adjustment.type_of_coverage} shift adjustment on {adjustment.date} <Button onClick={() => reviewRequest(adjustment)}>Review</Button></Card>
-                          )
-                        })}
-                      </CardBody>
-                      
-                  </Card>
-                }
-                  
-            </Flex>
-
-              <ReviewRequestDialog 
-                isOpen={isOpen}
-                closeRequestDialog={closeRequestDialog}
-                full={full}
-                date={currentAdjustment?.date}
-                start={currentAdjustment?.start}
-                end={currentAdjustment?.end}
-                approveRequest={approveRequest}
-            />
-                
-
-            <Box mt={4}>
-              <Heading size="md">Schedule for today</Heading>
-              <FullCalendar
-                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                initialView="timeGridDay"
-                weekends={false}
-                events={shifts}
-                slotMinTime="07:00:00"
-                slotMaxTime="22:00:00"
-                eventColor="#378006"
-                selectable={false}
-                slotEventOverlap={false}
-                allDaySlot={false}      
-              />
-                
+          <ReviewRequestDialog 
+            isOpen={isOpen}
+            closeRequestDialog={closeRequestDialog}
+            full={full}
+            date={currentAdjustment?.date}
+            start={currentAdjustment?.start}
+            end={currentAdjustment?.end}
+            approveRequest={approveRequest}
+          />
               
-            </Box>
-          </Container>
+
+          <Box mt={4} bg="white" boxShadow="sm" p={4}>
+            <Heading size="md">Schedule for today</Heading>
+            <FullCalendar
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+              initialView="timeGridDay"
+              weekends={false}
+              events={shifts}
+              slotMinTime="07:00:00"
+              slotMaxTime="22:00:00"
+              eventColor="#378006"
+              selectable={false}
+              slotEventOverlap={false}
+              allDaySlot={false}      
+            />  
         </Box>
-        </>
+      </Box>
     );
   }
   

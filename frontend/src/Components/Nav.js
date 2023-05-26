@@ -10,16 +10,16 @@ const Nav = () => {
     const nav = useNavigate()
 
     return (
-    <Box as="nav" p={4} shadow="md" bg="bg-surface">
+    <Box as="nav" p={4} shadow="md" bg="black">
         <Flex align="center" justify="space-between">
         <ButtonGroup variant="link" spacing={4}>
-            <Button onClick={() => nav('/dashboard')}>Dashboard</Button>
-            <Button onClick={() => nav('/')}>Schedule</Button>
+            <Button color="white"onClick={() => nav('/dashboard')}>Dashboard</Button>
+            <Button color="white" onClick={() => nav('/')}>Schedule</Button>
         </ButtonGroup>
 
         <HStack spacing={4}>
             <IconButton icon={<BellIcon/>} />
-            <Button variant="ghost" onClick={() => {
+            <Button onClick={() => {
                 Cookies.remove("authToken");
                 nav('/sign_in');
             }}>Log Out</Button>
