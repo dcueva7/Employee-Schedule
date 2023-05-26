@@ -61,4 +61,9 @@ class ShiftAdjustment(models.Model):
 
     def __str__(self):
         return self.employee + ' is requesting an adjustment on ' + str(self.date)
+    
+class AvailableShift(models.Model):
+    start = models.TimeField(null=True)
+    end = models.TimeField(null=True)
+    date = models.DateField(null=True)
 
