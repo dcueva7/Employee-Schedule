@@ -12,8 +12,9 @@ import {
     Card,
     CardBody,
     CardHeader,
-    
 } from '@chakra-ui/react';
+
+import { TimeIcon, CheckCircleIcon } from '@chakra-ui/icons';
 
 import Nav from './Nav';
 import useAuth from '../Hooks/UseAuth';
@@ -161,7 +162,6 @@ const Dashboard = () => {
     setCurrentAdjustment(adjustment)
   }
 
-
   const fetchAdjustments = useCallback(() => {
     fetch('retrieve_adjustments/', {
       method: 'GET',
@@ -185,20 +185,12 @@ const Dashboard = () => {
 
         setAdjustments(data)
       })
-
-
-
-
   }, [authToken, setAdjustments])
 
-  
   useEffect(() => {
-    if (role){
-      fetchAdjustments()
-    }
-  }, [fetchAdjustments, role])
-  
-    
+    fetchAdjustments()
+  }, [fetchAdjustments])
+     
   return (
       <>
         <Nav />
@@ -212,14 +204,32 @@ const Dashboard = () => {
           <Container maxW='container.xl' mt={12} mb={12}>
             <Flex wrap='wrap' justify='center' spacing={6}>
                 {!role &&
-                  <Card padding={4} background='blue.100'>
-                    <CardHeader><Heading size='sm'>Total Hours Worked</Heading></CardHeader>
+                  <Card padding={4}>
+                    <CardHeader><Heading size='sm'>Hours Scheduled This Week:</Heading></CardHeader>
                     <CardBody>{hours}</CardBody>
                   </Card>
                 }
-                {!role &&<Card padding={4} background='green.100'>
+
+                {!role &&<Card padding={4}>
                   <CardHeader><Heading size='sm'>Shifts available for coverage</Heading></CardHeader>
-                  <CardBody>List of approved shifts for coverage</CardBody>
+                  <CardBody>
+                    {adjustments.filter(adjustment => !adjustment.approved).map((adjustment) => {
+                      return(
+                        <Card key={adjustment.shift_id} padding={4}>{adjustment.employee} is requesting a {adjustment.type_of_coverage} shift adjustment on {adjustment.date} <Button onClick={() => reviewRequest(adjustment)}>Review</Button></Card>
+                      )
+                    })}
+                  </CardBody>
+                </Card>}
+
+                {!role &&<Card padding={4}>
+                  <CardHeader><Heading size='sm'>My time off requests:</Heading></CardHeader>
+                  <CardBody>
+                    {adjustments.map((adjustment) => {
+                      return(
+                        <Card key={adjustment.shift_id} padding={4}>{adjustment.type_of_coverage} coverage request on {adjustment.date} Status: {adjustment.approved && <CheckCircleIcon/>} {!adjustment.approved && <TimeIcon/>} </Card>
+                      )
+                    })}
+                  </CardBody>
                 </Card>}
                 
                 {role &&
@@ -234,7 +244,7 @@ const Dashboard = () => {
                       </CardBody>
                       
                   </Card>
-              }
+                }
                   
             </Flex>
 
