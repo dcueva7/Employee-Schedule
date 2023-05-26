@@ -91,6 +91,8 @@ const Schedule = () => {
                 console.log(json)
             })
             .catch(error => console.log(error))
+
+        setIsBulkDialogOpen(false)
     }
 
     //state variables and functions for shift adjustment alert dialog

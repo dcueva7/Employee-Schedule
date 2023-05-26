@@ -148,8 +148,7 @@ def retrieve_adjustments(request):
             return Response(serialized_data.data, status.HTTP_200_OK)
         
         else:
-            user_shifts = models.Shift.objects.filter(student__user=request.user)
-            query_set = models.ShiftAdjustment.objects.filter(shift__in=user_shifts)
+            query_set = models.ShiftAdjustment.objects.filter(user=request.user)
             serialized_data = serializers.ShiftAdjustmentSerializer(query_set, many=True)
             return Response(serialized_data.data, status.HTTP_200_OK)
     

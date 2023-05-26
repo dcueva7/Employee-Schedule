@@ -57,7 +57,7 @@ class ShiftAdjustment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ('employee', 'shift')
+        unique_together = ('user', 'start', 'end', 'date')
 
     def __str__(self):
         return self.employee + ' is requesting an adjustment on ' + str(self.date)
