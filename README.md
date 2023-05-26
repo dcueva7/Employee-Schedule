@@ -15,11 +15,16 @@ Interactive calendar for viewing shifts.
 Ability to add a shift by selecting a date and time range in the calendar.
 Option to edit and delete shifts directly from the calendar.
 Shift coverage request and approval system.
-Installation
+
+# Installation
 Provide instructions on how to install and setup your application.
 
 # Usage
-Provide instructions on how to use your application. You could consider including a walk-through of a typical use case, screenshots or a demo video.
+Supervisors can add shifts using the add shift button and entering shift details.  Individual shifts can be updated or deleted by clicking on the shifts.  There are buttons for bulk deleting shifts and creating recurring schedules.
+
+Employees can click on their own shifts and request for full or partial coverage.
+
+<img width="1511" alt="image" src="https://github.com/dcueva7/Employee-Schedule/assets/111453767/a5209b6b-eef8-4982-b05b-4646c0751a33">
 
 # Technologies Used
 React
@@ -28,13 +33,9 @@ Django's Djoser library for authentication
 FullCalendar for displaying shifts
 Chakra UI for component design
 Cookies for handling JWT tokens
-Contributing
-Provide guidelines for contributors (if your project is open to contribution).
 
-License
-Specify the type of license if any (MIT, GNU, etc.).
-
-Contact Information
-Include your contact information for users to report issues or ask questions about the application.
+# Contact Information
+Daniel Cueva
+dnlcueva@hotmail.com
 
 
