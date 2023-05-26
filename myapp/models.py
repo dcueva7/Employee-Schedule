@@ -55,6 +55,9 @@ class ShiftAdjustment(models.Model):
     date = models.DateField(null=True)
     approved = models.BooleanField()
 
+    class Meta:
+        unique_together = ('employee', 'shift')
+
     def __str__(self):
         return self.employee + ' is requesting an adjustment on ' + str(self.date)
 
