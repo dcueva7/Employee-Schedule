@@ -197,7 +197,7 @@ const Dashboard = () => {
       <Box>
         <Nav />
         
-        <Flex alignItems="center" justifyContent="space-between" bg="red.700" p={4} color="white" mb={4}>
+        <Flex alignItems="center" justifyContent="space-between"  p={4} color="black" mb={4}>
             <Heading>
               { !role ? 'Welcome to the Employee Dashboard' : 'Welcome to the Supervisor Dashboard'}
             </Heading>

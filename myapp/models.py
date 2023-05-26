@@ -48,7 +48,7 @@ class Availability(models.Model):
     
 class ShiftAdjustment(models.Model):
     employee = models.CharField(max_length=30)
-    shift = models.ForeignKey(Shift, null=True, on_delete=models.PROTECT)
+    shift = models.ForeignKey(Shift, null=True, on_delete=models.SET_NULL)
     type_of_coverage = models.CharField(max_length=10)
     start = models.TimeField(null=True)
     end = models.TimeField(null=True)

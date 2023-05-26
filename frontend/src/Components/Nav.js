@@ -10,11 +10,11 @@ const Nav = () => {
     const nav = useNavigate()
 
     return (
-    <Box as="nav" p={4} shadow="md" bg="black">
+    <Box as="nav" p={4} shadow="md">
         <Flex align="center" justify="space-between">
         <ButtonGroup variant="link" spacing={4}>
-            <Button color="white"onClick={() => nav('/dashboard')}>Dashboard</Button>
-            <Button color="white" onClick={() => nav('/')}>Schedule</Button>
+            <Button color="black"onClick={() => nav('/dashboard')}>Dashboard</Button>
+            <Button color="black" onClick={() => nav('/')}>Schedule</Button>
         </ButtonGroup>
 
         <HStack spacing={4}>
