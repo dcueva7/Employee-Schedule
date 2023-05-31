@@ -26,7 +26,7 @@ import ReviewRequestDialog from '../Overlay/ReviewRequestDialog';
 import useWeeklyHours from '../Hooks/useWeeklyHours';
 
 import useAddOpenShift from '../Hooks/useAddOpenShift';
-import useGetOpenShift from '../Hooks/useGetOpenShift';
+// import useGetOpenShift from '../Hooks/useGetOpenShift';
   
 const Dashboard = () => {
 
@@ -49,8 +49,8 @@ const Dashboard = () => {
 
   //state variables and funciton for open shifts
   const addOpenShift = useAddOpenShift()
-  const [ openShifts, setOpenShifts ] = useState('')
-  const [ currentOpenShift, setCurrentOpenShift ] = useState('')
+  // const [ openShifts, setOpenShifts ] = useState('')
+  // const [ currentOpenShift, setCurrentOpenShift ] = useState('')
 
   const closeRequestDialog = () => {
     setIsOpen(false)
@@ -189,7 +189,6 @@ const Dashboard = () => {
           end : adjustment.end,
           approved : adjustment.approved,
           user : adjustment.user,
-
         }))
 
         setAdjustments(data)

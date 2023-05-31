@@ -116,8 +116,8 @@ const Schedule = () => {
                     employee : placeholder,
                     shift : shift_id,
                     type_of_coverage : type_of_coverage,
-                    start : null,
-                    end : null,
+                    start : startTime,
+                    end : endTime,
                     date: date,
                     approved : false,
                     user : loggedInUser,
@@ -489,11 +489,13 @@ const Schedule = () => {
                             setStartTime(info.event.startStr.substring(11,16)) 
                             setEndTime(info.event.endStr.substring(11,16)) 
                             setSelectedEvent(info.event)
-                            setEventModalOpen(true);
+                            setEventModalOpen(true)
                         }
     
                     
                         else if(info.event.extendedProps.student_id === loggedInUser ){
+                            setStartTime(info.event.startStr.substring(11,16)) 
+                            setEndTime(info.event.endStr.substring(11,16))
                             setShiftId(info.event.id)
                             setPlaceholder(info.event.title)
                             setDate(info.event.startStr.substring(0,10))

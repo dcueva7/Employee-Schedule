@@ -6,7 +6,7 @@ const useAddOpenShift = () => {
     
     const addOpenShift = (start, end, date) => {
 
-        fetch('get_open_shifts/', {
+        fetch('add_open_shift/', {
             method : 'POST',
             headers : {
                 'Content-type' : 'application/json',
