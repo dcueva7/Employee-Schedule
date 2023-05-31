@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import Cookies from 'js-cookie'
 
-const useAddOpenShift = () => {
+const useGetOpenShift = () => {
 
     const [ openShifts, setOpenShifts ] = useState('')
     const authToken = Cookies.get('authToken')
@@ -32,4 +32,4 @@ const useAddOpenShift = () => {
 
 }
 
-export default useAddOpenShift;
+export default useGetOpenShift;

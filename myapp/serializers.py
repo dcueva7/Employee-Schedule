@@ -19,7 +19,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
         fields = ['id','first_name', 'last_name', 'color', 'user']
 
 
-
 class ShiftSerializer(serializers.ModelSerializer):
     student = EmployeeSerializer(read_only=False)
     class Meta:
@@ -29,4 +28,10 @@ class ShiftSerializer(serializers.ModelSerializer):
 class CreateShiftSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Shift
+        fields = '__all__'
+        
+
+class AvailableShiftSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.AvailableShift
         fields = '__all__'

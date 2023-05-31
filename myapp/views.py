@@ -57,6 +57,34 @@ def create_recurring_schedule(request):
     
     else:
         return HttpResponseNotAllowed()
+    
+#endpoint to modifty or list open shifts
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_open_shifts(request):
+    if request.method == 'GET':
+        query_set = models.AvailableShift.objects.all()
+        serialized_data = serializers.AvailableShiftSerializer(query_set, many=True)
+
+        return Response(serialized_data.data, status.HTTP_202_ACCEPTED)
+    
+    else:
+        return HttpResponseNotAllowed
+    
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_open_shift(request):
+    if request.method == 'POST':
+        serialized_data = serializers.AvailableShiftSerializer(data=request.data)
+        serialized_data.is_valid(raise_exception=True)
+        serialized_data.save()
+
+        return Response({'message: success'}, status.HTTP_201_CREATED)
+
+    else:
+        return HttpResponseNotAllowed
+
+    
 
 @api_view(['POST'])
 @permission_classes([IsAdminUser])

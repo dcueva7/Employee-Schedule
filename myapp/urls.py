@@ -25,5 +25,6 @@ urlpatterns = [
     path('get_total_hours/', views.get_hours_current_week),
     path('create_recurring_schedule/', views.create_recurring_schedule),
     path('bulk_delete_shifts/', views.bulk_delete_shifts),
+    path('get_open_shifts/', views.get_open_shifts),
 
 ]
