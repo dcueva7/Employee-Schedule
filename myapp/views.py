@@ -165,6 +165,7 @@ class DeleteAdjustmentRequest(generics.DestroyAPIView):
     queryset = models.ShiftAdjustment.objects.all()
     serializer_class = serializers.ShiftAdjustmentSerializer
     
+    
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def retrieve_adjustments(request):

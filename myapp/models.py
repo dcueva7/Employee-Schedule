@@ -66,5 +66,4 @@ class AvailableShift(models.Model):
     start = models.TimeField(null=True)
     end = models.TimeField(null=True)
     date = models.DateField(null=True)
-    open = models.BooleanField()
 

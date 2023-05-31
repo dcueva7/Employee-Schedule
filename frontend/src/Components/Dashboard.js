@@ -24,6 +24,9 @@ import EmployeeShiftContext from '../EmployeeShiftContext';
 import useRole from '../Hooks/useRole';
 import ReviewRequestDialog from '../Overlay/ReviewRequestDialog';
 import useWeeklyHours from '../Hooks/useWeeklyHours';
+
+import useAddOpenShift from '../Hooks/useAddOpenShift';
+import useGetOpenShift from '../Hooks/useGetOpenShift';
   
 const Dashboard = () => {
 
@@ -43,6 +46,11 @@ const Dashboard = () => {
   const [ isOpen, setIsOpen ] = useState(false)
   const [ full, setFull ] = useState(false)
   const [ currentAdjustment, setCurrentAdjustment] = useState(null)
+
+  //state variables and funciton for open shifts
+  const addOpenShift = useAddOpenShift()
+  const [ openShifts, setOpenShifts ] = useState('')
+  const [ currentOpenShift, setCurrentOpenShift ] = useState('')
 
   const closeRequestDialog = () => {
     setIsOpen(false)
@@ -87,6 +95,7 @@ const Dashboard = () => {
               console.log(json)
               fetchShift()
               fetchAdjustments()
+              addOpenShift(currentAdjustment.start, currentAdjustment.end, currentAdjustment.date)
             })
 
             .catch(error => console.error(error))
