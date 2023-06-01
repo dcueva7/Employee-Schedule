@@ -23,6 +23,7 @@ function App() {
   const [ shifts, setShifts ] = useState([]);
   const [ employees, setEmployees ] = useState([])
   const [ adjustments, setAdjustments ] = useState([])
+  const [ openShifts, setOpenShifts ] = useState([])
 
   const authToken = Cookies.get('authToken')
   const fetchShift = useCallback(() => {
@@ -62,7 +63,9 @@ function App() {
         setEmployees, 
         adjustments, 
         setAdjustments,
-        fetchShift
+        fetchShift,
+        openShifts,
+        setOpenShifts,
       }} >
         <Router>
           <Routes>

@@ -3,8 +3,9 @@ import Cookies from 'js-cookie'
 
 const useGetOpenShift = () => {
 
-    const [ openShifts, setOpenShifts ] = useState('')
+
     const authToken = Cookies.get('authToken')
+    const [ openShifts, setOpenShifts ] = useState([])
     
     const fetchOpenShifts = useCallback(() => {
 
@@ -18,7 +19,6 @@ const useGetOpenShift = () => {
             .then(response => response.json())
             .then(json => {
                 setOpenShifts(json)
-                console.log(json)
             }).catch(error => console.error(error))
 
     }, [authToken])

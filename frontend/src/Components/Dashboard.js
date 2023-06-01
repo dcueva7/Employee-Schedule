@@ -26,18 +26,21 @@ import ReviewRequestDialog from '../Overlay/ReviewRequestDialog';
 import useWeeklyHours from '../Hooks/useWeeklyHours';
 
 import useAddOpenShift from '../Hooks/useAddOpenShift';
+import useGetOpenShift from '../Hooks/useGetOpenShift';
 // import useGetOpenShift from '../Hooks/useGetOpenShift';
   
 const Dashboard = () => {
 
   const authToken = useAuth();
   const role = useRole()
-  const { shifts, adjustments, setAdjustments, fetchShift } = useContext(EmployeeShiftContext)
+  const { shifts, adjustments, setAdjustments, fetchShift, openShifts, setOpenShifts } = useContext(EmployeeShiftContext)
 
   //fetch shifts on component mount
   useEffect(() => {
     fetchShift()
   }, [fetchShift])
+
+  setOpenShifts(useGetOpenShift())
 
   //fetch weekly hours for user
   const hours = useWeeklyHours()
@@ -224,7 +227,10 @@ const Dashboard = () => {
         {!role &&  
           <Box bg="white" boxShadow="sm" p={4}> 
             <Heading size='sm'>Shifts Available for coverage</Heading>
-            <Text size='md'>Hours scheduled for the week: {hours}</Text>
+            {openShifts.map((item) => {
+              <Text key={item.id} mt={4} mb={4}>{item.start} - {item.end} on {item.date}</Text>
+            })}
+            
           </Box>
         }
           
