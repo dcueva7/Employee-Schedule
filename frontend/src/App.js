@@ -19,13 +19,15 @@ import {
 
 function App() {
 
-  //state variables to be shared between Dashboard and Schedule components.  Will be set initially in Schedule component
+  //state variables to be shared between Dashboard and Schedule components.
   const [ shifts, setShifts ] = useState([]);
   const [ employees, setEmployees ] = useState([])
   const [ adjustments, setAdjustments ] = useState([])
   const [ openShifts, setOpenShifts ] = useState([])
 
   const authToken = Cookies.get('authToken')
+
+  //fetch all shifts
   const fetchShift = useCallback(() => {
     fetch('/shift/list_shifts/', {
         method: 'GET',

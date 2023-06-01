@@ -24,10 +24,9 @@ import EmployeeShiftContext from '../EmployeeShiftContext';
 import useRole from '../Hooks/useRole';
 import ReviewRequestDialog from '../Overlay/ReviewRequestDialog';
 import useWeeklyHours from '../Hooks/useWeeklyHours';
-
 import useAddOpenShift from '../Hooks/useAddOpenShift';
 import useGetOpenShift from '../Hooks/useGetOpenShift';
-// import useGetOpenShift from '../Hooks/useGetOpenShift';
+
   
 const Dashboard = () => {
 
@@ -40,10 +39,12 @@ const Dashboard = () => {
     fetchShift()
   }, [fetchShift])
 
-  setOpenShifts(useGetOpenShift())
-
   //fetch weekly hours for user
   const hours = useWeeklyHours()
+
+  //fetch open shifts
+  useGetOpenShift(setOpenShifts)
+
 
   //state variables and functions for Review Request Dialog
   const [ isOpen, setIsOpen ] = useState(false)
@@ -52,8 +53,7 @@ const Dashboard = () => {
 
   //state variables and funciton for open shifts
   const addOpenShift = useAddOpenShift()
-  // const [ openShifts, setOpenShifts ] = useState('')
-  // const [ currentOpenShift, setCurrentOpenShift ] = useState('')
+
 
   const closeRequestDialog = () => {
     setIsOpen(false)
@@ -228,8 +228,9 @@ const Dashboard = () => {
           <Box bg="white" boxShadow="sm" p={4}> 
             <Heading size='sm'>Shifts Available for coverage</Heading>
             {openShifts.map((item) => {
-              <Text key={item.id} mt={4} mb={4}>{item.start} - {item.end} on {item.date}</Text>
-            })}
+              return (
+                <Text key={item.id} mt={4} mb={4}>{item.start} - {item.end} on {item.date}</Text>
+            )})}
             
           </Box>
         }
