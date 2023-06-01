@@ -25,7 +25,9 @@ const useGetOpenShift = (setOpenShifts) => {
 
     useEffect(() => {
         fetchOpenShifts()
-    })
+    }, [fetchOpenShifts])
+
+    return fetchOpenShifts;
 
 }
 

@@ -1,8 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 import Cookies from 'js-cookie'
 
-
-
 const useWeeklyHours = () => {
 
     const [ hours, setHours ] = useState('')
@@ -24,10 +22,9 @@ const useWeeklyHours = () => {
 
     }, [authToken])
 
-
     useEffect(() => {
         fetchHours()
-    })
+    }, [fetchHours])
 
     return hours
 

@@ -13,7 +13,7 @@ const useAuth = () => {
         if (!authToken){
             nav('/sign_in')
         }
-    })
+    }, [authToken, nav])
 
     return authToken;
 

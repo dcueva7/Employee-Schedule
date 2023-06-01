@@ -43,7 +43,7 @@ const Dashboard = () => {
   const hours = useWeeklyHours()
 
   //fetch open shifts
-  useGetOpenShift(setOpenShifts)
+  const fetchOpenShifts = useGetOpenShift(setOpenShifts)
 
 
   //state variables and functions for Review Request Dialog
@@ -99,6 +99,7 @@ const Dashboard = () => {
               fetchShift()
               fetchAdjustments()
               addOpenShift(currentAdjustment.start, currentAdjustment.end, currentAdjustment.date)
+              fetchOpenShifts()
             })
 
             .catch(error => console.error(error))

@@ -30,7 +30,6 @@ class CreateShiftSerializer(serializers.ModelSerializer):
         model = models.Shift
         fields = '__all__'
         
-
 class AvailableShiftSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.AvailableShift
