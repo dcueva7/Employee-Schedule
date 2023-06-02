@@ -1,8 +1,10 @@
 
 import Cookies from "js-cookie";
+import { useToast } from '@chakra-ui/react';
 
 const useRecurringSchedule = () => {
 
+    const toast = useToast()
     const authToken = Cookies.get('authToken')
 
     const createRecurringSchedule = async (weeks, date) => {
@@ -24,6 +26,12 @@ const useRecurringSchedule = () => {
             }
 
             const json = await response.json();
+            toast({
+                title: 'Recurring Schedule Created',
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+              })
             console.log(json, 'Created recurring shifts');
             
         } catch (error) {
