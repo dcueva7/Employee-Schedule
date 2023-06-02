@@ -68,8 +68,15 @@ const Schedule = () => {
     const [baseDate, setBaseDate ] = useState('')
     const closeRecurringDialog = () => setRecurringDialogOpen(false)
     const confirmRecurringSchedule = () => {
-        console.log(weeks)
-        console.log(baseDate)
+        if (!weeks || !baseDate){
+            toast({
+                title: 'Please enter all fields',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+              })
+            return
+        }
         createRecurringSchedule(weeks, baseDate).then(() => fetchShift())
         setRecurringDialogOpen(false)
     }
@@ -79,6 +86,15 @@ const Schedule = () => {
     const [ deleteDate, setDeleteDate ] = useState('')
     const closeBulkDialog = () => setIsBulkDialogOpen(false)
     const bulkDelete = () => {
+        if (!deleteDate){
+            toast({
+                title: 'Please enter all fields',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+              })
+            return
+        }
 
         fetch('bulk_delete_shifts/',{
             method : 'POST',

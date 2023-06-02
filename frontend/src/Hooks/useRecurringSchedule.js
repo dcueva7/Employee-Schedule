@@ -8,6 +8,8 @@ const useRecurringSchedule = () => {
     const authToken = Cookies.get('authToken')
 
     const createRecurringSchedule = async (weeks, date) => {
+
+        
         try {
             const response = await fetch('create_recurring_schedule/', {
                 method: 'POST',
