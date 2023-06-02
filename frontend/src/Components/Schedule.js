@@ -17,6 +17,7 @@ import {
     FormLabel,
     Text,
     Flex,
+    useToast,
     } from '@chakra-ui/react';
 
 import { 
@@ -43,6 +44,9 @@ const Schedule = () => {
     const authToken = useAuth();
     const role = useRole();
     const loggedInUser = useUserId();
+
+    //Chakra Toast const
+    const toast = useToast()
 
     const { createRecurringSchedule } = useRecurringSchedule()
 
@@ -126,7 +130,14 @@ const Schedule = () => {
             })
                 .then(response => response.json())
                 .then(json => {
-                    console.log(json,'adjustment requested');
+                    console.log(json,'adjustment requested')
+                    toast({
+                        title: 'Time-off requested.',
+                        description: "Request has been made for full coverage.",
+                        status: 'success',
+                        duration: 9000,
+                        isClosable: true,
+                      })
                 })
                 .catch(error => console.log(error))
             
@@ -152,7 +163,14 @@ const Schedule = () => {
             })
                 .then(response => response.json())
                 .then(json => {
-                    console.log(json, 'adjustment requested');
+                    console.log(json, 'adjustment requested')
+                    toast({
+                        title: 'Time-off requested.',
+                        description: "Request has been made for partial coverage.",
+                        status: 'success',
+                        duration: 9000,
+                        isClosable: true,
+                      })
                 })
                 .catch(error => console.log(error))
             

@@ -11,6 +11,7 @@ import {
     Heading,
     Card,
     Text,
+    useToast,
 } from '@chakra-ui/react';
 
 import { TimeIcon, CheckCircleIcon } from '@chakra-ui/icons';
@@ -228,7 +229,7 @@ const Dashboard = () => {
         {!role &&  
           <Box bg="white" boxShadow="sm" p={4}> 
             <Heading size='sm'>Shifts Available for coverage</Heading>
-            {openShifts.map((item) => {
+            {openShifts.length && openShifts.map((item) => {
               return (
                 <Text key={item.id} mt={4} mb={4}>{item.start} - {item.end} on {item.date}</Text>
             )})}
