@@ -102,6 +102,12 @@ const Dashboard = () => {
               fetchAdjustments()
               addOpenShift(currentAdjustment.start, currentAdjustment.end, currentAdjustment.date)
               fetchOpenShifts()
+              toast({
+                title: 'Time-off request approved',
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+              })
             })
 
             .catch(error => console.error(error))
@@ -157,8 +163,14 @@ const Dashboard = () => {
             })
             .then(json => {
               console.log(json)
-              
+              fetchShift()
               fetchAdjustments()
+              toast({
+                title: 'Time-off request approved',
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+              })
             })
             .catch(error => console.error(error))
             
