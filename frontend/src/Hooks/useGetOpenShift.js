@@ -17,6 +17,7 @@ const useGetOpenShift = (setOpenShifts) => {
         )
             .then(response => response.json())
             .then(json => {
+                console.log('fetched open shifts')
                 setOpenShifts(json)
             }).catch(error => console.error(error))
 

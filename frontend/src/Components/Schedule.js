@@ -88,7 +88,7 @@ const Schedule = () => {
             .then(response => response.json())
             .then(json => {
                 fetchShift()
-                console.log(json)
+                console.log(json, 'bulk deleted shifts')
             })
             .catch(error => console.log(error))
 
@@ -126,7 +126,7 @@ const Schedule = () => {
             })
                 .then(response => response.json())
                 .then(json => {
-                    console.log(json);
+                    console.log(json,'adjustment requested');
                 })
                 .catch(error => console.log(error))
             
@@ -152,7 +152,7 @@ const Schedule = () => {
             })
                 .then(response => response.json())
                 .then(json => {
-                    console.log(json);
+                    console.log(json, 'adjustment requested');
                 })
                 .catch(error => console.log(error))
             
@@ -258,7 +258,7 @@ const Schedule = () => {
         })
             .then(response => response.json())
             .then(json => {
-                console.log(json);
+                console.log(json, 'updated a shift');
                 fetchShift();
             })
             .catch(error => console.log(error))

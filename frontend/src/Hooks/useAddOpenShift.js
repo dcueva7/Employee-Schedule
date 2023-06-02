@@ -20,7 +20,7 @@ const useAddOpenShift = () => {
         })
             .then(response => response.json())
             .then(json => {
-                console.log(json)
+                console.log('added open shift')
             }).catch(error => console.error(error))
 
     }

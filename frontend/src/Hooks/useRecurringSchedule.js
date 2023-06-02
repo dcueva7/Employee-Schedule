@@ -24,7 +24,7 @@ const useRecurringSchedule = () => {
             }
 
             const json = await response.json();
-            console.log(json);
+            console.log(json, 'Created recurring shifts');
             
         } catch (error) {
             console.error(error);
