@@ -93,6 +93,13 @@ const Schedule = () => {
             .then(json => {
                 fetchShift()
                 console.log(json, 'bulk deleted shifts')
+                toast({
+                    title: 'Delete succesful',
+                    description: `All shifts including and after ${deleteDate} have been deleted`,
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                  })
             })
             .catch(error => console.log(error))
 
@@ -234,7 +241,12 @@ const Schedule = () => {
     //add shift onClose
     const addShift = () => {
         if (!student || !date || !startTime || !endTime) {
-            alert('All fields must be filled in before submitting.');
+            toast({
+                title: 'Please enter all fields',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+              })
             return;
         }
         fetch('/shift/add_shift/', {
@@ -249,6 +261,12 @@ const Schedule = () => {
             .then(json => {
                 console.log(json, 'added a shift');
                 fetchShift();
+                toast({
+                    title: 'Shift added',
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                  })
             })
             .catch(error => console.log(error))
         
@@ -278,6 +296,12 @@ const Schedule = () => {
             .then(json => {
                 console.log(json, 'updated a shift');
                 fetchShift();
+                toast({
+                    title: 'Shift updated.',
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                  })
             })
             .catch(error => console.log(error))
         
@@ -292,7 +316,15 @@ const Schedule = () => {
                 'Authorization' : `Token ${authToken}`,
             },
         })
-            .then(() => fetchShift())
+            .then(() => {
+                toast({
+                    title: 'Shift deleted',
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                  })
+                fetchShift()
+            })
             .catch(error => console.log(error))
 
         resetInputs()

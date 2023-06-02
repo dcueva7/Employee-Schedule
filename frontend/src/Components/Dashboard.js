@@ -32,7 +32,8 @@ import useGetOpenShift from '../Hooks/useGetOpenShift';
 const Dashboard = () => {
 
   const authToken = useAuth();
-  const role = useRole()
+  const role = useRole();
+  const toast = useToast()
   const { shifts, adjustments, setAdjustments, fetchShift, openShifts, setOpenShifts } = useContext(EmployeeShiftContext)
 
   //fetch shifts on component mount
