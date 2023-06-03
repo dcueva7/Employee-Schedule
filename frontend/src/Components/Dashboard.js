@@ -244,7 +244,7 @@ const Dashboard = () => {
             <Heading size='sm'>Shifts Available for coverage</Heading>
             {openShifts.length && openShifts.map((item) => {
               return (
-                <Card key={item.id} padding={6} mt={4} mb={4}>{item.start} - {item.end} on {item.date} <Button>Cover Shift</Button></Card>
+                <Card key={item.id} padding={6} mt={4} mb={4}>{item.date} from {item.start} to {item.end} <Button>Cover Shift</Button></Card>
             )})}
             
           </Box>
