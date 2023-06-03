@@ -47,20 +47,55 @@ const Dashboard = () => {
   //fetch open shifts
   const fetchOpenShifts = useGetOpenShift(setOpenShifts)
 
+  //state variables and funciton for open shifts
+  const addOpenShift = useAddOpenShift()
+
+  //state variables and functions for Confirm Coverage Dialog
+  const [ isConfirmCoverageDialogOpen, setIsConfirmCoverageDialogOpen ] = useState(false)
+  const closeConfirmCoverageDialog = () => {
+    setIsConfirmCoverageDialogOpen(false)
+  }
+  const confirmShiftCoverage = (shift) => {
+
+    fetch('/shift/add_shift/', {
+      method : 'POST',
+      headers : {
+          'Content-type' : 'application/json',
+          'Authorization': `Token ${authToken}`
+      },
+      body : JSON.stringify({
+        student : '', //need to grab users employee id somehow
+        start_time : shift.start_time,
+        end_time : shift.end_time,
+        date : shift.date,
+      })
+    })
+      .then(response => response.json())
+      .then(json => {
+          console.log(json, 'added a shift');
+          fetchShift();
+          toast({
+              title: 'Shift Coverage Accepted',
+              status: 'success',
+              duration: 9000,
+              isClosable: true,
+            })
+      })
+      .catch(error => console.log(error))
+
+      //add fetch call to delete available shift from database
+
+
+
+  }
 
   //state variables and functions for Review Request Dialog
   const [ isOpen, setIsOpen ] = useState(false)
   const [ full, setFull ] = useState(false)
   const [ currentAdjustment, setCurrentAdjustment] = useState(null)
-
-  //state variables and funciton for open shifts
-  const addOpenShift = useAddOpenShift()
-
-
   const closeRequestDialog = () => {
     setIsOpen(false)
   }
-
   const approveRequest = () => {
     if(full){
       fetch(`/shift/delete_shift/${currentAdjustment.shift_id}/`, {
@@ -176,17 +211,15 @@ const Dashboard = () => {
             
 
         }).catch(error => console.error(error))
-    }
-
-    
+    }  
     setIsOpen(false)
   }
-
   const reviewRequest = (adjustment) => {
     setIsOpen(true)
     setFull(adjustment.type_of_coverage === 'full')
     setCurrentAdjustment(adjustment)
   }
+
 
   const fetchAdjustments = useCallback(() => {
     fetch('retrieve_adjustments/', {
@@ -217,6 +250,7 @@ const Dashboard = () => {
     fetchAdjustments()
   }, [fetchAdjustments])
      
+
   return (
       <Box>
         <Nav />
@@ -244,7 +278,7 @@ const Dashboard = () => {
             <Heading size='sm'>Shifts Available for coverage</Heading>
             {openShifts.length && openShifts.map((item) => {
               return (
-                <Card key={item.id} padding={6} mt={4} mb={4}>{item.date} from {item.start} to {item.end} <Button>Cover Shift</Button></Card>
+                <Card key={item.id} padding={6} mt={4} mb={4}>{item.date} from {item.start} to {item.end} <Button onClick={() => {confirmShiftCoverage(item)}}>Cover Shift</Button></Card>
             )})}
             
           </Box>

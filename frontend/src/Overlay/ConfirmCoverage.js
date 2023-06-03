@@ -18,9 +18,9 @@ const ConfirmCoverage = (props) => {
     return (
         <>
             <AlertDialog
-                isOpen={props.bulkDeleteDialogOpen}
+                isOpen={props.confirmCoverageDialogOpen}
                 leastDestructiveRef={cancelRef}
-                onClose={props.alertClose}
+                onClose={props.closeConfirmCoverageDialog}
             >
             <AlertDialogOverlay>
                 <AlertDialogContent>
@@ -35,10 +35,10 @@ const ConfirmCoverage = (props) => {
                     </AlertDialogBody>
 
                     <AlertDialogFooter>
-                    <Button ref={cancelRef} onClick={props.alertClose}>
+                    <Button ref={cancelRef} onClick={props.closeConfirmCoverageDialog}>
                         Cancel
                     </Button>
-                    <Button colorScheme='red' onClick={props.confirm} ml={3}>
+                    <Button colorScheme='red' onClick={props.confirmShiftCoverage} ml={3}>
                         Confirm
                     </Button>
                     </AlertDialogFooter>
