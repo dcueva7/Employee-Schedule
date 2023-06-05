@@ -55,8 +55,9 @@ const Dashboard = () => {
   const userId = useUserId()
   const [ currentEmployee, setCurrentEmployee ] = useState('')
 
+  //set employee id for current user
   useEffect(() => {
-    setCurrentEmployee(employees.filter((employee) => employee.user === userId))
+    setCurrentEmployee(employees.find((employee) => employee.user === userId))
   }, [employees, userId])
 
   //state variables and functions for Confirm Coverage Dialog
