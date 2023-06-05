@@ -90,7 +90,20 @@ const Dashboard = () => {
               duration: 9000,
               isClosable: true,
             })
-        }).catch(error => console.log(error))
+        })
+          .then(
+            fetch(`/delete_open_shift/${shift.id}/`,{
+            method : 'DELETE',
+            headers : {
+                'Authorization' : `Token ${authToken}`,
+            },
+        })
+            .then(() => {
+                fetchShift()
+            })
+            .catch(error => console.log(error))
+          )
+          .catch(error => console.log(error))
 
       //add fetch call to delete available shift from database
 
