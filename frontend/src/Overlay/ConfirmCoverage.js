@@ -18,7 +18,7 @@ const ConfirmCoverage = (props) => {
     return (
         <>
             <AlertDialog
-                isOpen={props.confirmCoverageDialogOpen}
+                isOpen={props.isConfirmCoverageDialogOpen}
                 leastDestructiveRef={cancelRef}
                 onClose={props.closeConfirmCoverageDialog}
             >

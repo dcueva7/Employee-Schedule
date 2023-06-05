@@ -28,6 +28,7 @@ import useWeeklyHours from '../Hooks/useWeeklyHours';
 import useAddOpenShift from '../Hooks/useAddOpenShift';
 import useGetOpenShift from '../Hooks/useGetOpenShift';
 import useUserId from '../Hooks/useUserId';
+import ConfirmCoverage from '../Overlay/ConfirmCoverage';
 
   
 const Dashboard = () => {
@@ -52,6 +53,11 @@ const Dashboard = () => {
   const addOpenShift = useAddOpenShift()
 
   const userId = useUserId()
+  const [ currentEmployee, setCurrentEmployee ] = useState('')
+
+  useEffect(() => {
+    setCurrentEmployee(employees.filter((employee) => employee.user === userId))
+  }, [employees, userId])
 
   //state variables and functions for Confirm Coverage Dialog
   const [ isConfirmCoverageDialogOpen, setIsConfirmCoverageDialogOpen ] = useState(false)
@@ -60,8 +66,6 @@ const Dashboard = () => {
   }
   const confirmShiftCoverage = (shift) => {
 
-    const currentEmployee = employees.filter()
-
     fetch('/shift/add_shift/', {
       method : 'POST',
       headers : {
@@ -69,7 +73,7 @@ const Dashboard = () => {
           'Authorization': `Token ${authToken}`
       },
       body : JSON.stringify({
-        student : '', //need to grab users employee id somehow
+        student : currentEmployee.id, 
         start_time : shift.start_time,
         end_time : shift.end_time,
         date : shift.date,
@@ -307,6 +311,12 @@ const Dashboard = () => {
             start={currentAdjustment?.start}
             end={currentAdjustment?.end}
             approveRequest={approveRequest}
+          />
+
+          <ConfirmCoverage 
+            isConfirmCoverageDialogOpen={isConfirmCoverageDialogOpen}
+            closeConfirmCoverageDialog={closeConfirmCoverageDialog}
+            confirmShiftCoverage={confirmShiftCoverage}
           />
               
 
