@@ -94,6 +94,8 @@ const Dashboard = () => {
 
       //add fetch call to delete available shift from database
 
+      closeConfirmCoverageDialog()
+
   }
 
   //state variables and functions for Review Request Dialog

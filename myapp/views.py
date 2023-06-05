@@ -83,6 +83,10 @@ def add_open_shift(request):
 
     else:
         return HttpResponseNotAllowed
+    
+class DeleteOpenShift(generics.DestroyAPIView):
+    queryset = models.AvailableShift.objects.all()
+    serializer_class = serializers.AvailableShiftSerializer
 
     
 
