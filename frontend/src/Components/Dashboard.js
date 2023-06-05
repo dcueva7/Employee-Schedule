@@ -27,6 +27,7 @@ import ReviewRequestDialog from '../Overlay/ReviewRequestDialog';
 import useWeeklyHours from '../Hooks/useWeeklyHours';
 import useAddOpenShift from '../Hooks/useAddOpenShift';
 import useGetOpenShift from '../Hooks/useGetOpenShift';
+import useUserId from '../Hooks/useUserId';
 
   
 const Dashboard = () => {
@@ -34,7 +35,7 @@ const Dashboard = () => {
   const authToken = useAuth();
   const role = useRole();
   const toast = useToast()
-  const { shifts, adjustments, setAdjustments, fetchShift, openShifts, setOpenShifts } = useContext(EmployeeShiftContext)
+  const { shifts, adjustments, setAdjustments, fetchShift, openShifts, setOpenShifts, employees } = useContext(EmployeeShiftContext)
 
   //fetch shifts on component mount
   useEffect(() => {
@@ -50,12 +51,16 @@ const Dashboard = () => {
   //state variables and funciton for open shifts
   const addOpenShift = useAddOpenShift()
 
+  const userId = useUserId()
+
   //state variables and functions for Confirm Coverage Dialog
   const [ isConfirmCoverageDialogOpen, setIsConfirmCoverageDialogOpen ] = useState(false)
   const closeConfirmCoverageDialog = () => {
     setIsConfirmCoverageDialogOpen(false)
   }
   const confirmShiftCoverage = (shift) => {
+
+    const currentEmployee = employees.filter()
 
     fetch('/shift/add_shift/', {
       method : 'POST',
@@ -80,12 +85,9 @@ const Dashboard = () => {
               duration: 9000,
               isClosable: true,
             })
-      })
-      .catch(error => console.log(error))
+        }).catch(error => console.log(error))
 
       //add fetch call to delete available shift from database
-
-
 
   }
 

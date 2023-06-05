@@ -225,7 +225,8 @@ const Schedule = () => {
                 console.log(json, 'fetched all employees')
                 const data = json.map(item => ({
                     name : `${item.first_name} ${item.last_name}`,
-                    id : item.id
+                    id : item.id,
+                    user : item.user,
                 }));
                 setEmployees(data)
                 
