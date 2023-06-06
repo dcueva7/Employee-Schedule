@@ -53,6 +53,7 @@ const Dashboard = () => {
   const addOpenShift = useAddOpenShift()
 
   const userId = useUserId()
+
   const [ currentEmployee, setCurrentEmployee ] = useState('')
 
   //set employee id for current user
@@ -62,11 +63,17 @@ const Dashboard = () => {
 
   //state variables and functions for Confirm Coverage Dialog
   const [ isConfirmCoverageDialogOpen, setIsConfirmCoverageDialogOpen ] = useState(false)
+  const [ currentOpenShift, setCurrentOpenShift ] = useState('')
   const closeConfirmCoverageDialog = () => {
     setIsConfirmCoverageDialogOpen(false)
   }
-  const confirmShiftCoverage = (shift) => {
-
+  const triggerConfirmCoverage = (shift) => {
+    setCurrentOpenShift(shift)
+    setIsConfirmCoverageDialogOpen(true)
+    console.log(shift)
+    console.log(currentEmployee)
+  }
+  const confirmShiftCoverage = () => {
     fetch('/shift/add_shift/', {
       method : 'POST',
       headers : {
@@ -74,10 +81,10 @@ const Dashboard = () => {
           'Authorization': `Token ${authToken}`
       },
       body : JSON.stringify({
-        student : currentEmployee.id, 
-        start_time : shift.start_time,
-        end_time : shift.end_time,
-        date : shift.date,
+        student : currentEmployee.user, 
+        start_time : currentOpenShift.start_time,
+        end_time : currentOpenShift.end_time,
+        date : currentOpenShift.date,
       })
     })
       .then(response => response.json())
@@ -92,20 +99,18 @@ const Dashboard = () => {
             })
         })
           .then(
-            fetch(`/delete_open_shift/${shift.id}/`,{
+            fetch(`/delete_open_shift/${currentOpenShift.id}/`,{
             method : 'DELETE',
             headers : {
                 'Authorization' : `Token ${authToken}`,
             },
-        })
+            })
             .then(() => {
                 fetchShift()
             })
             .catch(error => console.log(error))
           )
           .catch(error => console.log(error))
-
-      //add fetch call to delete available shift from database
 
       closeConfirmCoverageDialog()
 
@@ -288,7 +293,7 @@ const Dashboard = () => {
           {!role &&
             <Box bg="white" boxShadow="sm" p={4}>
               <Heading size='sm'>My time off requests:</Heading>
-              {adjustments.map((adjustment) => {
+              {adjustments.length && adjustments.map((adjustment) => {
                 return(
                   <Text key={adjustment.adj_id} mt={4} mb={4}>{adjustment.type_of_coverage} coverage request on {adjustment.date} Status: {adjustment.approved && <CheckCircleIcon color={'green'}/>} {!adjustment.approved && <TimeIcon color='red'/>} </Text>
                 )
@@ -300,7 +305,7 @@ const Dashboard = () => {
             <Heading size='sm'>Shifts Available for coverage</Heading>
             {openShifts.length && openShifts.map((item) => {
               return (
-                <Card key={item.id} padding={6} mt={4} mb={4}>{item.date} from {item.start} to {item.end} <Button onClick={() => {confirmShiftCoverage(item)}}>Cover Shift</Button></Card>
+                <Card key={item.id} padding={6} mt={4} mb={4}>{item.date} from {item.start} to {item.end} <Button onClick={() => triggerConfirmCoverage(item)}>Cover Shift</Button></Card>
             )})}
             
           </Box>

@@ -38,7 +38,7 @@ const ConfirmCoverage = (props) => {
                     <Button ref={cancelRef} color='red' onClick={props.closeConfirmCoverageDialog}>
                         Cancel
                     </Button>
-                    <Button color='blue' onClick={props.confirmShiftCoverage} ml={3}>
+                    <Button onClick={props.confirmShiftCoverage} ml={3}>
                         Confirm
                     </Button>
                     </AlertDialogFooter>
