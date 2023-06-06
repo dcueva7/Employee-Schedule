@@ -27,6 +27,6 @@ urlpatterns = [
     path('bulk_delete_shifts/', views.bulk_delete_shifts),
     path('get_open_shifts/', views.get_open_shifts),
     path('add_open_shift/', views.add_open_shift),
-    path('delete_open_shift/<int:pk>', views.DeleteOpenShift.as_view()),
+    path('delete_open_shift/<int:pk>/', views.DeleteOpenShift.as_view()),
 
 ]

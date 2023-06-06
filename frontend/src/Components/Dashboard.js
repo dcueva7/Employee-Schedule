@@ -70,7 +70,7 @@ const Dashboard = () => {
   const triggerConfirmCoverage = (shift) => {
     setCurrentOpenShift(shift)
     setIsConfirmCoverageDialogOpen(true)
-    console.log(shift)
+    console.log(currentOpenShift)
     console.log(currentEmployee)
   }
   const confirmShiftCoverage = () => {
@@ -81,9 +81,9 @@ const Dashboard = () => {
           'Authorization': `Token ${authToken}`
       },
       body : JSON.stringify({
-        student : currentEmployee.user, 
-        start_time : currentOpenShift.start_time,
-        end_time : currentOpenShift.end_time,
+        student : currentEmployee.id, 
+        start_time : currentOpenShift.start,
+        end_time : currentOpenShift.end,
         date : currentOpenShift.date,
       })
     })
