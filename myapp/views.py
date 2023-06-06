@@ -41,7 +41,7 @@ def send_notifs(request):
     send_mail(
         'Subject here',
         'Here is the message.',
-        'dcueva@usc.edu',
+        'dnlcueva@hotmail.com',
         ['dnlcueva@hotmail.com'],
         fail_silently=False,
     )
