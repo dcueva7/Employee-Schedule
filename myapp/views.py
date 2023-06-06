@@ -27,6 +27,27 @@ def createSchedule():
 
     return 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def send_notifs(request):
+
+    email_recipients = []
+    employees = models.Employee.objects.all()
+
+    for worker in employees:
+        if(worker.user != request.user.id):
+            email_recipients.append(worker.email)
+
+    send_mail(
+        'Subject here',
+        'Here is the message.',
+        'dcueva@usc.edu',
+        ['dnlcueva@hotmail.com'],
+        fail_silently=False,
+    )
+
+    return Response({'List of recipients' : email_recipients}, status.HTTP_202_ACCEPTED)
+
 
 #funciton to create recurring schedule based on schedule during given week
 @api_view(['POST'])
