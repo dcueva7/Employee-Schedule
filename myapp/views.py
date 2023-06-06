@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import generics, status
 from . import serializers
 from . import models
@@ -11,6 +10,7 @@ from datetime import *
 from django.utils import timezone
 from django.db import transaction
 from django.core.mail import send_mail
+
 
 from pulp import *
 # Create your views here.
