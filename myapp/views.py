@@ -30,7 +30,6 @@ def createSchedule():
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def send_notifs(request):
-
     email_recipients = []
     employees = models.Employee.objects.all()
 
