@@ -172,6 +172,16 @@ const Dashboard = () => {
                 isClosable: true,
               })
             })
+              .then(
+                fetch('/send_notifs/', {
+                  method: 'POST',
+                  headers: {
+                      'Authorization': `Token ${authToken}`,
+                  },
+                  body : JSON.stringify({'user' : currentAdjustment.user})
+                }).then(response => response.json())
+                  .then(json => console.log(json))
+              )
 
             .catch(error => console.error(error))
             

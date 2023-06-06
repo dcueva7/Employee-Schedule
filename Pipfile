@@ -12,6 +12,7 @@ pulp = "*"
 django-cors-headers = "*"
 django-ses = "*"
 python-dotenv = "*"
+celery = "*"
 
 [dev-packages]
 

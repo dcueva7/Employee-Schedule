@@ -27,19 +27,19 @@ def createSchedule():
 
     return 
 
-@api_view(['GET'])
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def send_notifs(request):
     email_recipients = []
     employees = models.Employee.objects.all()
 
     for worker in employees:
-        if(worker.user != request.user.id):
+        if(worker.user != request['user']):
             email_recipients.append(worker.email)
 
     send_mail(
-        'Subject here',
-        'Here is the message.',
+        'Open Shift',
+        'A shift is available for coverage.  If you are interested please log-in and review the shift in the Dashboard',
         'dnlcueva@hotmail.com',
         ['dnlcueva@hotmail.com'],
         fail_silently=False,
