@@ -10,6 +10,7 @@ from django.http import Http404, HttpResponseNotAllowed
 from datetime import *
 from django.utils import timezone
 from django.db import transaction
+from django.core.mail import send_mail
 
 from pulp import *
 # Create your views here.

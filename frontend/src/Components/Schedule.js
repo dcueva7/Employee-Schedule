@@ -156,7 +156,6 @@ const Schedule = () => {
                     console.log(json,'adjustment requested')
                     toast({
                         title: 'Time-off requested.',
-                        description: "Request has been made for full coverage.",
                         status: 'success',
                         duration: 9000,
                         isClosable: true,

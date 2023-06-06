@@ -107,6 +107,7 @@ const Dashboard = () => {
             })
             .then(() => {
                 fetchShift()
+                fetchOpenShifts()
             })
             .catch(error => console.log(error))
           )
