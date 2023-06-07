@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth.models import User
 
 from . import models
 
@@ -19,9 +20,10 @@ class EmployeeSerializer(serializers.ModelSerializer):
         fields = ['id','first_name', 'last_name', 'color', 'user']
 
 class AddEmployeeSerializer(serializers.ModelSerializer):
+    user = serializers.SlugRelatedField(queryset = User.objects.all(), slug_field = 'username')
     class Meta:
         model = models.Employee
-        fields = '__all__'
+        fields = ['first_name','last_name', 'user', 'email', 'color']
 
 
 class ShiftSerializer(serializers.ModelSerializer):
