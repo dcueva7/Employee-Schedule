@@ -49,7 +49,6 @@ const Nav = () => {
                     <ButtonGroup variant="link" spacing={4}>
                         <Button color='black' onClick={() => nav('/dashboard')}>Dashboard</Button>
                         <Button color='black' onClick={() => nav('/')}>Schedule</Button>
-                        <Button color='black'>Availability</Button>
                     </ButtonGroup>
                 </Flex>
 

@@ -36,7 +36,6 @@ import useRecurringSchedule from '../Hooks/useRecurringSchedule';
 
 import CreateRecurringScheduleDialog from '../Overlay/CreateRecurringScheduleDialog';
 import BulkDeleteDialog from '../Overlay/BulkDeleteDialog';
-import useGetOpenShift from '../Hooks/useGetOpenShift';
 
 const Schedule = () => {
 
@@ -48,7 +47,7 @@ const Schedule = () => {
 
     const { createRecurringSchedule } = useRecurringSchedule()
 
-    const {shifts, employees, setEmployees, fetchShift, setOpenShifts, role } = useContext(EmployeeShiftContext)
+    const {shifts, employees, setEmployees, fetchShift, fetchOpenShifts, role } = useContext(EmployeeShiftContext)
 
     //isOpen state variable for the "addShift" Modal
     const [ isOpen, setIsOpen ] = useState(false)
@@ -58,7 +57,6 @@ const Schedule = () => {
     const [ placeholder, setPlaceholder ] = useState('') //state to hold placeholder when updating shifts
 
     //fetch openShifts
-    const fetchOpenShifts = useGetOpenShift(setOpenShifts)
     useEffect(() => {
         fetchOpenShifts()
     },[fetchOpenShifts])
@@ -385,11 +383,11 @@ const Schedule = () => {
                             </FormControl>
                             <FormControl>
                                 <FormLabel>Date</FormLabel>
-                                    <Input type='date' onChange={(e) => setDate(e.target.value)} value={date}/>
+                                    <Input type='date' onChange={(e) => setDate(e.target.value)} value={date} />
                             </FormControl>
                             <FormControl>
                                 <FormLabel>Start Time</FormLabel>
-                                    <Input type='time' value={startTime} onChange={(e) => setStartTime(e.target.value)} />
+                                    <Input type='time' value={startTime} onChange={(e) => setStartTime(e.target.value)}  />
                             </FormControl>
                             <FormControl>
                                 <FormLabel>End Time</FormLabel>
@@ -400,8 +398,8 @@ const Schedule = () => {
                         <ModalFooter>
                             <Button 
                                 onClick={() => {
-                                    setIsOpen(false);
                                     resetInputs();
+                                    setIsOpen(false);
                                 }} 
                                 color='red'>Cancel</Button>
 
@@ -452,8 +450,8 @@ const Schedule = () => {
                             <Box>
                                 <Button 
                                     onClick={() => {
-                                        setEventModalOpen(false);
                                         resetInputs();
+                                        setEventModalOpen(false);
                                     }} 
                                     color='red'>Cancel</Button>
                                 <Button onClick={updateShift} ml={3}>Submit</Button>

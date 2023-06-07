@@ -24,7 +24,6 @@ import EmployeeShiftContext from '../EmployeeShiftContext';
 import ReviewRequestDialog from '../Overlay/ReviewRequestDialog';
 import useWeeklyHours from '../Hooks/useWeeklyHours';
 import useAddOpenShift from '../Hooks/useAddOpenShift';
-import useGetOpenShift from '../Hooks/useGetOpenShift';
 import useUserId from '../Hooks/useUserId';
 import ConfirmCoverage from '../Overlay/ConfirmCoverage';
 
@@ -33,18 +32,16 @@ const Dashboard = () => {
 
   const authToken = useAuth();
   const toast = useToast()
-  const { shifts, adjustments, fetchShift, openShifts, setOpenShifts, employees, fetchAdjustments, role } = useContext(EmployeeShiftContext)
+  const { shifts, adjustments, fetchShift, openShifts, fetchOpenShifts, employees, fetchAdjustments, role } = useContext(EmployeeShiftContext)
 
-  //fetch shifts on component mount
+  //fetch shifts and openShifts on component mount
   useEffect(() => {
     fetchShift()
-  }, [fetchShift])
+    fetchOpenShifts()
+  }, [fetchShift, fetchOpenShifts])
 
   //fetch weekly hours for user
   const hours = useWeeklyHours()
-
-  //fetch open shifts
-  const fetchOpenShifts = useGetOpenShift(setOpenShifts)
 
   //state variables and funciton for open shifts
   const addOpenShift = useAddOpenShift()

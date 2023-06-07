@@ -7,7 +7,7 @@ import Dashboard from './Components/Dashboard';
 import EmployeeShiftContext from './EmployeeShiftContext';
 import { useState, useCallback } from 'react';
 import useRole from './Hooks/useRole';
-
+import useGetOpenShift from './Hooks/useGetOpenShift';
 import Cookies from 'js-cookie'
 
 import {
@@ -20,13 +20,16 @@ import {
 
 function App() {
 
+  const authToken = Cookies.get('authToken')
+
   //state variables to be shared between Dashboard and Schedule components.
   const [ shifts, setShifts ] = useState([]);
   const [ employees, setEmployees ] = useState([])
   const [ adjustments, setAdjustments ] = useState([])
   const [ openShifts, setOpenShifts ] = useState([])
+  
 
-  const authToken = Cookies.get('authToken')
+  const fetchOpenShifts = useGetOpenShift(setOpenShifts)
 
   const role = useRole()
 
@@ -104,6 +107,7 @@ function App() {
         setAdjustments,
         fetchShift,
         openShifts,
+        fetchOpenShifts,
         setOpenShifts,
         fetchAdjustments,
         role

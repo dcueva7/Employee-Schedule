@@ -1,12 +1,14 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import Cookies from 'js-cookie'
 
 const useGetOpenShift = (setOpenShifts) => {
 
-
     const authToken = Cookies.get('authToken')
     
     const fetchOpenShifts = useCallback(() => {
+        if (!authToken){
+            return
+        }
 
         fetch('get_open_shifts/', {
             method : 'GET',
@@ -22,11 +24,6 @@ const useGetOpenShift = (setOpenShifts) => {
             }).catch(error => console.error(error))
 
     }, [authToken, setOpenShifts])
-
-
-    useEffect(() => {
-        fetchOpenShifts()
-    }, [fetchOpenShifts])
 
     return fetchOpenShifts;
 
