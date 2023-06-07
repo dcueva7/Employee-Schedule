@@ -8,6 +8,9 @@ const useUserId = () => {
     const [ id, setId] = useState('')
 
     useEffect(() => {
+        if(!authToken){
+            return
+        }
         fetch('/get_id/',{
             method: 'GET',
             headers: {

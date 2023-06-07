@@ -12,12 +12,16 @@ import {
     PopoverCloseButton,
     PopoverHeader,
     PopoverBody,
+    Image, 
+    Badge,
+    Heading,
+    useDisclosure
  } from '@chakra-ui/react';
-import {BellIcon} from '@chakra-ui/icons'
-import { Image, Badge } from '@chakra-ui/react';
+import {BellIcon, SettingsIcon} from '@chakra-ui/icons'
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import EmployeeShiftContext from '../EmployeeShiftContext';
+import Settings from './Settings';
 
 
 
@@ -28,6 +32,9 @@ const Nav = () => {
     const nav = useNavigate()
 
     const { openShifts, adjustments, fetchAdjustments, role } = useContext(EmployeeShiftContext)
+
+    //states for Settings drawer
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     useEffect(() => {
         fetchAdjustments()
@@ -43,6 +50,11 @@ const Nav = () => {
 
     return (
         <Box as="nav" p={4} shadow="md" bg="white">
+            <Settings 
+                isOpen={isOpen}
+                onClose={onClose}
+            />
+
             <Flex align="center" justify="space-between">
                 <Flex align="center" marginRight={12}>
                     <Image src="/logo-viterbi.png" alt="Logo" width='200px' mr={4} />
@@ -53,6 +65,7 @@ const Nav = () => {
                 </Flex>
 
                 <HStack spacing={4}>
+                    <Heading size='sm'>Welcome, Daniel</Heading><IconButton onClick={onOpen} icon={<SettingsIcon />}/>
                     <Popover>
                         <PopoverTrigger>
                             <IconButton icon={<BellIcon/>} />
