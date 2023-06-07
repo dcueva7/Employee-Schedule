@@ -32,6 +32,10 @@ function App() {
 
   //fetch all shifts
   const fetchShift = useCallback(() => {
+    if (!authToken){
+      return
+    }
+
     fetch('/shift/list_shifts/', {
         method: 'GET',
         headers: {
@@ -60,6 +64,11 @@ function App() {
   }, [authToken])
 
   const fetchAdjustments = useCallback(() => {
+
+    if (!authToken){
+      return
+    }
+
     fetch('retrieve_adjustments/', {
       method: 'GET',
       headers: {

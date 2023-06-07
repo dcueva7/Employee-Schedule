@@ -8,6 +8,10 @@ const useRole = () => {
     const [ manager, setManager] = useState(false)
 
     useEffect(() => {
+        if(!authToken){
+            return
+        }
+
         fetch('/check_manager/',{
             method: 'GET',
             headers: {
