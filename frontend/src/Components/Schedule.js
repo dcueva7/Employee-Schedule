@@ -555,7 +555,6 @@ const Schedule = () => {
                     slotEventOverlap={false}
                     allDaySlot={false}
                     eventClick={(info) => {
-
                         if (role){
                             setPlaceholder(info.event.title)
                             setStudent(info.event.extendedProps.employee_id)
@@ -565,8 +564,7 @@ const Schedule = () => {
                             setSelectedEvent(info.event)
                             setEventModalOpen(true)
                         }
-    
-                    
+           
                         else if(info.event.extendedProps.student_id === loggedInUser ){
                             setStartTime(info.event.startStr.substring(11,16)) 
                             setEndTime(info.event.endStr.substring(11,16))
@@ -575,7 +573,6 @@ const Schedule = () => {
                             setDate(info.event.startStr.substring(0,10))
                             setEmployeeModalOpen(true)
                         }
-                        
                     }}      
                 />
             </Container>

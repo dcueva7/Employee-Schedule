@@ -15,10 +15,10 @@ import {
  } from '@chakra-ui/react';
 import {BellIcon} from '@chakra-ui/icons'
 import { Image, Badge } from '@chakra-ui/react';
-
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import EmployeeShiftContext from '../EmployeeShiftContext';
+import useRole from '../Hooks/useRole';
 
 
 
@@ -28,7 +28,13 @@ const Nav = () => {
 
     const nav = useNavigate()
 
-    const { openShifts, adjustments, setAdjustments } = useContext(EmployeeShiftContext)
+    const role = useRole()
+
+    const { openShifts, adjustments, setAdjustments, fetchAdjustments } = useContext(EmployeeShiftContext)
+
+    useEffect(() => {
+        fetchAdjustments()
+    },[fetchAdjustments])
 
     return (
         <Box as="nav" p={4} shadow="md" bg="white">
@@ -51,16 +57,25 @@ const Nav = () => {
                             <PopoverArrow />
                             <PopoverCloseButton />
                             <PopoverHeader>Nofication:</PopoverHeader>
-                            <PopoverBody>{openShifts.length} shift(s) available for coverage</PopoverBody>
+                            {!role && 
+                                <PopoverBody>{openShifts.length} shift(s) available for coverage</PopoverBody>
+                            }
+                            {role && 
+                                <PopoverBody>{adjustments.filter((adjustment) => !adjustment.approved).length} time-off requests </PopoverBody>
+                            }
                         </PopoverContent>
                     </Popover>
-                    {openShifts.length > 0 && 
+                    {!role && openShifts.length > 0 && 
                         <Badge position="absolute" right="119" top="3" borderRadius="full" px="2">
                             {openShifts.length}
                         </Badge>
                     }
+                    {role && adjustments.length > 0 && 
+                        <Badge position="absolute" right="119" top="3" borderRadius="full" px="2">
+                            {adjustments.filter((adjustment) => !adjustment.approved).length}
+                        </Badge>
+                    }
                     <Button onClick={() => {
-                        setAdjustments('')
                         Cookies.remove("authToken");
                         nav('/sign_in');
                     }}>Log Out</Button>
