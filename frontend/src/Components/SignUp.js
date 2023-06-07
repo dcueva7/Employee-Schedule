@@ -27,6 +27,7 @@ const SignUp = () => {
     const [ firstName, setFirstName ] = useState('')
     const [ lastName, setLastName ] = useState('')
     const [ email, setEmail ] = useState('')
+    const [username, setUsername ] = useState('')
 
     const nav = useNavigate()
     const toast = useToast()
@@ -41,6 +42,35 @@ const SignUp = () => {
               })
             return
         }
+
+        fetch('/auth/users/', {
+            method : 'POST',
+            headers : {
+                'Content-type' : 'application/json',
+            },
+            body : JSON.stringify({
+                email : email,
+                username : username,
+                password : password,
+            })
+        })
+            .then(response => {
+                if(!response){
+                    toast({
+                        title: 'Invalid credentials, try a different username',
+                        status: 'error',
+                        duration: 9000,
+                        isClosable: true,
+                      })
+                      throw new Error('Invalid fields')
+                }
+                else{
+                    return response.json()
+                }
+
+            }).then(json => console.log(json)).catch(error => console.log(error))
+
+            
     }
 
     return (
@@ -86,6 +116,12 @@ const SignUp = () => {
                 <FormLabel>Email address</FormLabel>
                 <Input type="email" value={email} onChange={(e) => {
                         setEmail(e.target.value)
+                }}/>
+                </FormControl>
+                <FormControl id="username" isRequired>
+                <FormLabel>Username</FormLabel>
+                <Input type="text" value={username} onChange={(e) => {
+                        setUsername(e.target.value)
                 }}/>
                 </FormControl>
                 <FormControl id="password" isRequired>
