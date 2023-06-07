@@ -30,7 +30,7 @@ const Nav = () => {
 
     const role = useRole()
 
-    const { openShifts, adjustments, setAdjustments, fetchAdjustments } = useContext(EmployeeShiftContext)
+    const { openShifts, adjustments, fetchAdjustments } = useContext(EmployeeShiftContext)
 
     useEffect(() => {
         fetchAdjustments()

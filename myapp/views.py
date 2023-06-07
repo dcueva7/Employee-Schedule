@@ -222,10 +222,12 @@ class UpdateAdjustment(generics.UpdateAPIView):
     serializer_class = serializers.ShiftAdjustmentSerializer
 
 @api_view(['GET'])
-@permission_classes([ IsAdminUser ])
+@permission_classes([ IsAuthenticated ])
 def check_manager(request):
 
-    return Response({'message': 'true'})
+    manager = request.user.is_staff
+
+    return Response({'message': manager})
 
 
 class GetShifts(generics.ListAPIView):
