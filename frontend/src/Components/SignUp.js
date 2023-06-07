@@ -32,7 +32,7 @@ const SignUp = () => {
     const nav = useNavigate()
     const toast = useToast()
 
-    const createAccount = () => {
+    const createAccount = async () => {
         if (!password || !email || !firstName || !lastName){
             toast({
                 title: 'Please enter all fields',
@@ -43,34 +43,59 @@ const SignUp = () => {
             return
         }
 
-        fetch('/auth/users/', {
-            method : 'POST',
-            headers : {
-                'Content-type' : 'application/json',
-            },
-            body : JSON.stringify({
-                email : email,
-                username : username,
-                password : password,
+        try {
+            const response = await fetch('/auth/users/', {
+                method : 'POST', 
+                headers : {
+                    'Content-type' : 'application/json',
+                },
+                body : JSON.stringify({
+                    username : username,
+                    email : email,
+                    password : password,
+                })
+
             })
-        })
-            .then(response => {
-                if(!response){
+
+            if (!response.ok){
+                const errorData = await response.json()
+
+                if(response.status === 400 && errorData.username){
                     toast({
-                        title: 'Invalid credentials, try a different username',
+                        title: 'Username already taken',
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
-                      })
-                      throw new Error('Invalid fields')
+                    })
+                }
+                else if (response.status === 400 && errorData.password){
+                    toast({
+                        title: 'Weak password',
+                        status: 'error',
+                        duration: 9000,
+                        isClosable: true,
+                    })
                 }
                 else{
-                    return response.json()
+                    toast({
+                        title: 'Error',
+                        status: 'error',
+                        duration: 9000,
+                        isClosable: true,
+                    })
                 }
+                throw new Error("Invalid fields")
+            }
+            else{
+                const json = await response.json()
+                console.log(json)
+                
+            }
+        } catch (error) {
+            console.log(error)
+        }  
 
-            }).then(json => console.log(json)).catch(error => console.log(error))
-
-            
+        nav('/sign_in')
     }
 
     return (
