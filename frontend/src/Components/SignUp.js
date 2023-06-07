@@ -92,7 +92,12 @@ const SignUp = () => {
 
                 const createEmployeeResponse = await fetch('/employee/add/', {
                     method : 'POST',
-                    headers : 
+                    headers : {
+                        'Content-type' : 'application/json',
+                    },
+                    body : JSON.stringify({
+                        fi
+                    })
                 })
                 
             }

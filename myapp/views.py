@@ -254,8 +254,11 @@ class UpdateShift(generics.UpdateAPIView):
 @authentication_classes([])
 @permission_classes([AllowAny])
 def add_employee(request):
-    serialized_data = serializers.AddEmployeeSerializer
-    return Response({'success' : 'employee added'}, status.HTTP_201_CREATED)
+    serialized_data = serializers.AddEmployeeSerializer(data=request.data)
+    serialized_data.is_valid(raise_exception=True)
+    serialized_data.save()
+
+    return Response({'success' : 'employee added', 'employee' : serialized_data.data}, status.HTTP_201_CREATED)
 
 class GetAllEmployees(generics.ListAPIView):
     queryset = models.Employee.objects.all()

@@ -18,6 +18,11 @@ class EmployeeSerializer(serializers.ModelSerializer):
         model = models.Employee
         fields = ['id','first_name', 'last_name', 'color', 'user']
 
+class AddEmployeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Employee
+        fields = '__all__'
+
 
 class ShiftSerializer(serializers.ModelSerializer):
     student = EmployeeSerializer(read_only=False)
@@ -35,7 +40,3 @@ class AvailableShiftSerializer(serializers.ModelSerializer):
         model = models.AvailableShift
         fields = '__all__'
 
-class AddEmployeeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Employee
-        fields = '__all__'
