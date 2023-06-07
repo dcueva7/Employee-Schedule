@@ -21,8 +21,6 @@ import useAuth from '../Hooks/UseAuth';
 
 import { useContext, useEffect, useState } from 'react';
 import EmployeeShiftContext from '../EmployeeShiftContext';
-
-import useRole from '../Hooks/useRole';
 import ReviewRequestDialog from '../Overlay/ReviewRequestDialog';
 import useWeeklyHours from '../Hooks/useWeeklyHours';
 import useAddOpenShift from '../Hooks/useAddOpenShift';
@@ -34,9 +32,8 @@ import ConfirmCoverage from '../Overlay/ConfirmCoverage';
 const Dashboard = () => {
 
   const authToken = useAuth();
-  const role = useRole();
   const toast = useToast()
-  const { shifts, adjustments, fetchShift, openShifts, setOpenShifts, employees, fetchAdjustments } = useContext(EmployeeShiftContext)
+  const { shifts, adjustments, fetchShift, openShifts, setOpenShifts, employees, fetchAdjustments, role } = useContext(EmployeeShiftContext)
 
   //fetch shifts on component mount
   useEffect(() => {

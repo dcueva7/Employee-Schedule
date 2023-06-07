@@ -30,8 +30,6 @@ import Nav from './Nav';
 
 import useAuth from '../Hooks/UseAuth';
 import EmployeeShiftContext from '../EmployeeShiftContext';
-
-import useRole from '../Hooks/useRole';
 import useUserId from '../Hooks/useUserId';
 import Dialog from '../Overlay/Dialog';
 import useRecurringSchedule from '../Hooks/useRecurringSchedule';
@@ -43,7 +41,6 @@ import useGetOpenShift from '../Hooks/useGetOpenShift';
 const Schedule = () => {
 
     const authToken = useAuth();
-    const role = useRole();
     const loggedInUser = useUserId();
 
     //Chakra Toast const
@@ -51,7 +48,7 @@ const Schedule = () => {
 
     const { createRecurringSchedule } = useRecurringSchedule()
 
-    const {shifts, employees, setEmployees, fetchShift, setOpenShifts } = useContext(EmployeeShiftContext)
+    const {shifts, employees, setEmployees, fetchShift, setOpenShifts, role } = useContext(EmployeeShiftContext)
 
     //isOpen state variable for the "addShift" Modal
     const [ isOpen, setIsOpen ] = useState(false)

@@ -18,7 +18,6 @@ import { Image, Badge } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import EmployeeShiftContext from '../EmployeeShiftContext';
-import useRole from '../Hooks/useRole';
 
 
 
@@ -28,13 +27,19 @@ const Nav = () => {
 
     const nav = useNavigate()
 
-    const role = useRole()
-
-    const { openShifts, adjustments, fetchAdjustments } = useContext(EmployeeShiftContext)
+    const { openShifts, adjustments, fetchAdjustments, role } = useContext(EmployeeShiftContext)
 
     useEffect(() => {
         fetchAdjustments()
     },[fetchAdjustments])
+
+    let openShiftLength = openShifts.length
+
+    let timeOffRequests = 0
+
+    if (adjustments.length > 0){
+        timeOffRequests = adjustments.filter((adjustment) => !adjustment.approved).length
+    }
 
     return (
         <Box as="nav" p={4} shadow="md" bg="white">
@@ -58,21 +63,21 @@ const Nav = () => {
                             <PopoverCloseButton />
                             <PopoverHeader>Nofication:</PopoverHeader>
                             {!role && 
-                                <PopoverBody>{openShifts.length} shift(s) available for coverage</PopoverBody>
+                                <PopoverBody>{openShiftLength} shift(s) available for coverage</PopoverBody>
                             }
                             {role && 
-                                <PopoverBody>{adjustments.filter((adjustment) => !adjustment.approved).length} time-off requests </PopoverBody>
+                                <PopoverBody>{timeOffRequests} time-off requests </PopoverBody>
                             }
                         </PopoverContent>
                     </Popover>
-                    {!role && openShifts.length > 0 && 
+                    {!role && openShiftLength > 0 && 
                         <Badge position="absolute" right="119" top="3" borderRadius="full" px="2">
-                            {openShifts.length}
+                            {openShiftLength}
                         </Badge>
                     }
-                    {role && adjustments.length > 0 && 
+                    {role && timeOffRequests > 0 && 
                         <Badge position="absolute" right="119" top="3" borderRadius="full" px="2">
-                            {adjustments.filter((adjustment) => !adjustment.approved).length}
+                            {timeOffRequests}
                         </Badge>
                     }
                     <Button onClick={() => {

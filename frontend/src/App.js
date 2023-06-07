@@ -6,6 +6,7 @@ import SignUp from './Components/SignUp';
 import Dashboard from './Components/Dashboard';
 import EmployeeShiftContext from './EmployeeShiftContext';
 import { useState, useCallback } from 'react';
+import useRole from './Hooks/useRole';
 
 import Cookies from 'js-cookie'
 
@@ -26,6 +27,8 @@ function App() {
   const [ openShifts, setOpenShifts ] = useState([])
 
   const authToken = Cookies.get('authToken')
+
+  const role = useRole()
 
   //fetch all shifts
   const fetchShift = useCallback(() => {
@@ -93,7 +96,8 @@ function App() {
         fetchShift,
         openShifts,
         setOpenShifts,
-        fetchAdjustments
+        fetchAdjustments,
+        role
       }} >
         <Router>
           <Routes>
