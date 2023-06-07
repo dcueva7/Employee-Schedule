@@ -38,6 +38,7 @@ import useRecurringSchedule from '../Hooks/useRecurringSchedule';
 
 import CreateRecurringScheduleDialog from '../Overlay/CreateRecurringScheduleDialog';
 import BulkDeleteDialog from '../Overlay/BulkDeleteDialog';
+import useGetOpenShift from '../Hooks/useGetOpenShift';
 
 const Schedule = () => {
 
@@ -50,7 +51,7 @@ const Schedule = () => {
 
     const { createRecurringSchedule } = useRecurringSchedule()
 
-    const {shifts, employees, setEmployees, fetchShift } = useContext(EmployeeShiftContext)
+    const {shifts, employees, setEmployees, fetchShift, setOpenShifts } = useContext(EmployeeShiftContext)
 
     //isOpen state variable for the "addShift" Modal
     const [ isOpen, setIsOpen ] = useState(false)
@@ -58,6 +59,13 @@ const Schedule = () => {
     //state variables for the "editEvent" modal
     const [ eventModalOpen, setEventModalOpen ] = useState(false)
     const [ placeholder, setPlaceholder ] = useState('') //state to hold placeholder when updating shifts
+
+    //fetch openShifts
+    const fetchOpenShifts = useGetOpenShift(setOpenShifts)
+    useEffect(() => {
+        fetchOpenShifts()
+    },[fetchOpenShifts])
+    
 
     //state variable for employeeModal
     const [ employeeModalOpen, setEmployeeModalOpen ] = useState(false)

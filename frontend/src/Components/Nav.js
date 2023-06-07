@@ -1,8 +1,11 @@
 import { Box, Button, ButtonGroup, Flex, HStack, IconButton } from '@chakra-ui/react';
 import {BellIcon} from '@chakra-ui/icons'
-import { Image } from '@chakra-ui/react';
+import { Image, Badge } from '@chakra-ui/react';
 
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import EmployeeShiftContext from '../EmployeeShiftContext';
+
 
 
 import Cookies from 'js-cookie'
@@ -10,6 +13,8 @@ import Cookies from 'js-cookie'
 const Nav = () => {
 
     const nav = useNavigate()
+
+    const { openShifts } = useContext(EmployeeShiftContext)
 
     return (
     <Box as="nav" p={4} shadow="md" bg="white">
