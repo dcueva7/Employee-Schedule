@@ -176,14 +176,13 @@ const Dashboard = () => {
                 fetch('/send_notifs/', {
                   method: 'POST',
                   headers: {
-                      'Authorization': `Token ${authToken}`,
+                    'Content-type' : 'application/json',
+                    'Authorization': `Token ${authToken}`,
                   },
                   body : JSON.stringify({'user' : currentAdjustment.user})
                 }).then(response => response.json())
-                  .then(json => console.log(json))
-              )
-
-            .catch(error => console.error(error))
+                  .then(json => console.log(json, 'email sent'))
+              ).catch(error => console.error(error))
             
 
         }).catch(error => console.error(error))
