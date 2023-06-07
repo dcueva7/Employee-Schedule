@@ -64,8 +64,6 @@ const Dashboard = () => {
   const triggerConfirmCoverage = (shift) => {
     setCurrentOpenShift(shift)
     setIsConfirmCoverageDialogOpen(true)
-    console.log(currentOpenShift)
-    console.log(currentEmployee)
   }
   const confirmShiftCoverage = () => {
     fetch('/shift/add_shift/', {

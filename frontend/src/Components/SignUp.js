@@ -13,6 +13,7 @@ import {
     Text,
     useColorModeValue,
     Link,
+    useToast,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
@@ -22,7 +23,25 @@ import { useNavigate } from 'react-router-dom';
 const SignUp = () => {
 
     const [showPassword, setShowPassword] = useState(false);
+    const [ password, setPassword ] = useState('')
+    const [ firstName, setFirstName ] = useState('')
+    const [ lastName, setLastName ] = useState('')
+    const [ email, setEmail ] = useState('')
+
     const nav = useNavigate()
+    const toast = useToast()
+
+    const createAccount = () => {
+        if (!password || !email || !firstName || !lastName){
+            toast({
+                title: 'Please enter all fields',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+              })
+            return
+        }
+    }
 
     return (
         <Flex
@@ -49,24 +68,32 @@ const SignUp = () => {
                 <Box>
                     <FormControl id="firstName" isRequired>
                     <FormLabel>First Name</FormLabel>
-                    <Input type="text" />
+                    <Input type="text" value={firstName} onChange={(e) => {
+                        setFirstName(e.target.value)
+                    }}/>
                     </FormControl>
                 </Box>
                 <Box>
                     <FormControl id="lastName">
                     <FormLabel>Last Name</FormLabel>
-                    <Input type="text" />
+                    <Input type="text" value={lastName} onChange={(e) => {
+                        setLastName(e.target.value)
+                    }}/>
                     </FormControl>
                 </Box>
                 </HStack>
                 <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" />
+                <Input type="email" value={email} onChange={(e) => {
+                        setEmail(e.target.value)
+                }}/>
                 </FormControl>
                 <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
-                    <Input type={showPassword ? 'text' : 'password'} />
+                    <Input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => {
+                        setPassword(e.target.value)
+                    }}/>
                     <InputRightElement h={'full'}>
                     <Button
                         variant={'ghost'}
@@ -86,7 +113,9 @@ const SignUp = () => {
                     color={'white'}
                     _hover={{
                     bg: 'blue.500',
-                    }}>
+                    }}
+                    onClick={createAccount}
+                    >
                     Sign up
                 </Button>
                 </Stack>
