@@ -56,6 +56,31 @@ function App() {
         })
   }, [authToken])
 
+  const fetchAdjustments = useCallback(() => {
+    fetch('retrieve_adjustments/', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Token ${authToken}`,
+      },
+    })
+      .then(response => response.json())
+      .then(json => {
+        const data = json.map(adjustment => ({
+          adj_id : adjustment.id,
+          employee : adjustment.employee,
+          date : adjustment.date,
+          shift_id : adjustment.shift,
+          type_of_coverage : adjustment.type_of_coverage,
+          start : adjustment.start,
+          end : adjustment.end,
+          approved : adjustment.approved,
+          user : adjustment.user,
+        }))
+
+        setAdjustments(data)
+      })
+  }, [authToken, setAdjustments])
+
   return (
     <ChakraProvider>
       <EmployeeShiftContext.Provider value={{
@@ -68,6 +93,7 @@ function App() {
         fetchShift,
         openShifts,
         setOpenShifts,
+        fetchAdjustments
       }} >
         <Router>
           <Routes>

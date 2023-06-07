@@ -19,7 +19,7 @@ import { TimeIcon, CheckCircleIcon } from '@chakra-ui/icons';
 import Nav from './Nav';
 import useAuth from '../Hooks/UseAuth';
 
-import { useContext, useCallback, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import EmployeeShiftContext from '../EmployeeShiftContext';
 
 import useRole from '../Hooks/useRole';
@@ -36,7 +36,7 @@ const Dashboard = () => {
   const authToken = useAuth();
   const role = useRole();
   const toast = useToast()
-  const { shifts, adjustments, setAdjustments, fetchShift, openShifts, setOpenShifts, employees } = useContext(EmployeeShiftContext)
+  const { shifts, adjustments, fetchShift, openShifts, setOpenShifts, employees, fetchAdjustments } = useContext(EmployeeShiftContext)
 
   //fetch shifts on component mount
   useEffect(() => {
@@ -256,32 +256,6 @@ const Dashboard = () => {
     setFull(adjustment.type_of_coverage === 'full')
     setCurrentAdjustment(adjustment)
   }
-
-
-  const fetchAdjustments = useCallback(() => {
-    fetch('retrieve_adjustments/', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Token ${authToken}`,
-      },
-    })
-      .then(response => response.json())
-      .then(json => {
-        const data = json.map(adjustment => ({
-          adj_id : adjustment.id,
-          employee : adjustment.employee,
-          date : adjustment.date,
-          shift_id : adjustment.shift,
-          type_of_coverage : adjustment.type_of_coverage,
-          start : adjustment.start,
-          end : adjustment.end,
-          approved : adjustment.approved,
-          user : adjustment.user,
-        }))
-
-        setAdjustments(data)
-      })
-  }, [authToken, setAdjustments])
 
   useEffect(() => {
     fetchAdjustments()

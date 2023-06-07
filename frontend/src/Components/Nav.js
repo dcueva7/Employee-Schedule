@@ -28,45 +28,45 @@ const Nav = () => {
 
     const nav = useNavigate()
 
-    const { openShifts, adjustments } = useContext(EmployeeShiftContext)
+    const { openShifts, adjustments, setAdjustments } = useContext(EmployeeShiftContext)
 
     return (
-        
-    <Box as="nav" p={4} shadow="md" bg="white">
-        <Flex align="center" justify="space-between">
-            <Flex align="center" marginRight={12}>
-                <Image src="/logo-viterbi.png" alt="Logo" width='200px' mr={4} />
-                <ButtonGroup variant="link" spacing={4}>
-                    <Button color='black' onClick={() => nav('/dashboard')}>Dashboard</Button>
-                    <Button color='black' onClick={() => nav('/')}>Schedule</Button>
-                    <Button color='black'>Availability</Button>
-                </ButtonGroup>
-            </Flex>
+        <Box as="nav" p={4} shadow="md" bg="white">
+            <Flex align="center" justify="space-between">
+                <Flex align="center" marginRight={12}>
+                    <Image src="/logo-viterbi.png" alt="Logo" width='200px' mr={4} />
+                    <ButtonGroup variant="link" spacing={4}>
+                        <Button color='black' onClick={() => nav('/dashboard')}>Dashboard</Button>
+                        <Button color='black' onClick={() => nav('/')}>Schedule</Button>
+                        <Button color='black'>Availability</Button>
+                    </ButtonGroup>
+                </Flex>
 
-            <HStack spacing={4}>
-                <Popover>
-                    <PopoverTrigger>
-                        <IconButton icon={<BellIcon/>} />
-                    </PopoverTrigger>
-                    <PopoverContent>
-                        <PopoverArrow />
-                        <PopoverCloseButton />
-                        <PopoverHeader>Nofication:</PopoverHeader>
-                        <PopoverBody>{openShifts.length} shift(s) available for coverage</PopoverBody>
-                    </PopoverContent>
-                </Popover>
-                {openShifts.length > 0 && 
-                    <Badge position="absolute" right="119" top="3" borderRadius="full" px="2">
-                        {openShifts.length}
-                    </Badge>
-                }
-                <Button onClick={() => {
-                    Cookies.remove("authToken");
-                    nav('/sign_in');
-                }}>Log Out</Button>
-            </HStack>
-        </Flex>
-    </Box>
+                <HStack spacing={4}>
+                    <Popover>
+                        <PopoverTrigger>
+                            <IconButton icon={<BellIcon/>} />
+                        </PopoverTrigger>
+                        <PopoverContent>
+                            <PopoverArrow />
+                            <PopoverCloseButton />
+                            <PopoverHeader>Nofication:</PopoverHeader>
+                            <PopoverBody>{openShifts.length} shift(s) available for coverage</PopoverBody>
+                        </PopoverContent>
+                    </Popover>
+                    {openShifts.length > 0 && 
+                        <Badge position="absolute" right="119" top="3" borderRadius="full" px="2">
+                            {openShifts.length}
+                        </Badge>
+                    }
+                    <Button onClick={() => {
+                        setAdjustments('')
+                        Cookies.remove("authToken");
+                        nav('/sign_in');
+                    }}>Log Out</Button>
+                </HStack>
+            </Flex>
+        </Box>
     );
 };
 
