@@ -23,7 +23,7 @@ class AddEmployeeSerializer(serializers.ModelSerializer):
     user = serializers.SlugRelatedField(queryset = User.objects.all(), slug_field = 'username')
     class Meta:
         model = models.Employee
-        fields = ['first_name','last_name', 'user', 'email', 'color']
+        fields = ['first_name','last_name', 'user', 'email']
 
 
 class ShiftSerializer(serializers.ModelSerializer):

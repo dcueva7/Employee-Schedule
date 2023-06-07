@@ -33,7 +33,7 @@ const SignUp = () => {
     const toast = useToast()
 
     const createAccount = async () => {
-        if (!password || !email || !firstName || !lastName){
+        if (!password || !email || !firstName || !lastName || !username){
             toast({
                 title: 'Please enter all fields',
                 status: 'error',
@@ -97,16 +97,31 @@ const SignUp = () => {
                     },
                     body : JSON.stringify({
                         first_name : firstName,
-                        last_name : lastName
+                        last_name : lastName,
+                        user : username,
+                        email : email,
+
                     })
                 })
-                
+
+                if (!createEmployeeResponse.ok){
+                    toast({
+                        title: 'Error creating cmployee, notify supervisor',
+                        status: 'error',
+                        duration: 9000,
+                        isClosable: true,
+                    })
+                    throw new Error('Error creating employee')
+                }
+                else{
+                    const employeeJson = await createEmployeeResponse.json()
+                    console.log(employeeJson)
+                    nav('/sign_in')
+                }
             }
         } catch (error) {
             console.log(error)
         }  
-
-        nav('/sign_in')
     }
 
     return (
