@@ -10,6 +10,7 @@ from datetime import *
 from django.utils import timezone
 from django.db import transaction
 from django.core.mail import send_mail
+from django.core.exceptions import ValidationError
 
 
 from pulp import *
@@ -34,16 +35,22 @@ def send_notifs(request):
     employees = models.Employee.objects.all()
 
     for worker in employees:
-        if(worker.user != request['user']):
+        if(worker.user.id != request.data['user']):
             email_recipients.append(worker.email)
 
-    send_mail(
-        'Open Shift',
-        'A shift is available for coverage.  If you are interested please log-in and review the shift in the Dashboard',
-        'dnlcueva@hotmail.com',
-        ['dnlcueva@hotmail.com'],
-        fail_silently=False,
-    )
+    try:
+        send_mail(
+            'Open Shift',
+            'A shift is available for coverage.  If you are interested please log-in and review the shift in the Dashboard',
+            'dnlcueva@hotmail.com',
+            ['dnlcueva@hotmail.com'],
+            fail_silently=False,
+        )
+    except ValidationError as e:
+        return Response({"detail": str(e)}, status=400) 
+    except Exception as e:  
+        
+        return Response({"detail": "Internal Server Error"}, status=500) 
 
     return Response({'List of recipients' : email_recipients}, status.HTTP_202_ACCEPTED)
 
