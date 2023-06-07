@@ -89,6 +89,11 @@ const SignUp = () => {
             else{
                 const json = await response.json()
                 console.log(json)
+
+                const createEmployeeResponse = await fetch('/employee/add/', {
+                    method : 'POST',
+                    headers : 
+                })
                 
             }
         } catch (error) {

@@ -34,3 +34,8 @@ class AvailableShiftSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.AvailableShift
         fields = '__all__'
+
+class AddEmployeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Employee
+        fields = '__all__'

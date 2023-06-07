@@ -2,8 +2,8 @@ from rest_framework import generics, status
 from . import serializers
 from . import models
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from django.contrib.auth.models import User
 from django.http import Http404, HttpResponseNotAllowed
 from datetime import *
@@ -250,9 +250,12 @@ class UpdateShift(generics.UpdateAPIView):
     queryset = models.Shift.objects.all()
     serializer_class = serializers.CreateShiftSerializer
 
-class CreateEmployee(generics.CreateAPIView):
-    queryset = models.Employee.objects.all()
-    serializer_class = serializers.EmployeeSerializer
+@api_view(['POST'])
+@authentication_classes([])
+@permission_classes([AllowAny])
+def add_employee(request):
+    serialized_data = serializers.AddEmployeeSerializer
+    return Response({'success' : 'employee added'}, status.HTTP_201_CREATED)
 
 class GetAllEmployees(generics.ListAPIView):
     queryset = models.Employee.objects.all()
