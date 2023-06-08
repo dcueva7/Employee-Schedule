@@ -10,7 +10,7 @@ from datetime import *
 from django.utils import timezone
 from django.db import transaction
 from django.core.mail import send_mail
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 
 
 from pulp import *
@@ -269,6 +269,23 @@ def add_employee(request):
     serialized_data.save()
 
     return Response({'success' : 'employee added', 'employee' : serialized_data.data}, status.HTTP_201_CREATED)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_employee_color(request):
+
+    if 'color' not in request.data:
+        raise ValidationError({'error' : 'color was not included in request'})
+    try:
+        employee = models.Employee.object.get(user=request.user)
+    except ObjectDoesNotExist:
+        return Response({'error' : 'No associated user with this employee'}, status.HTTP_400_BAD_REQUEST)
+    
+    employee.color = request.data['color']
+    employee.save()
+
+    return Response({'message' : 'color saved'}, status.HTTP_202_ACCEPTED)
+    
 
 class GetAllEmployees(generics.ListAPIView):
     queryset = models.Employee.objects.all()

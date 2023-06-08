@@ -90,7 +90,42 @@ const Settings = (props) => {
     }
 
     const changeUsername = async () => {
-        
+        if(!username){
+            toast({
+                title: 'Please enter all fields',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+              })
+            return
+        }
+
+        try {
+            const response = await fetch('/change_username/', {
+                method : 'POST',
+                headers : {
+                    'Content-type' : 'application/json',
+                    'Authorization': `Token ${authToken}`
+                },
+                body : JSON.stringify({username : username})
+            })
+            if(!response.ok){
+                toast({
+                    title: 'Invalid username',
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                throw new Error('invalid username')
+            }
+            else{
+                const json = await response.json()
+                console.log(json)
+            }  
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 
     return (
@@ -140,7 +175,7 @@ const Settings = (props) => {
                                 <Input type='text' value={username} onChange={(e) => setUsername(e.target.value)} />
                         </FormControl>
                         <HStack mt={3} justifyContent='right'>
-                            <Button>Submit</Button>
+                            <Button onClick={changeUsername}>Submit</Button>
                         </HStack>
                     </Box>
 
