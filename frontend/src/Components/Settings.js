@@ -11,18 +11,83 @@ import {
     FormLabel,
     Heading,
     Box,
-    HStack
+    HStack,
+    useToast
  } from "@chakra-ui/react"
 import { useState } from "react"
+import useAuth from "../Hooks/UseAuth";
 
 
 const Settings = (props) => {
+
+    const authToken = useAuth();
 
     const [ currentPass, setCurrentPass ] = useState('')
     const [ newPass, setNewPass ] = useState('')
     const [ passReType, setPassReType ] = useState('')
     const [ color, setColor ] = useState('')
     const [ username, setUsername ] = useState('')
+
+    const toast = useToast()
+
+    const resetPassword = async () => {
+        if(!currentPass || !newPass || !passReType){
+            toast({
+                title: 'Please enter all fields',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+              })
+            return
+        }
+        if(newPass !== passReType){
+            toast({
+                title: 'Passwords do not match',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+              })
+            return
+        }
+
+        try{
+            const reset = await fetch('/auth/users/set_password/', {
+                method : 'POST',
+                headers : {
+                    'Content-type' : 'application/json',
+                    'Authorization': `Token ${authToken}`
+                },
+                body : JSON.stringify({
+                    new_password : newPass,
+                    current_password : currentPass
+                })
+            })
+
+            if(!reset.ok){
+                toast({
+                    title: 'Error changing password',
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                  })
+                  throw new Error('Error changing password')
+            }
+            else{
+                toast({
+                    title: 'Password Changed',
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                  })
+                setCurrentPass('')
+                setNewPass('')
+                setPassReType('')
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
 
     return (
         <>
@@ -35,7 +100,7 @@ const Settings = (props) => {
             <DrawerOverlay />
             <DrawerContent>
                 <DrawerCloseButton />
-                <DrawerHeader>Settings</DrawerHeader>
+                <DrawerHeader size='lg'>Settings</DrawerHeader>
 
                 <DrawerBody>
                     <Box mb={5}>
@@ -60,7 +125,7 @@ const Settings = (props) => {
                             }}>
                                 Clear
                             </Button>
-                            <Button>Submit</Button>
+                            <Button onClick={resetPassword}>Submit</Button>
                         </HStack>
                     </Box>
 
@@ -77,7 +142,7 @@ const Settings = (props) => {
 
                     <Box>
                         <Heading mb={5} mt={5} size='md'>Set Color</Heading>
-                        <FormControl id="username">
+                        <FormControl id="color">
                             <FormLabel>Color</FormLabel>
                                 <Input type='text' value={color} onChange={(e) => setColor(e.target.value)} />
                         </FormControl>
