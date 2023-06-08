@@ -291,9 +291,21 @@ class GetAllEmployees(generics.ListAPIView):
     queryset = models.Employee.objects.all()
     serializer_class = serializers.EmployeeSerializer
 
-class GetSingleEmployee(generics.RetrieveAPIView):
-    queryset = models.Employee.objects.all()
-    serializer_class = serializers.EmployeeSerializer
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_current_employee(request):
+    if(request.user.is_staff):
+        name = request.user.first_name
+    else:
+        try:
+            employee = models.Employee.objects.get(user=request.user)
+        except ObjectDoesNotExist:
+            return Response({'error' : 'No associated user with this employee'}, status.HTTP_400_BAD_REQUEST)
+        
+        name = employee.first_name
+
+    return Response({'name': name}, status.HTTP_200_OK)
+        
 
 class DeleteEmployee(generics.DestroyAPIView):
     queryset = models.Employee.objects.all()

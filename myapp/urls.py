@@ -10,7 +10,7 @@ urlpatterns = [
     path('shift/update_shift/<int:pk>/', views.UpdateShift.as_view()),
     path('shift/delete_shift/<int:pk>/', views.RemoveShift.as_view()), 
     path('employee/add/', views.add_employee),
-    path('employee/get_single_employee/<int:pk>/', views.GetSingleEmployee.as_view()),
+    path('employee/get_current_employee/', views.get_current_employee),
     path('employee/get_all_employees/', views.GetAllEmployees.as_view()),
     path('employee/delete_employee/<int:pk>/', views.DeleteEmployee.as_view()), 
     path('employee/update_employee/<int:pk>/', views.UpdateEmployee.as_view()),

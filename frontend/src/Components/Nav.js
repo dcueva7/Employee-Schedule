@@ -17,11 +17,12 @@ import {
     Heading,
     useDisclosure
  } from '@chakra-ui/react';
-import {BellIcon, SettingsIcon} from '@chakra-ui/icons'
+import { BellIcon, SettingsIcon } from '@chakra-ui/icons'
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState, useCallback } from 'react';
 import EmployeeShiftContext from '../EmployeeShiftContext';
 import Settings from './Settings';
+import useAuth from '../Hooks/UseAuth';
 
 
 
@@ -30,15 +31,39 @@ import Cookies from 'js-cookie'
 const Nav = () => {
 
     const nav = useNavigate()
+    const authToken = useAuth()
 
     const { openShifts, adjustments, fetchAdjustments, role } = useContext(EmployeeShiftContext)
 
     //states for Settings drawer
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [ employeeName, setEmployeeName ] = useState('')
+
+    const fetchEmployeeName = useCallback(() => {
+        fetch('/employee/get_current_employee/',{
+            method : 'GET',
+            headers: {
+                'Authorization': `Token ${authToken}`,
+            }
+        })
+            .then(response => {
+                if(!response.ok){
+                    throw new Error('Error fetching name')
+                }
+                else{
+                    return response.json()
+                }
+            })
+            .then(json => {
+                console.log(json)
+                setEmployeeName(json.name)
+            }).catch(error => console.log(error))
+    },[authToken])
 
     useEffect(() => {
         fetchAdjustments()
-    },[fetchAdjustments])
+        fetchEmployeeName()
+    },[fetchAdjustments, fetchEmployeeName])
 
     let openShiftLength = openShifts.length
 
@@ -65,7 +90,7 @@ const Nav = () => {
                 </Flex>
 
                 <HStack spacing={4}>
-                    <Heading size='sm'>Welcome, Daniel</Heading><IconButton onClick={onOpen} icon={<SettingsIcon />}/>
+                    <Heading size='sm'>Welcome, {employeeName}</Heading><IconButton onClick={onOpen} icon={<SettingsIcon />}/>
                     <Popover>
                         <PopoverTrigger>
                             <IconButton icon={<BellIcon/>} />
