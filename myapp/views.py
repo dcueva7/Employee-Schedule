@@ -229,6 +229,16 @@ def check_manager(request):
 
     return Response({'message': manager})
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_username(request):
+    serialized_data = serializers.UsernameChangeSerializer(instance=request.user,data=request.data)
+
+    serialized_data.is_valid(raise_exception=True)
+    serialized_data.save()
+
+    return Response({'message': "username changed"}, status.HTTP_202_ACCEPTED)
+
 
 class GetShifts(generics.ListAPIView):
     queryset = models.Shift.objects.all()

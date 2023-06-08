@@ -89,6 +89,10 @@ const Settings = (props) => {
 
     }
 
+    const changeUsername = async () => {
+        
+    }
+
     return (
         <>
             <Drawer

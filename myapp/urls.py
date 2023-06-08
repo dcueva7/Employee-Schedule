@@ -29,5 +29,5 @@ urlpatterns = [
     path('add_open_shift/', views.add_open_shift),
     path('delete_open_shift/<int:pk>/', views.DeleteOpenShift.as_view()),
     path('send_notifs/', views.send_notifs),
-    
+    path('change_username/', views.change_username),
 ]

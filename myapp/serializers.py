@@ -42,3 +42,8 @@ class AvailableShiftSerializer(serializers.ModelSerializer):
         model = models.AvailableShift
         fields = '__all__'
 
+class UsernameChangeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username']
+
