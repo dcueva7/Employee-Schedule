@@ -5,13 +5,10 @@ import {
     FormLabel,
     Input,
     Stack,
-    Link,
     Button,
     Heading,
-    Text,
     useColorModeValue,
-    Alert,
-    AlertIcon
+    
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
@@ -19,6 +16,7 @@ const PasswordReset = () => {
 
     const [ newPass, setNewPass ] = useState('')
     const [ confirmPass, setConfirmPass ] = useState('')
+
     return (
         <Flex
           minH={'100vh'}

@@ -11,12 +11,18 @@ import {
     Text,
     useColorModeValue,
     Alert,
-    AlertIcon
+    AlertIcon,
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    PopoverArrow,
+    PopoverCloseButton,
+    PopoverHeader,
+    PopoverBody,
+    useDisclosure
 } from '@chakra-ui/react';
-
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-
 import Cookies from 'js-cookie'
   
 const SignIn = () => {
@@ -26,6 +32,9 @@ const SignIn = () => {
     const [ username, setUsername ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ error, setError ] = useState('')
+    const [ email, setEmail ] = useState('')
+
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     const handleLogin = (e) => {
       e.preventDefault()
@@ -49,7 +58,10 @@ const SignIn = () => {
               Cookies.set("authToken", json.auth_token, { expires: 7 });
               nav('/');
           }).catch(error => console.log(error.message))
+    }
 
+    const passwordReset = () => {
+      onClose()
     }
 
     return (
@@ -90,7 +102,30 @@ const SignIn = () => {
                     direction={{ base: 'column', sm: 'row' }}
                     align={'start'}
                     justify={'space-between'}>
-                    <Link color={'blue.400'}>Forgot password?</Link>
+                    <Popover
+                      isOpen={isOpen}
+                      onOpen={onOpen}
+                      onClose={onClose}
+                      closeOnBlur={false}
+                    >
+                      <PopoverTrigger>
+                        <Link color={'blue.400'}>Forgot password?</Link>
+                      </PopoverTrigger>
+                      <PopoverContent p={5}>
+                          <PopoverArrow />
+                          <PopoverCloseButton />
+                          <PopoverHeader>Enter Email</PopoverHeader>
+                          <PopoverBody>
+                          <FormControl id="resetemail">
+                            <FormLabel>Email</FormLabel>
+                              <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                            </FormControl>
+                            <Stack mt={5}>
+                              <Button onClick={passwordReset}>Submit</Button>
+                            </Stack>
+                          </PopoverBody>
+                      </PopoverContent>
+                    </Popover>  
                   </Stack>
                   <Button
                     type='submit'
