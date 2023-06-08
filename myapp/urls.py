@@ -15,7 +15,7 @@ urlpatterns = [
     path('employee/delete_employee/<int:pk>/', views.DeleteEmployee.as_view()), 
     path('employee/update_employee/<int:pk>/', views.UpdateEmployee.as_view()),
     path('availability/add/', views.AddAvailability.as_view()),
-    path('availability/update/<int:pk>', views.UpdateAvailability.as_view()),
+    path('availability/update/<int:pk>/', views.UpdateAvailability.as_view()),
     path('availability/list/', views.GetAllAvailability.as_view()),
     path('availability/delete/<int:pk>', views.DeleteAvailability.as_view()),
     path('request_adjustment/', views.request_adjustment),
@@ -30,4 +30,5 @@ urlpatterns = [
     path('delete_open_shift/<int:pk>/', views.DeleteOpenShift.as_view()),
     path('send_notifs/', views.send_notifs),
     path('change_username/', views.change_username),
+    path('change_employee_color/', views.change_employee_color),
 ]

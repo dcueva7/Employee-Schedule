@@ -277,14 +277,14 @@ def change_employee_color(request):
     if 'color' not in request.data:
         raise ValidationError({'error' : 'color was not included in request'})
     try:
-        employee = models.Employee.object.get(user=request.user)
+        employee = models.Employee.objects.get(user=request.user)
     except ObjectDoesNotExist:
         return Response({'error' : 'No associated user with this employee'}, status.HTTP_400_BAD_REQUEST)
     
     employee.color = request.data['color']
     employee.save()
 
-    return Response({'message' : 'color saved'}, status.HTTP_202_ACCEPTED)
+    return Response({'message' : 'color changed'}, status.HTTP_202_ACCEPTED)
     
 
 class GetAllEmployees(generics.ListAPIView):

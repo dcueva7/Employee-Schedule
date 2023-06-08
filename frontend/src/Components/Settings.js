@@ -14,8 +14,9 @@ import {
     HStack,
     useToast
  } from "@chakra-ui/react"
-import { useState } from "react"
+import { useState, useContext } from "react"
 import useAuth from "../Hooks/UseAuth";
+import EmployeeShiftContext from "../EmployeeShiftContext";
 
 
 const Settings = (props) => {
@@ -27,6 +28,8 @@ const Settings = (props) => {
     const [ passReType, setPassReType ] = useState('')
     const [ color, setColor ] = useState('')
     const [ username, setUsername ] = useState('')
+
+    const { fetchShift } = useContext(EmployeeShiftContext)
 
     const toast = useToast()
 
@@ -121,11 +124,65 @@ const Settings = (props) => {
             else{
                 const json = await response.json()
                 console.log(json)
+                toast({
+                    title: `Username changed to ${username}`,
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                setUsername('')
+
             }  
         } catch (error) {
             console.log(error)
         }
 
+    }
+
+    const changeColor = async () => {
+        if(!color){
+            toast({
+                title: 'Please enter a color',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+              })
+            return
+        }
+        try{
+            const response = await fetch('/change_employee_color/', {
+                method : 'POST',
+                headers : {
+                    'Content-type' : 'application/json',
+                    'Authorization': `Token ${authToken}`
+                },
+                body : JSON.stringify({color : color})
+            })
+
+            if(!response.ok){
+                toast({
+                    title: 'Error changing color',
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                throw new Error('Error changing color')
+            }
+            else{
+                const json = response.json()
+                console.log(json)
+                fetchShift()
+                toast({
+                    title: 'Color changed succesfully'  ,
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                setColor('')
+            }
+        } catch (error){
+            console.log(error)
+        }
     }
 
     return (
@@ -186,7 +243,7 @@ const Settings = (props) => {
                                 <Input type='text' value={color} onChange={(e) => setColor(e.target.value)} />
                         </FormControl>
                         <HStack mt={3} justifyContent='right'>
-                            <Button>Submit</Button>
+                            <Button onClick={changeColor}>Submit</Button>
                         </HStack>
                     </Box>
                 </DrawerBody>
