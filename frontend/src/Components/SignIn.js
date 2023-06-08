@@ -19,7 +19,8 @@ import {
     PopoverCloseButton,
     PopoverHeader,
     PopoverBody,
-    useDisclosure
+    useDisclosure,
+    useToast
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -35,6 +36,8 @@ const SignIn = () => {
     const [ email, setEmail ] = useState('')
 
     const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const toast = useToast()
 
     const handleLogin = (e) => {
       e.preventDefault()
@@ -60,7 +63,49 @@ const SignIn = () => {
           }).catch(error => console.log(error.message))
     }
 
-    const passwordReset = () => {
+    const passwordReset = async () => {
+      if(!email){
+        toast({
+          title: 'Please enter a valid email',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+      }
+
+      try {
+        const response = await fetch('/auth/users/reset_password/', {
+          method : 'POST',
+          headers : {
+            'Content-type' : 'application/json'
+          },
+          body : JSON.stringify({ email })
+        })
+
+        if(!response.ok){
+          
+          throw new Error('Error sending password reset email')
+        }
+        else{
+          toast({
+            title: 'Password reset link sent succesfully',
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          })
+          console.log('Password reset link sent succesfully')
+        }
+        
+      } catch (error) {
+        toast({
+          title: error,
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+        console.log(error)
+      }
+
       onClose()
     }
 

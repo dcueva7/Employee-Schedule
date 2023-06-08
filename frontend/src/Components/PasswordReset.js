@@ -11,11 +11,14 @@ import {
     
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const PasswordReset = () => {
 
     const [ newPass, setNewPass ] = useState('')
     const [ confirmPass, setConfirmPass ] = useState('')
+
+    let { uid, token } = useParams
 
     return (
         <Flex
@@ -43,15 +46,13 @@ const PasswordReset = () => {
                   </FormControl>
                   <Stack spacing={10}>
                     <Button
-                      type='submit'
                       bg={'blue.400'}
                       color={'white'}
                       _hover={{
                         bg: 'blue.500',
                       }}>
-                      Sign in
+                      Submit
                     </Button>
-                
                 </Stack>
               </Stack>
             </Box>

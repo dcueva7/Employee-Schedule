@@ -9,7 +9,7 @@ import { useState, useCallback } from 'react';
 import useRole from './Hooks/useRole';
 import useGetOpenShift from './Hooks/useGetOpenShift';
 import Cookies from 'js-cookie'
-
+import PasswordReset from './Components/PasswordReset';
 import {
   BrowserRouter as Router,
   Route,
@@ -118,6 +118,7 @@ function App() {
               <Route path="sign_in" element={<SignIn />} />
               <Route path="sign_up" element={<SignUp />} />
               <Route path="dashboard" element={<Dashboard/>} />
+              <Route path="password_reset/:uid/:token" element={<PasswordReset/>}/>
           </Routes>
         </Router>
       </EmployeeShiftContext.Provider>

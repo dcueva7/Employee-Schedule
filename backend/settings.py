@@ -154,6 +154,10 @@ CORS_ALLOW_HEADERS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': 'password_reset/{uid}/{token}',
+}
+
 EMAIL_BACKEND = 'django_ses.SESBackend'
 
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
