@@ -7,7 +7,11 @@ import {
     DrawerHeader,
     DrawerBody,
     Input,
-    DrawerFooter,
+    FormControl,
+    FormLabel,
+    Heading,
+    Box,
+    HStack
  } from "@chakra-ui/react"
 import { useState } from "react"
 
@@ -26,7 +30,7 @@ const Settings = (props) => {
                 isOpen={props.isOpen}
                 placement='right'
                 onClose={props.onClose}
-                size='full'
+                size='md'
             >
             <DrawerOverlay />
             <DrawerContent>
@@ -34,15 +38,56 @@ const Settings = (props) => {
                 <DrawerHeader>Settings</DrawerHeader>
 
                 <DrawerBody>
-                    <Input placeholder='Type here...' />
+                    <Box mb={5}>
+                        <Heading mb={5} size='md'>Reset Password</Heading>
+                        <FormControl id="currpass">
+                            <FormLabel>Current Password</FormLabel>
+                                <Input type='password' value={currentPass} onChange={(e) => setCurrentPass(e.target.value)} />
+                        </FormControl>
+                        <FormControl id="newpass">
+                            <FormLabel>New Password</FormLabel>
+                                <Input type='password' value={newPass} onChange={(e) => setNewPass(e.target.value)} />
+                        </FormControl>
+                        <FormControl id="retype">
+                            <FormLabel>Confirm New Password</FormLabel>
+                                <Input type='password' value={passReType} onChange={(e) => setPassReType(e.target.value)} />
+                        </FormControl>
+                        <HStack mt={3} justifyContent='right'>
+                            <Button onClick={() => {
+                                setCurrentPass('')
+                                setNewPass('')
+                                setPassReType('')
+                            }}>
+                                Clear
+                            </Button>
+                            <Button>Submit</Button>
+                        </HStack>
+                    </Box>
+
+                    <Box mb={5}>
+                        <Heading mb={5} mt={5} size='md'>Change Username</Heading>
+                        <FormControl id="username">
+                            <FormLabel>New Username</FormLabel>
+                                <Input type='text' value={username} onChange={(e) => setUsername(e.target.value)} />
+                        </FormControl>
+                        <HStack mt={3} justifyContent='right'>
+                            <Button>Submit</Button>
+                        </HStack>
+                    </Box>
+
+                    <Box>
+                        <Heading mb={5} mt={5} size='md'>Set Color</Heading>
+                        <FormControl id="username">
+                            <FormLabel>Color</FormLabel>
+                                <Input type='text' value={color} onChange={(e) => setColor(e.target.value)} />
+                        </FormControl>
+                        <HStack mt={3} justifyContent='right'>
+                            <Button>Submit</Button>
+                        </HStack>
+                    </Box>
                 </DrawerBody>
 
-                <DrawerFooter>
-                    <Button variant='outline' mr={3} onClick={props.onClose}>
-                        Cancel
-                    </Button>
-                    <Button colorScheme='blue'>Save</Button>
-                </DrawerFooter>
+
             </DrawerContent>
             </Drawer>
         </>
