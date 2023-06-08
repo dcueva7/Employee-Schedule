@@ -26,7 +26,7 @@ const PasswordReset = () => {
     const confirmReset = () => {
       if(!newPass || !confirmPass){
         toast({
-          title: 'Please enter all fields ',
+          title: 'Please enter all fields',
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -59,7 +59,13 @@ const PasswordReset = () => {
           .then(response => {
               if(!response.ok){
                   return response.json().then(error => {
-                      throw new Error(error)
+                    toast({
+                      title: 'Error resetting password',
+                      status: 'error',
+                      duration: 9000,
+                      isClosable: true,
+                    })
+                    throw new Error(error)
                   })
               }
               else{
