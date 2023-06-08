@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     'corsheaders',
 
@@ -60,6 +61,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+SITE_ID = 1
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -156,13 +159,15 @@ CORS_ALLOW_CREDENTIALS = True
 
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': 'password_reset/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
 }
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
+DEFAULT_FROM_EMAIL = 'dnlcueva@hotmail.com'
 
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-AWS_SES_REGION_NAME = 'us-west-1'  # e.g. 'us-east-1'
-AWS_SES_REGION_ENDPOINT = 'email.us-west-1.amazonaws.com'  # e.g. 'email.us-east-1.amazonaws.com'
+AWS_SES_REGION_NAME = 'us-west-1'  
+AWS_SES_REGION_ENDPOINT = 'email.us-west-1.amazonaws.com'  
 
 

@@ -16,7 +16,7 @@ from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from pulp import *
 # Create your views here.
 
-prob = LpProblem("Scheduling Problem", LpMaximize)
+prob = LpProblem("Scheduling_Problem", LpMaximize)
 
 def createSchedule():
 

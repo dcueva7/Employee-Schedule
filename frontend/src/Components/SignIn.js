@@ -98,7 +98,7 @@ const SignIn = () => {
         
       } catch (error) {
         toast({
-          title: error,
+          title: error.message,
           status: 'error',
           duration: 9000,
           isClosable: true,

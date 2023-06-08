@@ -8,17 +8,47 @@ import {
     Button,
     Heading,
     useColorModeValue,
-    
+    useToast
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const PasswordReset = () => {
 
+    const toast = useToast()
+
     const [ newPass, setNewPass ] = useState('')
     const [ confirmPass, setConfirmPass ] = useState('')
 
-    let { uid, token } = useParams
+    let { uid, token } = useParams()
+
+    const confirmReset = () => {
+        fetch('/users/reset_password_confirm/', {
+            method : 'POST',
+            headers : {
+                'Content-type' : 'application/json'
+            },
+            body : JSON.stringify({
+                uid : uid,
+                token : token,
+                new_password : newPass,
+                re_new_password : confirmPass
+            }) 
+        })
+            .then(response => {
+                if(!response.ok){
+                    toast({
+                        title: 'Passwords do not match',
+                        status: 'error',
+                        duration: 9000,
+                        isClosable: true,
+                      })
+                    return response.json().then(error => {
+                        throw new Error(error)
+                    })
+                }
+            }).catch(error => console.log(error))
+    }
 
     return (
         <Flex
@@ -46,11 +76,13 @@ const PasswordReset = () => {
                   </FormControl>
                   <Stack spacing={10}>
                     <Button
-                      bg={'blue.400'}
-                      color={'white'}
-                      _hover={{
-                        bg: 'blue.500',
-                      }}>
+                        onClick={confirmReset}
+                        bg={'blue.400'}
+                        color={'white'}
+                        _hover={{
+                            bg: 'blue.500',
+                        }}
+                    >
                       Submit
                     </Button>
                 </Stack>
