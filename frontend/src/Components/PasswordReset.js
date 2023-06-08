@@ -11,11 +11,12 @@ import {
     useToast
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const PasswordReset = () => {
 
     const toast = useToast()
+    const nav = useNavigate()
 
     const [ newPass, setNewPass ] = useState('')
     const [ confirmPass, setConfirmPass ] = useState('')
@@ -23,31 +24,54 @@ const PasswordReset = () => {
     let { uid, token } = useParams()
 
     const confirmReset = () => {
-        fetch('/users/reset_password_confirm/', {
-            method : 'POST',
-            headers : {
-                'Content-type' : 'application/json'
-            },
-            body : JSON.stringify({
-                uid : uid,
-                token : token,
-                new_password : newPass,
-                re_new_password : confirmPass
-            }) 
+      if(!newPass || !confirmPass){
+        toast({
+          title: 'Please enter all fields ',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
         })
-            .then(response => {
-                if(!response.ok){
-                    toast({
-                        title: 'Passwords do not match',
-                        status: 'error',
-                        duration: 9000,
-                        isClosable: true,
-                      })
-                    return response.json().then(error => {
-                        throw new Error(error)
-                    })
-                }
-            }).catch(error => console.log(error))
+        return
+      }
+
+      if(newPass !== confirmPass){
+        toast({
+          title: 'Passwords do not match',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+        return
+      }
+
+      fetch('/auth/users/reset_password_confirm/', {
+          method : 'POST',
+          headers : {
+              'Content-type' : 'application/json'
+          },
+          body : JSON.stringify({
+              uid : uid,
+              token : token,
+              new_password : newPass,
+              re_new_password : confirmPass
+          }) 
+      })
+          .then(response => {
+              if(!response.ok){
+                  return response.json().then(error => {
+                      throw new Error(error)
+                  })
+              }
+              else{
+                toast({
+                  title: 'Password reset succesfully',
+                  status: 'success',
+                  duration: 9000,
+                  isClosable: true,
+                })
+                nav('/sign_in')
+              }
+          }).catch(error => console.log(error))
     }
 
     return (
