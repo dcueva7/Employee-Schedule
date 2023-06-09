@@ -81,7 +81,6 @@ const Dashboard = () => {
     })
       .then(response => response.json())
       .then(json => {
-          console.log(json, 'added a shift');
           fetchShift();
           toast({
               title: 'Shift Coverage Accepted',
@@ -203,7 +202,6 @@ const Dashboard = () => {
           
         })
         .then(json => {
-          console.log(json)
           fetchShift()
         })
         .then(() => {
@@ -226,7 +224,6 @@ const Dashboard = () => {
               }
             })
             .then(json => {
-              console.log(json)
               fetchShift()
               fetchAdjustments()
               toast({

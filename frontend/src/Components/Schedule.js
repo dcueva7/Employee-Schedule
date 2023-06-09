@@ -111,7 +111,6 @@ const Schedule = () => {
             .then(response => response.json())
             .then(json => {
                 fetchShift()
-                console.log(json, 'bulk deleted shifts')
                 toast({
                     title: 'Delete succesful',
                     description: `All shifts including and after ${deleteDate} have been deleted`,
@@ -156,7 +155,6 @@ const Schedule = () => {
             })
                 .then(response => response.json())
                 .then(json => {
-                    console.log(json,'adjustment requested')
                     toast({
                         title: 'Time-off requested.',
                         status: 'success',
@@ -188,7 +186,6 @@ const Schedule = () => {
             })
                 .then(response => response.json())
                 .then(json => {
-                    console.log(json, 'adjustment requested')
                     toast({
                         title: 'Time-off requested.',
                         description: "Request has been made for partial coverage.",
@@ -216,6 +213,10 @@ const Schedule = () => {
 
     //retrive all employees
     useEffect(() => {
+        if(!authToken){
+            return
+        }
+        
         fetch('/employee/get_all_employees/', {
             method: 'GET',
             headers: {
@@ -224,7 +225,7 @@ const Schedule = () => {
         })
             .then(response => response.json())
             .then(json => {
-                console.log(json, 'fetched all employees')
+                
                 const data = json.map(item => ({
                     name : `${item.first_name} ${item.last_name}`,
                     id : item.id,
@@ -278,7 +279,6 @@ const Schedule = () => {
         })
             .then(response => response.json())
             .then(json => {
-                console.log(json, 'added a shift');
                 fetchShift();
                 toast({
                     title: 'Shift added',
@@ -313,7 +313,6 @@ const Schedule = () => {
         })
             .then(response => response.json())
             .then(json => {
-                console.log(json, 'updated a shift');
                 fetchShift();
                 toast({
                     title: 'Shift updated.',

@@ -55,7 +55,6 @@ const Nav = () => {
                 }
             })
             .then(json => {
-                console.log(json)
                 setEmployeeName(json.name)
             }).catch(error => console.log(error))
     },[authToken])
