@@ -18,6 +18,7 @@ The front-end of the application is built using React and the back-end is develo
 - Shift coverage request and approval system.
 - Settings panel where users can change their password, username, and associated color on calendar.
 - Integration with AWS Simple Email Service for automated email notifications
+- Integration with AWS RDS to manage data in MySQL database instance
 
 # Installation
 Provide instructions on how to install and setup your application.
@@ -37,6 +38,8 @@ Employees can click on their own shifts and request for full or partial coverage
 - Chakra UI for component design
 - JS-Cookies for handling JWT tokens
 - AWS SES for automatic email sending
+- AWS RDS MySQL for data management
+- AWS Cloudwatch for logging and error tracking
 
 # Contact Information
 Daniel Cueva
