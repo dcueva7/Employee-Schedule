@@ -17,7 +17,6 @@ const useWeeklyHours = () => {
         )
             .then(response => response.json())
             .then(json => {
-                console.log('fetched hours')
                 setHours(json.total_hours)
             }).catch(error => console.error(error))
 

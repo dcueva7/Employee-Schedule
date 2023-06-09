@@ -122,8 +122,6 @@ const Settings = (props) => {
                 throw new Error('invalid username')
             }
             else{
-                const json = await response.json()
-                console.log(json)
                 toast({
                     title: `Username changed to ${username}`,
                     status: 'success',
@@ -168,9 +166,7 @@ const Settings = (props) => {
                 })
                 throw new Error('Error changing color')
             }
-            else{
-                const json = response.json()
-                console.log(json)
+            else{        
                 fetchShift()
                 toast({
                     title: 'Color changed succesfully'  ,

@@ -20,7 +20,6 @@ const useUserId = () => {
             .then(response => response.json() )
             .then(json => {
                 setId(json.id)
-                console.log('retrieved user id')
             }).catch(error => console.error(error))
 
     }, [authToken])

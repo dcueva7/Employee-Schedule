@@ -26,14 +26,13 @@ const useRecurringSchedule = () => {
                 throw new Error(`HTTP Error! status: ${response.status}`)    
             }
 
-            const json = await response.json();
             toast({
                 title: 'Recurring Schedule Created',
                 status: 'success',
                 duration: 9000,
                 isClosable: true,
               })
-            console.log(json, 'Created recurring shifts');
+            
             
         } catch (error) {
             console.error(error);

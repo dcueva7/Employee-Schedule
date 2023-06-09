@@ -93,7 +93,6 @@ const SignIn = () => {
             duration: 9000,
             isClosable: true,
           })
-          console.log('Password reset link sent succesfully')
         }
         
       } catch (error) {

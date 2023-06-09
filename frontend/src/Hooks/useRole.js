@@ -29,7 +29,6 @@ const useRole = () => {
             })
             .then(json => { 
                 setManager(json.message)
-                console.log(json)
             }).catch(error => console.error(error))
 
     }, [authToken, manager])
