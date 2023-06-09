@@ -30,13 +30,13 @@ Employees can click on their own shifts and request for full or partial coverage
 <img width="1511" alt="image" src="https://github.com/dcueva7/Employee-Schedule/assets/111453767/a5209b6b-eef8-4982-b05b-4646c0751a33">
 
 # Technologies Used
--React
--Django Rest Framework
--Django's Djoser library for authentication
--FullCalendar for displaying shifts
--Chakra UI for component design
--JS-Cookies for handling JWT tokens
--AWS SES for automatic email sending
+- React
+- Django Rest Framework
+- Django's Djoser library for authentication
+- FullCalendar for displaying shifts
+- Chakra UI for component design
+- JS-Cookies for handling JWT tokens
+- AWS SES for automatic email sending
 
 # Contact Information
 Daniel Cueva
