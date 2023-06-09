@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import watchtower
 
 load_dotenv()
 
@@ -169,5 +170,20 @@ AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 AWS_SES_REGION_NAME = 'us-west-1'  
 AWS_SES_REGION_ENDPOINT = 'email.us-west-1.amazonaws.com'  
+
+
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'cloudwatch': {
+            'level': 'INFO',
+            'class': 'watchtower.CloudWatchLogHandler',
+        },
+    },
+    'root': {
+        'handlers': ['cloudwatch'],
+        'level': 'INFO',
+    },
+}
 
 

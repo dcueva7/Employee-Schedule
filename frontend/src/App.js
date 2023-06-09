@@ -16,9 +16,23 @@ import {
   Routes
 
 } from "react-router-dom"
-
+import { Logger } from 'aws-amplify';
 
 function App() {
+
+ 
+
+  const logger = new Logger('My-Logger');
+
+  // In development mode, this will log to the console
+  logger.onHubCapsule = (capsule) => {
+      const { channel, payload } = capsule;
+      if (channel === 'Logger') {
+          console.log(payload.message);
+      }
+  };
+
+  Logger.addPluggable(logger);
 
   const authToken = Cookies.get('authToken')
 

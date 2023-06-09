@@ -17,6 +17,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "aws-amplify": "^5.2.5",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.5",
     "framer-motion": "^10.12.9",
