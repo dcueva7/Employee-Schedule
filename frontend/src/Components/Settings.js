@@ -166,7 +166,9 @@ const Settings = (props) => {
                 })
                 throw new Error('Error changing color')
             }
-            else{        
+            else{
+                const json = await response.json()
+                console.log(json, "color changed succesfully")        
                 fetchShift()
                 toast({
                     title: 'Color changed succesfully'  ,

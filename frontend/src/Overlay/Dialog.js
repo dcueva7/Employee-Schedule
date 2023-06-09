@@ -57,7 +57,7 @@ const Dialog = (props) => {
                     <Button ref={cancelRef} onClick={props.alertClose}>
                         Cancel
                     </Button>
-                    <Button colorScheme='red' onClick={props.alertConfirm} ml={3}>
+                    <Button onClick={props.alertConfirm} ml={3}>
                         Confirm
                     </Button>
                     </AlertDialogFooter>

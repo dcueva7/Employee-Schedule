@@ -87,6 +87,8 @@ const SignUp = () => {
                 throw new Error("Invalid fields")
             }
             else{
+                const responseJson = await response.json()
+                console.log(responseJson,'created Account')
 
                 const createEmployeeResponse = await fetch('/employee/add/', {
                     method : 'POST',
@@ -104,7 +106,7 @@ const SignUp = () => {
 
                 if (!createEmployeeResponse.ok){
                     toast({
-                        title: 'Error creating cmployee, notify supervisor',
+                        title: 'Error creating employee, notify supervisor',
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
@@ -112,9 +114,12 @@ const SignUp = () => {
                     throw new Error('Error creating employee')
                 }
                 else{
+                    const json =  await createEmployeeResponse.json()
+
+                    console.log(json, 'added employee')
                     toast({
                         title: 'Account Created',
-                        status: 'Success',
+                        status: 'success',
                         duration: 9000,
                         isClosable: true,
                     })

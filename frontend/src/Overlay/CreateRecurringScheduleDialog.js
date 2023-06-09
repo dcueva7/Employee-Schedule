@@ -56,7 +56,7 @@ const CreateRecurringScheduleDialog = (props) => {
                     <Button ref={cancelRef} onClick={props.alertClose}>
                         Cancel
                     </Button>
-                    <Button colorScheme='red' onClick={props.confirm} ml={3}>
+                    <Button onClick={props.confirm} ml={3}>
                         Confirm
                     </Button>
                     </AlertDialogFooter>

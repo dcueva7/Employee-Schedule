@@ -79,7 +79,17 @@ const Dashboard = () => {
         date : currentOpenShift.date,
       })
     })
-      .then(response => response.json())
+      .then(response => {
+        if(!response.ok){
+          toast({
+            title: 'Error covering shift',
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          })
+        }
+        return response.json()
+      })
       .then(json => {
           fetchShift();
           toast({
@@ -151,7 +161,6 @@ const Dashboard = () => {
 
             })
             .then(json => {
-              console.log(json)
               fetchShift()
               fetchAdjustments()
               addOpenShift(currentAdjustment.start, currentAdjustment.end, currentAdjustment.date)
@@ -172,7 +181,7 @@ const Dashboard = () => {
                   },
                   body : JSON.stringify({'user' : currentAdjustment.user})
                 }).then(response => response.json())
-                  .then(json => console.log(json, 'email sent'))
+                  .then(json => console.log('email sent'))
               ).catch(error => console.error(error))
             
 

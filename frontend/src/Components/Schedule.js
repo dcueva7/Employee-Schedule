@@ -452,7 +452,7 @@ const Schedule = () => {
                                         resetInputs();
                                         setEventModalOpen(false);
                                     }} 
-                                    color='red'>Cancel</Button>
+                                    >Cancel</Button>
                                 <Button onClick={updateShift} ml={3}>Submit</Button>
                             </Box>
                         </ModalFooter>
@@ -534,7 +534,7 @@ const Schedule = () => {
                         </Box>
 
                         <Button ml={8} onClick={() => setRecurringDialogOpen(true)}>Create Recurring Schedule</Button>
-                        <Button ml={8} colorScheme='red' onClick={() => setIsBulkDialogOpen(true)}>Bulk Delete</Button>
+                        <Button ml={8} color='red' onClick={() => setIsBulkDialogOpen(true)}>Bulk Delete</Button>
                     </Flex>
                 }
                 <FullCalendar
