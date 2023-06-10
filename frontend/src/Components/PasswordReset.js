@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../apiConfig';
 
 const PasswordReset = () => {
 
@@ -44,7 +45,7 @@ const PasswordReset = () => {
         return
       }
 
-      fetch('/auth/users/reset_password_confirm/', {
+      fetch(`${BASE_URL}/auth/users/reset_password_confirm/`, {
           method : 'POST',
           headers : {
               'Content-type' : 'application/json'

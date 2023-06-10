@@ -18,7 +18,8 @@ import {
     Text,
     Flex,
     useToast,
-    } from '@chakra-ui/react';
+} from '@chakra-ui/react';
+import { BASE_URL } from '../apiConfig';
 
 import { 
     useEffect, 
@@ -99,7 +100,7 @@ const Schedule = () => {
             return
         }
 
-        fetch('bulk_delete_shifts/',{
+        fetch(`${BASE_URL}/bulk_delete_shifts/`,{
             method : 'POST',
             headers : {
                 'Content-type' : 'application/json',
@@ -135,7 +136,7 @@ const Schedule = () => {
         const shift_id = shiftId
         const type_of_coverage = full ? 'full' : 'partial'
         if (full){
-            fetch(`/request_adjustment/`, {
+            fetch(`${BASE_URL}/request_adjustment/`, {
                 method : 'POST',
                 headers : {
                     'Content-type' : 'application/json',
@@ -166,7 +167,7 @@ const Schedule = () => {
             
         }
         else if (!full){
-            fetch(`/request_adjustment/`, {
+            fetch(`${BASE_URL}/request_adjustment/`, {
                 method : 'POST',
                 headers : {
                     'Content-type' : 'application/json',
@@ -217,7 +218,7 @@ const Schedule = () => {
             return
         }
         
-        fetch('/employee/get_all_employees/', {
+        fetch(`${BASE_URL}/employee/get_all_employees/`, {
             method: 'GET',
             headers: {
                 'Authorization': `Token ${authToken}`,
@@ -269,7 +270,7 @@ const Schedule = () => {
               })
             return;
         }
-        fetch('/shift/add_shift/', {
+        fetch(`${BASE_URL}/shift/add_shift/`, {
             method : 'POST',
             headers : {
                 'Content-type' : 'application/json',
@@ -297,7 +298,7 @@ const Schedule = () => {
     //update Shift
     const updateShift = () => {
 
-        fetch(`/shift/update_shift/${selectedEvent.id}/`, {
+        fetch(`${BASE_URL}/shift/update_shift/${selectedEvent.id}/`, {
             method : 'PATCH',
             headers : {
                 'Content-type' : 'application/json',
@@ -328,7 +329,7 @@ const Schedule = () => {
     }
 
     const deleteShift = () => {
-        fetch(`/shift/delete_shift/${selectedEvent.id}/`,{
+        fetch(`${BASE_URL}/shift/delete_shift/${selectedEvent.id}/`,{
             method : 'DELETE',
             headers : {
                 'Authorization' : `Token ${authToken}`,

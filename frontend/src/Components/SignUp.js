@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { BASE_URL } from '../apiConfig';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -44,7 +45,7 @@ const SignUp = () => {
         }
 
         try {
-            const response = await fetch('/auth/users/', {
+            const response = await fetch(`${BASE_URL}/auth/users/`, {
                 method : 'POST', 
                 headers : {
                     'Content-type' : 'application/json',
@@ -90,7 +91,7 @@ const SignUp = () => {
                 const responseJson = await response.json()
                 console.log(responseJson,'created Account')
 
-                const createEmployeeResponse = await fetch('/employee/add/', {
+                const createEmployeeResponse = await fetch(`${BASE_URL}/employee/add/`, {
                     method : 'POST',
                     headers : {
                         'Content-type' : 'application/json',

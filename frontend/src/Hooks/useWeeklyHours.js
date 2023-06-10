@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 import Cookies from 'js-cookie'
+import { BASE_URL } from '../apiConfig'
 
 const useWeeklyHours = () => {
 
@@ -8,7 +9,7 @@ const useWeeklyHours = () => {
     
     const fetchHours = useCallback(() => {
 
-        fetch('get_total_hours/', {
+        fetch(`${BASE_URL}/get_total_hours/`, {
             method : 'GET',
             headers : {
                 'Content-type' : 'application/json',

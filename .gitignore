@@ -8,6 +8,7 @@
 /backend/Pipfile.lock
 /backend/backend/.env
 /backend/backend/__pycache__
+/frontend/.env
 
 
 

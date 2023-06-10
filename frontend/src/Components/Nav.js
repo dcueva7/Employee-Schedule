@@ -23,6 +23,7 @@ import { useContext, useEffect, useState, useCallback } from 'react';
 import EmployeeShiftContext from '../EmployeeShiftContext';
 import Settings from './Settings';
 import useAuth from '../Hooks/UseAuth';
+import { BASE_URL } from '../apiConfig';
 
 
 
@@ -40,7 +41,7 @@ const Nav = () => {
     const [ employeeName, setEmployeeName ] = useState('')
 
     const fetchEmployeeName = useCallback(() => {
-        fetch('/employee/get_current_employee/',{
+        fetch(`${BASE_URL}/employee/get_current_employee/`,{
             method : 'GET',
             headers: {
                 'Authorization': `Token ${authToken}`,

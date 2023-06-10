@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import Cookies from 'js-cookie'
+import { BASE_URL } from '../apiConfig'
 
 const useGetOpenShift = (setOpenShifts) => {
 
@@ -10,7 +11,7 @@ const useGetOpenShift = (setOpenShifts) => {
             return
         }
 
-        fetch('get_open_shifts/', {
+        fetch(`${BASE_URL}/get_open_shifts/`, {
             method : 'GET',
             headers : {
                 'Content-type' : 'application/json',

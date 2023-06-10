@@ -25,6 +25,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Cookies from 'js-cookie'
+import { BASE_URL } from '../apiConfig';
   
 const SignIn = () => {
 
@@ -34,6 +35,7 @@ const SignIn = () => {
     const [ password, setPassword ] = useState('')
     const [ error, setError ] = useState('')
     const [ email, setEmail ] = useState('')
+    
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -42,7 +44,7 @@ const SignIn = () => {
     const handleLogin = (e) => {
       e.preventDefault()
 
-      fetch('/auth/token/login/', {
+      fetch(`${BASE_URL}/auth/token/login/`, {
           method : 'POST',
           headers : {
               'Content-type' : 'application/json'
@@ -74,7 +76,7 @@ const SignIn = () => {
       }
 
       try {
-        const response = await fetch('/auth/users/reset_password/', {
+        const response = await fetch(`${BASE_URL}/auth/users/reset_password/`, {
           method : 'POST',
           headers : {
             'Content-type' : 'application/json'

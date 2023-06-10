@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import Cookies from "js-cookie"
+import { BASE_URL } from "../apiConfig"
 
 const useRole = () => {
 
@@ -12,7 +13,7 @@ const useRole = () => {
             return
         }
 
-        fetch('/check_manager/',{
+        fetch(`${BASE_URL}/check_manager/`,{
             method: 'GET',
             headers: {
                 'Authorization': `Token ${authToken}`,

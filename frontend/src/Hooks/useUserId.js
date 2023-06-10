@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import Cookies from "js-cookie"
+import { BASE_URL } from "../apiConfig"
 
 const useUserId = () => {
 
@@ -11,7 +12,7 @@ const useUserId = () => {
         if(!authToken){
             return
         }
-        fetch('/get_id/',{
+        fetch(`${BASE_URL}/get_id/`,{
             method: 'GET',
             headers: {
                 'Authorization': `Token ${authToken}`,

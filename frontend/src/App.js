@@ -16,6 +16,7 @@ import {
   Routes
 
 } from "react-router-dom"
+import { BASE_URL } from './apiConfig';
 
 function App() {
 
@@ -38,7 +39,7 @@ function App() {
       return
     }
 
-    fetch('/shift/list_shifts/', {
+    fetch(`${BASE_URL}/shift/list_shifts/`, {
         method: 'GET',
         headers: {
             'Authorization': `Token ${authToken}`,
@@ -70,7 +71,7 @@ function App() {
       return
     }
 
-    fetch('retrieve_adjustments/', {
+    fetch(`${BASE_URL}/retrieve_adjustments/`, {
       method: 'GET',
       headers: {
         'Authorization': `Token ${authToken}`,

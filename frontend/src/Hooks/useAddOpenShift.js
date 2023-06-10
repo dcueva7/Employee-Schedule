@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+import { BASE_URL } from '../apiConfig'
 
 const useAddOpenShift = () => {
 
@@ -6,7 +7,7 @@ const useAddOpenShift = () => {
     
     const addOpenShift = (start, end, date) => {
 
-        fetch('add_open_shift/', {
+        fetch(`${BASE_URL}/add_open_shift/`, {
             method : 'POST',
             headers : {
                 'Content-type' : 'application/json',

@@ -1,6 +1,7 @@
 
 import Cookies from "js-cookie";
 import { useToast } from '@chakra-ui/react';
+import { BASE_URL } from "../apiConfig";
 
 const useRecurringSchedule = () => {
 
@@ -10,7 +11,7 @@ const useRecurringSchedule = () => {
     const createRecurringSchedule = async (weeks, date) => {
 
         try {
-            const response = await fetch('create_recurring_schedule/', {
+            const response = await fetch(`${BASE_URL}/create_recurring_schedule/`, {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',

@@ -2,6 +2,8 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from "@fullcalendar/interaction"; 
+import { BASE_URL } from '../apiConfig';
+
 
 import {
     Box,
@@ -66,7 +68,7 @@ const Dashboard = () => {
     setIsConfirmCoverageDialogOpen(true)
   }
   const confirmShiftCoverage = () => {
-    fetch('/shift/add_shift/', {
+    fetch(`${BASE_URL}/shift/add_shift/`, {
       method : 'POST',
       headers : {
           'Content-type' : 'application/json',
@@ -100,7 +102,7 @@ const Dashboard = () => {
             })
         })
           .then(
-            fetch(`/delete_open_shift/${currentOpenShift.id}/`,{
+            fetch(`${BASE_URL}/delete_open_shift/${currentOpenShift.id}/`,{
             method : 'DELETE',
             headers : {
                 'Authorization' : `Token ${authToken}`,
@@ -127,7 +129,7 @@ const Dashboard = () => {
   }
   const approveRequest = () => {
     if(full){
-      fetch(`/shift/delete_shift/${currentAdjustment.shift_id}/`, {
+      fetch(`${BASE_URL}/shift/delete_shift/${currentAdjustment.shift_id}/`, {
         method: 'DELETE',
         headers : {
           'Authorization' : `Token ${authToken}`,
@@ -141,7 +143,7 @@ const Dashboard = () => {
           return response
         })
         .then(() => {
-          fetch(`update_adjustment/${currentAdjustment.adj_id}/`, {
+          fetch(`${BASE_URL}/update_adjustment/${currentAdjustment.adj_id}/`, {
             method : 'PATCH',
             headers : {
               'Content-type' : 'application/json',
@@ -173,7 +175,7 @@ const Dashboard = () => {
               })
             })
               .then(
-                fetch('/send_notifs/', {
+                fetch(`${BASE_URL}/send_notifs/`, {
                   method: 'POST',
                   headers: {
                     'Content-type' : 'application/json',
@@ -190,7 +192,7 @@ const Dashboard = () => {
     }
     else{
 
-      fetch(`/shift/update_shift/${currentAdjustment.shift_id}/`, {
+      fetch(`${BASE_URL}/shift/update_shift/${currentAdjustment.shift_id}/`, {
         method: 'PATCH',
         headers : {
           'Content-type' : 'application/json',
@@ -214,7 +216,7 @@ const Dashboard = () => {
           fetchShift()
         })
         .then(() => {
-          fetch(`update_adjustment/${currentAdjustment.adj_id}/`, {
+          fetch(`${BASE_URL}/update_adjustment/${currentAdjustment.adj_id}/`, {
             method : 'PATCH',
             headers : {
               'Content-type' : 'application/json',

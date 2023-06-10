@@ -17,6 +17,7 @@ import {
 import { useState, useContext } from "react"
 import useAuth from "../Hooks/UseAuth";
 import EmployeeShiftContext from "../EmployeeShiftContext";
+import { BASE_URL } from "../apiConfig";
 
 
 const Settings = (props) => {
@@ -54,7 +55,7 @@ const Settings = (props) => {
         }
 
         try{
-            const reset = await fetch('/auth/users/set_password/', {
+            const reset = await fetch(`${BASE_URL}/auth/users/set_password/`, {
                 method : 'POST',
                 headers : {
                     'Content-type' : 'application/json',
@@ -104,7 +105,7 @@ const Settings = (props) => {
         }
 
         try {
-            const response = await fetch('/change_username/', {
+            const response = await fetch(`${BASE_URL}/change_username/`, {
                 method : 'POST',
                 headers : {
                     'Content-type' : 'application/json',
@@ -148,7 +149,7 @@ const Settings = (props) => {
             return
         }
         try{
-            const response = await fetch('/change_employee_color/', {
+            const response = await fetch(`${BASE_URL}/change_employee_color/`, {
                 method : 'POST',
                 headers : {
                     'Content-type' : 'application/json',
