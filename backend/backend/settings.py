@@ -162,8 +162,15 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOW_HEADERS = [
-   
+    "content-type",
     "Authorization",
+    "accept",
+    "accept-encoding",
+    "connection",
+    "content-length",
+    "user-agent",
+    "origin",
+    "x-csrftoken",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
