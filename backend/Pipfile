@@ -16,6 +16,8 @@ awscli = "*"
 mysqlclient = "*"
 mysql = "*"
 gunicorn = "*"
+django-storages = "*"
+boto3 = "*"
 
 [dev-packages]
 

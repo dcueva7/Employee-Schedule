@@ -86,6 +86,7 @@ const Nav = () => {
                     <ButtonGroup variant="link" spacing={4}>
                         <Button color='black' onClick={() => nav('/dashboard')}>Dashboard</Button>
                         <Button color='black' onClick={() => nav('/')}>Schedule</Button>
+                        {role && <Button color='black'>Admin</Button>}
                     </ButtonGroup>
                 </Flex>
 
