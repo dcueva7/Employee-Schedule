@@ -49,13 +49,18 @@ const ReviewRequestDialog = (props) => {
                         }
                     </AlertDialogBody>
 
-                    <AlertDialogFooter>
-                    <Button ref={cancelRef} onClick={props.closeRequestDialog}>
-                        Cancel
-                    </Button>
-                    <Button onClick={props.approveRequest} ml={3}>
-                        Approve
-                    </Button>
+                    <AlertDialogFooter display='flex' justifyContent='space-between'>
+                        
+                        <Button onClick={props.denyRequest} color='red'>Deny</Button>
+
+                        <Box>
+                            <Button ref={cancelRef} onClick={props.closeRequestDialog}>
+                                Cancel
+                            </Button>
+                            <Button onClick={props.approveRequest} ml={3}>
+                                Approve
+                            </Button>
+                        </Box>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialogOverlay>

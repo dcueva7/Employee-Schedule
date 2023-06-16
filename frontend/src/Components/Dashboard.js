@@ -252,6 +252,41 @@ const Dashboard = () => {
     }  
     setIsOpen(false)
   }
+  const denyRequest = () => {
+
+    console.log('deleted adjustment')
+
+    fetch(`${BASE_URL}/delete_adjustment/${currentAdjustment.adj_id}/`, {
+      method: 'DELETE',
+      headers : {
+        'Authorization' : `Token ${authToken}`,
+      }
+    }).then((response) => {
+      if(!response.ok){
+        toast({
+          title: 'Error denying coverage',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+        throw new Error("error denying coverage")
+      }
+      else{
+        toast({
+          title: 'Coverage request denied',
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        })
+        fetchAdjustments()
+        return response
+      }
+
+    }).catch(error => console.log(error))
+
+    setIsOpen(false)
+
+  }
   const reviewRequest = (adjustment) => {
     setIsOpen(true)
     setFull(adjustment.type_of_coverage === 'full')
@@ -317,6 +352,7 @@ const Dashboard = () => {
             start={currentAdjustment?.start}
             end={currentAdjustment?.end}
             approveRequest={approveRequest}
+            denyRequest={denyRequest}
           />
 
           <ConfirmCoverage 
