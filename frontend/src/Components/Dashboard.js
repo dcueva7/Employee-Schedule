@@ -254,8 +254,6 @@ const Dashboard = () => {
   }
   const denyRequest = () => {
 
-    console.log('deleted adjustment')
-
     fetch(`${BASE_URL}/delete_adjustment/${currentAdjustment.adj_id}/`, {
       method: 'DELETE',
       headers : {
