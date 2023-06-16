@@ -15,6 +15,7 @@ watchtower = "*"
 awscli = "*"
 mysqlclient = "*"
 mysql = "*"
+gunicorn = "*"
 
 [dev-packages]
 

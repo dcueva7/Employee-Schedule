@@ -20,4 +20,5 @@ RUN pip install pipenv && pipenv install --system
 
 # Copy the current directory contents into the container at /code
 COPY . /code/
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+
+CMD ["gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]

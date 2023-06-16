@@ -89,6 +89,7 @@ const Dashboard = () => {
             duration: 9000,
             isClosable: true,
           })
+          throw new Error('Error covering shift')
         }
         return response.json()
       })

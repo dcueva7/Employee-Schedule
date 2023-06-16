@@ -8,7 +8,9 @@
 /backend/Pipfile.lock
 /backend/backend/.env
 /backend/backend/__pycache__
-/frontend/.env
+/frontend/.env*
+scheduling_app.pem
+*.dockerignore
 
 
 

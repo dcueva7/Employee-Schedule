@@ -1,1 +1,1 @@
-export const BASE_URL = process.env.REACT_APP_BASE_URL;
+export const BASE_URL = 'http://denschedule.com:8000';
