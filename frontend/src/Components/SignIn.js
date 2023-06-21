@@ -44,8 +44,6 @@ const SignIn = () => {
     const handleLogin = (e) => {
       e.preventDefault()
 
-      console.log(`BASE_URL: ${BASE_URL}`);
-
       fetch(`${BASE_URL}/auth/token/login/`, {
           method : 'POST',
           headers : {

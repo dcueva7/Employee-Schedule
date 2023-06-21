@@ -43,7 +43,7 @@ def send_notifs(request):
             'Open Shift',
             'A shift is available for coverage.  If you are interested please log-in and review the shift in the Dashboard',
             'dnlcueva@hotmail.com',
-            ['dnlcueva@hotmail.com'],
+            email_recipients,
             fail_silently=False,
         )
     except ValidationError as e:
