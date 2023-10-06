@@ -10,8 +10,9 @@ const useGetOpenShift = (setOpenShifts) => {
         if (!authToken){
             return
         }
+        
 
-        fetch(`${BASE_URL}/get_open_shifts/`, {
+        fetch(`${BASE_URL}/shift/list_shifts/`, {
             method : 'GET',
             headers : {
                 'Content-type' : 'application/json',
@@ -21,6 +22,7 @@ const useGetOpenShift = (setOpenShifts) => {
             .then(response => response.json())
             .then(json => {
                 setOpenShifts(json)
+                console.log()
             }).catch(error => console.error(error))
 
     }, [authToken, setOpenShifts])

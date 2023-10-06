@@ -38,7 +38,7 @@ import useRecurringSchedule from '../Hooks/useRecurringSchedule';
 import CreateRecurringScheduleDialog from '../Overlay/CreateRecurringScheduleDialog';
 import BulkDeleteDialog from '../Overlay/BulkDeleteDialog';
 
-const Schedule = ({department}) => {
+const Exam = ({department}) => {
 
     const authToken = useAuth();
     const loggedInUser = useUserId();
@@ -576,4 +576,4 @@ const Schedule = ({department}) => {
     );
 }
 
-export default Schedule
+export default Exam

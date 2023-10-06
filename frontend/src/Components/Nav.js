@@ -85,8 +85,8 @@ const Nav = () => {
                     <Image src="/logo-viterbi.png" alt="Logo" width='200px' mr={4} />
                     <ButtonGroup variant="link" spacing={4}>
                         <Button color='black' onClick={() => nav('/dashboard')}>Dashboard</Button>
-                        <Button color='black' onClick={() => nav('/')}>Schedule</Button>
-                        {role && <Button color='black'>Admin</Button>}
+                        <Button color='black' onClick={() => nav('/')}>TSC Schedule</Button>
+                        <Button color='black' onClick = {() => nav('/exams')}>Exams Schedule</Button>
                     </ButtonGroup>
                 </Flex>
 

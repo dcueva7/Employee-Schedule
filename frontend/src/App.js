@@ -5,6 +5,7 @@ import SignIn from './Components/SignIn';
 import SignUp from './Components/SignUp';
 import Dashboard from './Components/Dashboard';
 import EmployeeShiftContext from './EmployeeShiftContext';
+import Exam from './Components/Exam';
 import { useState, useCallback } from 'react';
 import useRole from './Hooks/useRole';
 import useGetOpenShift from './Hooks/useGetOpenShift';
@@ -34,12 +35,18 @@ function App() {
   const role = useRole()
 
   //fetch all shifts
-  const fetchShift = useCallback(() => {
+  const fetchShift = useCallback((departmentId) => {
     if (!authToken){
       return
     }
 
-    fetch(`${BASE_URL}/shift/list_shifts/`, {
+    let url = `${BASE_URL}/shift/list_shifts/`
+
+    if (departmentId){
+      url += `?department=${departmentId}`
+    }
+
+    fetch(url, {
         method: 'GET',
         headers: {
             'Authorization': `Token ${authToken}`,
@@ -63,6 +70,7 @@ function App() {
         }).catch(error => {
             console.error('Error:', error);
         })
+
   }, [authToken])
 
   const fetchAdjustments = useCallback(() => {
@@ -113,11 +121,12 @@ function App() {
       }} >
         <Router>
           <Routes>
-              <Route path="/" exact element={<Schedule />} />
+              <Route path="/" exact element={<Schedule department="1" />} />
               <Route path="sign_in" element={<SignIn />} />
               <Route path="sign_up" element={<SignUp />} />
               <Route path="dashboard" element={<Dashboard/>} />
               <Route path="password_reset/:uid/:token" element={<PasswordReset/>}/>
+              <Route path="exams" element={<Exam department="2"/>}/>
           </Routes>
         </Router>
       </EmployeeShiftContext.Provider>

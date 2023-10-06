@@ -1,6 +1,7 @@
 from rest_framework import generics, status
 from . import serializers
 from . import models
+from datetime import date
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
@@ -90,8 +91,9 @@ def create_recurring_schedule(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_open_shifts(request):
+    today = date.today()
     if request.method == 'GET':
-        query_set = models.AvailableShift.objects.all()
+        query_set = models.AvailableShift.objects.filter(date__gte=today)
         serialized_data = serializers.AvailableShiftSerializer(query_set, many=True)
 
         return Response(serialized_data.data, status.HTTP_202_ACCEPTED)
@@ -243,6 +245,12 @@ def change_username(request):
 class GetShifts(generics.ListAPIView):
     queryset = models.Shift.objects.all()
     serializer_class = serializers.ShiftSerializer
+
+    def get_queryset(self):
+        department_id = self.request.query_params.get('department', None)
+        if department_id:
+            return models.Shift.objects.filter(student__department=department_id)
+        return models.Shift.objects.all()
 
 class CreateShift(generics.CreateAPIView):
     queryset = models.Shift.objects.all()
