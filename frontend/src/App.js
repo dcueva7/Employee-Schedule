@@ -45,7 +45,7 @@ function App() {
     if (departmentId){
       url += `?department=${departmentId}`
     }
-
+    
     fetch(url, {
         method: 'GET',
         headers: {
