@@ -14,6 +14,7 @@ import {
     Card,
     Text,
     useToast,
+    Spinner
 } from '@chakra-ui/react';
 
 import { TimeIcon, CheckCircleIcon } from '@chakra-ui/icons';
@@ -34,7 +35,7 @@ const Dashboard = () => {
 
   const authToken = useAuth();
   const toast = useToast()
-  const { shifts, adjustments, fetchShift, openShifts, fetchOpenShifts, employees, fetchAdjustments, role } = useContext(EmployeeShiftContext)
+  const { isLoading, shifts, adjustments, fetchShift, openShifts, fetchOpenShifts, employees, fetchAdjustments, role } = useContext(EmployeeShiftContext)
 
   //fetch shifts and openShifts on component mount
   useEffect(() => {
@@ -359,8 +360,9 @@ const Dashboard = () => {
             confirmShiftCoverage={confirmShiftCoverage}
           />
               
-
+          {isLoading ? <Spinner/> :
           <Box mt={4} bg="white" boxShadow="sm" p={4}>
+            
             <Heading size="md">Schedule for today</Heading>
             <FullCalendar
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -374,7 +376,7 @@ const Dashboard = () => {
               slotEventOverlap={false}
               allDaySlot={false}      
             />  
-        </Box>
+        </Box>}
       </Box>
     );
   }

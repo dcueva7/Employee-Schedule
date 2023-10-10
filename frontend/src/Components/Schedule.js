@@ -18,6 +18,7 @@ import {
     Text,
     Flex,
     useToast,
+    Spinner
 } from '@chakra-ui/react';
 import { BASE_URL } from '../apiConfig';
 
@@ -48,7 +49,7 @@ const Schedule = ({department}) => {
 
     const { createRecurringSchedule } = useRecurringSchedule()
 
-    const {shifts, employees, setEmployees, fetchShift, fetchOpenShifts, role } = useContext(EmployeeShiftContext)
+    const { isLoading, shifts, employees, setEmployees, fetchShift, fetchOpenShifts, role } = useContext(EmployeeShiftContext)
 
     //isOpen state variable for the "addShift" Modal
     const [ isOpen, setIsOpen ] = useState(false)
@@ -81,7 +82,7 @@ const Schedule = ({department}) => {
               })
             return
         }
-        createRecurringSchedule(weeks, baseDate).then(() => fetchShift(department))
+        createRecurringSchedule(weeks, baseDate, department).then(() => fetchShift(department))
         setRecurringDialogOpen(false)
     }
 
@@ -538,6 +539,8 @@ const Schedule = ({department}) => {
                         <Button ml={8} color='red' onClick={() => setIsBulkDialogOpen(true)}>Bulk Delete</Button>
                     </Flex>
                 }
+
+                {isLoading ? <Spinner/> :
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                     initialView="timeGridWeek"
@@ -569,7 +572,7 @@ const Schedule = ({department}) => {
                             setEmployeeModalOpen(true)
                         }
                     }}      
-                />
+                />}
             </Container>
         </>
        

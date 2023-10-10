@@ -8,10 +8,16 @@ const useRecurringSchedule = () => {
     const toast = useToast()
     const authToken = Cookies.get('authToken')
 
-    const createRecurringSchedule = async (weeks, date) => {
+    const createRecurringSchedule = async (weeks, date, department) => {
+
+        let url = `${BASE_URL}/create_recurring_schedule/`
+
+        if (department){
+            url += `?department=${department}`
+        }
 
         try {
-            const response = await fetch(`${BASE_URL}/create_recurring_schedule/`, {
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',

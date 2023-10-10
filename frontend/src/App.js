@@ -28,6 +28,7 @@ function App() {
   const [ employees, setEmployees ] = useState([])
   const [ adjustments, setAdjustments ] = useState([])
   const [ openShifts, setOpenShifts ] = useState([])
+  const [ isLoading, setIsLoading ] = useState(false)
   
 
   const fetchOpenShifts = useGetOpenShift(setOpenShifts)
@@ -39,6 +40,8 @@ function App() {
     if (!authToken){
       return
     }
+
+    setIsLoading(true)
 
     let url = `${BASE_URL}/shift/list_shifts/`
 
@@ -66,9 +69,11 @@ function App() {
                 },
             }));
             setShifts(data)
+            setIsLoading(false)
             
         }).catch(error => {
             console.error('Error:', error);
+            setIsLoading(false)
         })
 
   }, [authToken])
@@ -117,7 +122,8 @@ function App() {
         fetchOpenShifts,
         setOpenShifts,
         fetchAdjustments,
-        role
+        role,
+        isLoading
       }} >
         <Router>
           <Routes>
