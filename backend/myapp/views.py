@@ -43,7 +43,7 @@ def send_notifs(request):
         send_mail(
             'Open Shift',
             'A shift is available for coverage.  If you are interested please log-in and review the shift in the Dashboard',
-            'dnlcueva@hotmail.com',
+            'dcueva@usc.edu',
             email_recipients,
             fail_silently=False,
         )
@@ -69,7 +69,12 @@ def create_recurring_schedule(request):
 
         base_week = date_object.isocalendar()[1]
 
-        shifts = models.Shift.objects.filter(date__week=base_week)
+        department_id = request.query_params.get('department', None)
+
+        if department_id:
+            shifts = models.Shift.objects.filter(date__week=base_week, student__department_id=department_id)
+        else:
+            shifts = models.Shift.objects.filter(date__week=base_week)
 
         with transaction.atomic():
             for week in range(weeks_to_create):
@@ -248,9 +253,12 @@ class GetShifts(generics.ListAPIView):
 
     def get_queryset(self):
         department_id = self.request.query_params.get('department', None)
+        queryset = models.Shift.objects.select_related('student')
+    
         if department_id:
-            return models.Shift.objects.filter(student__department=department_id)
-        return models.Shift.objects.all()
+            queryset = queryset.filter(student__department=department_id)
+    
+        return queryset
 
 class CreateShift(generics.CreateAPIView):
     queryset = models.Shift.objects.all()

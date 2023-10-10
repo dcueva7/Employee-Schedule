@@ -18,6 +18,7 @@ mysql = "*"
 gunicorn = "*"
 django-storages = "*"
 boto3 = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 

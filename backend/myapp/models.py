@@ -26,7 +26,7 @@ class Employee(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     email = models.EmailField(max_length=254)
     color = models.CharField(max_length=20, default='red')
-    department = models.ForeignKey(Department, null=True, on_delete=models.SET_NULL)
+    department = models.ForeignKey(Department, default="TSC", null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
@@ -43,8 +43,8 @@ class Shift(models.Model):
 
     def __str__(self):
         return self.student.first_name + ' shift on ' + str(self.date)
-    
 
+    
 class Availability(models.Model):
     student = models.ForeignKey(Employee, on_delete=models.CASCADE)
     start_time = models.TimeField(blank=True)
