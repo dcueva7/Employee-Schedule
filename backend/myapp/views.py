@@ -134,8 +134,13 @@ def bulk_delete_shifts(request):
 
         date_object = datetime.strptime(base_date, "%Y-%m-%d").date()
 
+        department_id = request.query_params.get('department', None)
 
-        models.Shift.objects.filter(date__gte=date_object).delete()
+        
+        if department_id:
+            models.Shift.objects.filter(date__gte=date_object, student__department_id=department_id).delete()
+        else:
+            models.Shift.objects.filter(date__gte=date_object).delete()
 
         return Response({'message' : 'shifts succesfully deleted'}, status.HTTP_200_OK)
     
