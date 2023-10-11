@@ -292,9 +292,9 @@ const Dashboard = () => {
     setCurrentAdjustment(adjustment)
   }
 
-  useEffect(() => {
-    fetchAdjustments()
-  }, [fetchAdjustments])
+  // useEffect(() => {
+  //   fetchAdjustments()
+  // }, [fetchAdjustments])
      
 
   return (

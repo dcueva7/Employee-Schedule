@@ -6,7 +6,8 @@ import SignUp from './Components/SignUp';
 import Dashboard from './Components/Dashboard';
 import EmployeeShiftContext from './EmployeeShiftContext';
 import Exam from './Components/Exam';
-import { useState, useCallback } from 'react';
+import Info from './Components/Info';
+import { useState, useCallback, useEffect } from 'react';
 import useRole from './Hooks/useRole';
 import useGetOpenShift from './Hooks/useGetOpenShift';
 import Cookies from 'js-cookie'
@@ -29,6 +30,7 @@ function App() {
   const [ adjustments, setAdjustments ] = useState([])
   const [ openShifts, setOpenShifts ] = useState([])
   const [ isLoading, setIsLoading ] = useState(false)
+  const [ employeeName, setEmployeeName ] = useState('')
   
 
   const fetchOpenShifts = useGetOpenShift(setOpenShifts)
@@ -108,6 +110,60 @@ function App() {
       })
   }, [authToken, setAdjustments])
 
+  const fetchEmployeeName = useCallback(() => {
+      fetch(`${BASE_URL}/employee/get_current_employee/`,{
+          method : 'GET',
+          headers: {
+              'Authorization': `Token ${authToken}`,
+          }
+      })
+          .then(response => {
+              if(!response.ok){
+                  throw new Error('Error fetching name')
+              }
+              else{
+                  return response.json()
+              }
+          })
+          .then(json => {
+              setEmployeeName(json.name)
+          }).catch(error => console.log(error))
+  },[authToken])
+
+  const fetchEmpoyees = useCallback(() => {
+    if(!authToken){
+        return
+    }
+    
+    fetch(`${BASE_URL}/employee/get_all_employees/`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Token ${authToken}`,
+        },
+    })
+        .then(response => response.json())
+        .then(json => {
+            
+            const data = json.map(item => ({
+                name : `${item.first_name} ${item.last_name}`,
+                id : item.id,
+                user : item.user,
+            }));
+            setEmployees(data)
+            
+        }).catch(error => {
+            console.error('Error:', error);
+        })
+},[setEmployees, authToken] )
+  
+
+  useEffect(() => {
+      fetchEmpoyees()
+      fetchAdjustments()
+      fetchEmployeeName()
+  },[fetchAdjustments, fetchEmployeeName, fetchEmpoyees])
+
+
   return (
     <ChakraProvider>
       <EmployeeShiftContext.Provider value={{
@@ -123,7 +179,9 @@ function App() {
         setOpenShifts,
         fetchAdjustments,
         role,
-        isLoading
+        isLoading,
+        employeeName,
+        setEmployeeName
       }} >
         <Router>
           <Routes>
@@ -133,6 +191,7 @@ function App() {
               <Route path="dashboard" element={<Dashboard/>} />
               <Route path="password_reset/:uid/:token" element={<PasswordReset/>}/>
               <Route path="exams" element={<Exam department="2"/>}/>
+              <Route path="info" element={<Info />}/>
           </Routes>
         </Router>
       </EmployeeShiftContext.Provider>

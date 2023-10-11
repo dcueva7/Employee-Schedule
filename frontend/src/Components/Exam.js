@@ -49,7 +49,7 @@ const Exam = ({department}) => {
 
     const { createRecurringSchedule } = useRecurringSchedule()
 
-    const { isLoading, shifts, employees, setEmployees, fetchShift, fetchOpenShifts, role } = useContext(EmployeeShiftContext)
+    const { isLoading, shifts, employees, fetchShift, fetchOpenShifts, role } = useContext(EmployeeShiftContext)
 
     //isOpen state variable for the "addShift" Modal
     const [ isOpen, setIsOpen ] = useState(false)
@@ -101,7 +101,12 @@ const Exam = ({department}) => {
             return
         }
 
-        fetch(`${BASE_URL}/bulk_delete_shifts/`,{
+        let url = `${BASE_URL}/bulk_delete_shifts/`
+
+        if(department){
+            url += `?department=${department}`
+        }
+        fetch(url, {
             method : 'POST',
             headers : {
                 'Content-type' : 'application/json',
@@ -212,33 +217,6 @@ const Exam = ({department}) => {
 
     // state variable to hold selected event after event click
     const [ selectedEvent, setSelectedEvent ] = useState([])
-
-    //retrive all employees
-    useEffect(() => {
-        if(!authToken){
-            return
-        }
-        
-        fetch(`${BASE_URL}/employee/get_all_employees/`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Token ${authToken}`,
-            },
-        })
-            .then(response => response.json())
-            .then(json => {
-                
-                const data = json.map(item => ({
-                    name : `${item.first_name} ${item.last_name}`,
-                    id : item.id,
-                    user : item.user,
-                }));
-                setEmployees(data)
-                
-            }).catch(error => {
-                console.error('Error:', error);
-            })
-    },[setEmployees, authToken] )
 
     //retrieve all shifts
     useEffect(() => {
