@@ -146,15 +146,18 @@ function App() {
             
             const data = json.map(item => ({
                 name : `${item.first_name} ${item.last_name}`,
+                email: item.email,
                 id : item.id,
                 user : item.user,
+                phone: item.phone,
+                department : item.department
             }));
             setEmployees(data)
             
         }).catch(error => {
             console.error('Error:', error);
         })
-},[setEmployees, authToken] )
+    },[setEmployees, authToken] )
   
 
   useEffect(() => {

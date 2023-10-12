@@ -1,46 +1,61 @@
 import { 
-    Container, 
-    Box, 
-    Button, 
-    Modal, 
-    ModalContent, 
-    ModalHeader, 
-    ModalFooter, 
-    Select, 
-    ModalBody, 
-    Input, 
-    FormControl, 
-    FormLabel,
-    Text,
-    Flex,
-    useToast,
-    Spinner
+    Table,
+    Thead,
+    Tbody,
+    Tr,
+    Th,
+    Td,
+    TableContainer,
 } from '@chakra-ui/react';
-import { BASE_URL } from '../apiConfig';
 
 import { 
-    useEffect, 
-    useState, 
+   
     useContext,  
 } from 'react'
 
 import Nav from './Nav';
-
-import useAuth from '../Hooks/UseAuth';
 import EmployeeShiftContext from '../EmployeeShiftContext';
-import useUserId from '../Hooks/useUserId';
+
 
 
 
 const Info = () => {
 
 
-    const { employees, setEmployees} = useContext(EmployeeShiftContext)
+    const { employees } = useContext(EmployeeShiftContext)
 
 
 
     return (
+        <>
         <Nav /> 
+
+        <TableContainer>
+        <Table variant='striped' colorScheme='gray'>
+            <Thead>
+            <Tr>
+                <Th>Name</Th>
+                <Th>Email</Th>
+                <Th>Phone Number </Th>  
+            </Tr>
+            </Thead>
+            <Tbody>
+            {employees.map((item) => {
+
+                return(
+                <Tr>
+                    <Td>{item.name}</Td>
+                    <Td>{item.email}</Td>
+                    <Td>{item.phone}</Td>
+
+                </Tr>)
+                
+            })}
+            </Tbody>
+        </Table>
+        </TableContainer>
+
+        </>
 
 
     )

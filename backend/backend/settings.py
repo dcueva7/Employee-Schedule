@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
-    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -68,7 +67,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 SITE_ID = 1
@@ -182,11 +180,6 @@ DJOSER = {
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
 }
 
-INTERNAL_IPS = [
-    
-    "127.0.0.1",
-    
-]
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
 DEFAULT_FROM_EMAIL = 'dcueva@usc.edu'
@@ -195,22 +188,4 @@ AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 AWS_SES_REGION_NAME = 'us-west-1'  
 AWS_SES_REGION_ENDPOINT = 'email.us-west-1.amazonaws.com'  
-
-
-# LOGGING = {
-#     'version': 1,
-#     'handlers': {
-#         'console': {
-#             'class': 'logging.StreamHandler',
-#         },
-#         'watchtower': {
-#             'class': 'watchtower.CloudWatchLogHandler',
-#             'level': 'DEBUG'
-#         }
-#     },
-#     'root': {
-#         'level': 'DEBUG',
-#         'handlers': ['console', 'watchtower'],
-#     },
-# }
 

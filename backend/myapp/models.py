@@ -26,7 +26,8 @@ class Employee(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     email = models.EmailField(max_length=254)
     color = models.CharField(max_length=20, default='red')
-    department = models.ForeignKey(Department, default="TSC", null=True, on_delete=models.SET_NULL)
+    phone = models.CharField(max_length=60, default="0")
+    department = models.ForeignKey(Department, default=1, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name

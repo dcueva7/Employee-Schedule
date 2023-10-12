@@ -13,7 +13,6 @@ scheduling_app.pem
 *.dockerignore
 
 
-
 # testing
 /coverage
 
