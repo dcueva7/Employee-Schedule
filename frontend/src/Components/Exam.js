@@ -41,15 +41,16 @@ import BulkDeleteDialog from '../Overlay/BulkDeleteDialog';
 
 const Exam = ({department}) => {
 
-    const authToken = useAuth();
+    const { authToken, isLoading, shifts, employees, fetchShift, fetchOpenShifts, role } = useContext(EmployeeShiftContext)
     const loggedInUser = useUserId();
+    
 
     //Chakra Toast const
     const toast = useToast()
+    useAuth()
 
     const { createRecurringSchedule } = useRecurringSchedule()
 
-    const { isLoading, shifts, employees, fetchShift, fetchOpenShifts, role } = useContext(EmployeeShiftContext)
 
     //isOpen state variable for the "addShift" Modal
     const [ isOpen, setIsOpen ] = useState(false)
@@ -221,7 +222,7 @@ const Exam = ({department}) => {
     //retrieve all shifts
     useEffect(() => {
         fetchShift(department);
-    }, [fetchShift, department])
+    }, [fetchShift, department, authToken])
 
     const resetInputs = () => {
         setStudent('')

@@ -30,6 +30,7 @@ import Cookies from 'js-cookie'
 const Nav = () => {
 
     const nav = useNavigate()
+    
 
     const { openShifts, adjustments,  role, employeeName } = useContext(EmployeeShiftContext)
 

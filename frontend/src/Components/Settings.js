@@ -14,9 +14,8 @@ import {
     HStack,
     useToast
  } from "@chakra-ui/react"
-import { useState, useContext } from "react"
+import { useState } from "react"
 import useAuth from "../Hooks/UseAuth";
-import EmployeeShiftContext from "../EmployeeShiftContext";
 import { BASE_URL } from "../apiConfig";
 
 
@@ -30,7 +29,6 @@ const Settings = (props) => {
     const [ color, setColor ] = useState('')
     const [ username, setUsername ] = useState('')
 
-    const { fetchShift } = useContext(EmployeeShiftContext)
 
     const toast = useToast()
 
@@ -169,10 +167,9 @@ const Settings = (props) => {
             }
             else{
                 const json = await response.json()
-                console.log(json, "color changed succesfully")        
-                fetchShift()
+                console.log(json, "color changed succesfully")
                 toast({
-                    title: 'Color changed succesfully'  ,
+                    title: 'Color changed succesfully, refresh the page'  ,
                     status: 'success',
                     duration: 9000,
                     isClosable: true,

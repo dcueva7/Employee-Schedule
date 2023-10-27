@@ -10,7 +10,6 @@ import Info from './Components/Info';
 import { useState, useCallback, useEffect } from 'react';
 import useRole from './Hooks/useRole';
 import useGetOpenShift from './Hooks/useGetOpenShift';
-import Cookies from 'js-cookie'
 import PasswordReset from './Components/PasswordReset';
 import {
   BrowserRouter as Router,
@@ -19,10 +18,12 @@ import {
 
 } from "react-router-dom"
 import { BASE_URL } from './apiConfig';
+import Cookies from 'js-cookie';
 
 function App() {
 
-  const authToken = Cookies.get('authToken')
+  const initialToken = Cookies.get("authToken")
+  const [ authToken, setAuthToken ] = useState(initialToken)
 
   //state variables to be shared between Dashboard and Schedule components.
   const [ shifts, setShifts ] = useState([]);
@@ -111,6 +112,10 @@ function App() {
   }, [authToken, setAdjustments])
 
   const fetchEmployeeName = useCallback(() => {
+      if(!authToken){
+        return
+      }
+
       fetch(`${BASE_URL}/employee/get_current_employee/`,{
           method : 'GET',
           headers: {
@@ -164,7 +169,7 @@ function App() {
       fetchEmpoyees()
       fetchAdjustments()
       fetchEmployeeName()
-  },[fetchAdjustments, fetchEmployeeName, fetchEmpoyees])
+  },[fetchAdjustments, fetchEmployeeName, fetchEmpoyees, authToken])
 
 
   return (
@@ -184,7 +189,9 @@ function App() {
         role,
         isLoading,
         employeeName,
-        setEmployeeName
+        setEmployeeName,
+        authToken,
+        setAuthToken
       }} >
         <Router>
           <Routes>

@@ -12,6 +12,8 @@
 scheduling_app.pem
 *.dockerignore
 
+./backend
+./frontend
 
 # testing
 /coverage

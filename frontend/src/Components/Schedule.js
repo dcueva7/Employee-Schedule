@@ -41,15 +41,16 @@ import BulkDeleteDialog from '../Overlay/BulkDeleteDialog';
 
 const Schedule = ({department}) => {
 
-    const authToken = useAuth();
+    const { fetchAdjustments, authToken, isLoading, shifts, employees, fetchShift, fetchOpenShifts, role } = useContext(EmployeeShiftContext)   
+    
     const loggedInUser = useUserId();
 
     //Chakra Toast const
     const toast = useToast()
+    useAuth();
 
-    const { createRecurringSchedule } = useRecurringSchedule()
+    const { createRecurringSchedule } = useRecurringSchedule()  
 
-    const { isLoading, shifts, employees, fetchShift, fetchOpenShifts, role } = useContext(EmployeeShiftContext)
 
     //isOpen state variable for the "addShift" Modal
     const [ isOpen, setIsOpen ] = useState(false)
@@ -167,6 +168,7 @@ const Schedule = ({department}) => {
                         duration: 9000,
                         isClosable: true,
                       })
+                      console.log("full shift time off requested")
                 })
                 .catch(error => console.log(error))
             
@@ -199,10 +201,12 @@ const Schedule = ({department}) => {
                         duration: 9000,
                         isClosable: true,
                       })
+                      console.log("partial time off requested")
                 })
                 .catch(error => console.log(error))
             
         }
+        fetchAdjustments()
         resetInputs()
         setEmployeeModalOpen(false)
         setAlertDialogOpen(false)
@@ -220,7 +224,7 @@ const Schedule = ({department}) => {
     //retrieve all shifts
     useEffect(() => {
         fetchShift(department);
-    }, [fetchShift, department])
+    }, [fetchShift, department, authToken])
 
     const resetInputs = () => {
         setStudent('')

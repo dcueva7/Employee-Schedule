@@ -33,10 +33,10 @@ import ConfirmCoverage from '../Overlay/ConfirmCoverage';
   
 const Dashboard = () => {
 
-  const authToken = useAuth();
   const toast = useToast()
-  const { isLoading, shifts, adjustments, fetchShift, openShifts, fetchOpenShifts, employees, fetchAdjustments, role } = useContext(EmployeeShiftContext)
+  const { authToken, isLoading, shifts, adjustments, fetchShift, openShifts, fetchOpenShifts, employees, fetchAdjustments, role } = useContext(EmployeeShiftContext)
 
+  useAuth()
   //fetch shifts and openShifts on component mount
   useEffect(() => {
     fetchShift()
@@ -95,7 +95,6 @@ const Dashboard = () => {
         return response.json()
       })
       .then(json => {
-          fetchShift();
           toast({
               title: 'Shift Coverage Accepted',
               status: 'success',
@@ -118,6 +117,8 @@ const Dashboard = () => {
           )
           .catch(error => console.log(error))
 
+      
+      fetchShift();
       closeConfirmCoverageDialog()
 
   }
@@ -139,9 +140,10 @@ const Dashboard = () => {
       })
         .then(response => {
           if(!response.ok){
+            console.log("error deleting shift after shift adjustment approval")
             throw response
           }
-
+          console.log("deleted shift after approval")
           return response
         })
         .then(() => {
@@ -157,9 +159,11 @@ const Dashboard = () => {
           })
             .then(response => {
               if(!response.ok){
+                
                 throw response
               }
               else{
+                console.log("updated adjustment status to approved")
                 return response.json()
               }
 

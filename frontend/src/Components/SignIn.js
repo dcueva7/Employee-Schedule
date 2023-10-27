@@ -23,12 +23,14 @@ import {
     useToast
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Cookies from 'js-cookie'
 import { BASE_URL } from '../apiConfig';
+import EmployeeShiftContext from '../EmployeeShiftContext';
   
 const SignIn = () => {
 
+    const { setAuthToken } = useContext(EmployeeShiftContext)
     const nav = useNavigate()
 
     const [ username, setUsername ] = useState('')
@@ -61,6 +63,7 @@ const SignIn = () => {
           })
           .then(json => {
               Cookies.set("authToken", json.auth_token, { expires: 7 });
+              setAuthToken(json.auth_token)
               nav('/');
           }).catch(error => console.log(error.message))
     }
